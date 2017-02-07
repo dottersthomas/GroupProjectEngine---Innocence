@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CameraComponent" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAACAAIAAAAAAAIAAAAABAABAAAAAAAIAAAAA=</HashCode>
+      <FileName>include\Components\CameraComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Component" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAQAAAAAACAAAAAAAAAAIAAAAABAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>include\Components\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DistanceComponent" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAIAAAAEIAAAAABIAAAAAAAAAAAACAA=</HashCode>
+      <FileName>include\Components\DistanceComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FirstPersonCameraComponent" Collapsed="true">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAgAAAACABEQZgAIAAMAAAAAFACAAAAABAAIAAAAA=</HashCode>
+      <FileName>include\Components\FirstPersonCameraComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanvasComponent" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIAAAACEBAAAAAAAAIAAAAABAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>include\Components\GUI\CanvasComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputComponent" Collapsed="true">
+    <Position X="14.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAACAAAAAAAAAAIAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Components\InputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LightComponent" Collapsed="true">
+    <Position X="16.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIQAAAAAACAAgQAAAAAAIAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Components\LightComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerKeyboardControlComponent" Collapsed="true">
+    <Position X="14.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAASAAAAAAIAQCAABAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>include\Components\PlayerKeyboardControlComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RobotAnimationComponent" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASACAAAACGAAgAAAAAAagIAAEBECAAgAAQAgAAAgAA=</HashCode>
+      <FileName>include\Components\RobotAnimationComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThirdPersonCameraComponent" Collapsed="true">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABUAgAAAACABEQYgQYAAMAAAAABACAAEAABAAIAAAAA=</HashCode>
+      <FileName>include\Components\ThirdPersonCameraComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanvasButton" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIAACAAAAAAAAABAAAAAARCAgAIABABAEAAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\CanvasButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanvasElement" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAKAAAACAAAQAAAgQAAAACAERgIAESBBAAAAFAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\CanvasElement.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanvasRect" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIEACAAAAAAAAABAAAAAARAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\CanvasRect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GUIRenderer" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAACAAAAAAAAAAAAAAQAAAAAAAhAIAAABAAAAAQAAA=</HashCode>
+      <FileName>include\Rendering\GUI\GUIRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABAAAAAAAQAggAAAAAAAAAAAMAIAAQAAACAIAAIA=</HashCode>
+      <FileName>include\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAQAAAAAABEAAAgACAiAAgCAgAAEAAA=</HashCode>
+      <FileName>include\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputHandler" Collapsed="true">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAIwAAAAAAAAAAAABAAAAAAAABgAA=</HashCode>
+      <FileName>include\InputHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderComponent" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Typedef Name="RenderComponent::t_Mesh_vector_" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>include\Components\RenderComponent.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="RenderComponent::t_Mesh_vector_Iterator_" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>include\Components\RenderComponent.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAACAAIAAAAAQAIAAAAABQAAIAADAAEABAAAA=</HashCode>
+      <FileName>include\Components\RenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Proxy" Collapsed="true">
+    <Position X="10.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DACAAAgACAAAAAAAAAACAAYQAAAAACQAAAAAgAAIAAA=</HashCode>
+      <FileName>include\Proxy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Text2D" Collapsed="true">
+    <Position X="5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAACAAAAAABAAAAAAAAABIAAAAABAEgAAEAAA=</HashCode>
+      <FileName>include\Rendering\GUI\Text2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mesh" Collapsed="true">
+    <Position X="7" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIIgIQAEAAAAAAgAAEAACCESkAgEyAQRAEAAAAAA=</HashCode>
+      <FileName>include\Rendering\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshFactory" Collapsed="true">
+    <Position X="8.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\MeshFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer" Collapsed="true">
+    <Position X="12.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAACAAAAAAAAAAAAAAQAAAAAAAAAIAAABCAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceManager" Collapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEEBBAKDBAIAABAAgGAGEAAgAIAAAQgAQBAAIAAAAI=</HashCode>
+      <FileName>include\Rendering\ResourceManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TransformComponent" Collapsed="true">
+    <Position X="19" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIIgAgGAICQAAAgABIAACCEJgAIACAABAAAAgAAA=</HashCode>
+      <FileName>include\Components\TransformComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="7" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAERBBAgAAAAAAAAEAAAAAAAAAAAIIAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="8.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AATgAAAAACAAAAAAgRAQAQAAQABAAAAAAAQEAAAAAAA=</HashCode>
+      <FileName>include\Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shader" Collapsed="true">
+    <Position X="12.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAYBAAAAAAghAAAAAAAAAAAAAEAAAAJAAAAAAIAEA=</HashCode>
+      <FileName>include\Rendering\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="10.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAACCAAAEwACAABCAAAAAAAAAAAAAAAAAAAAIQ=</HashCode>
+      <FileName>include\SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowManager" Collapsed="true">
+    <Position X="8.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SIAAAAAAQBAAAACA4AQCAAAAAAAAoAgAAAAACAAAAAA=</HashCode>
+      <FileName>include\WindowManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XMLParser" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgACAAAEBAAAAAQAAACAAAAIABAAAAEAAABAAAAAA=</HashCode>
+      <FileName>include\XML\XMLParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ComponentVectorWrapper" Collapsed="true">
+    <Position X="12.25" Y="7.5" Width="1.5" />
+    <NestedTypes>
+      <Typedef Name="ComponentVectorWrapper::t_Components_Vector_" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>include\ComponentVectorWrapper.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="ComponentVectorWrapper::t_Component_Iter" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>include\ComponentVectorWrapper.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="ComponentVectorWrapper::t_Component_Const_Iter" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>include\ComponentVectorWrapper.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\ComponentVectorWrapper.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ComponentMissingException" Collapsed="true">
+    <Position X="10.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Exceptions\ComponentMissingException.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="CanvasElementVectorWrapper" Collapsed="true">
+    <Position X="7" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\CanvasElementVectorWrapper.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GUIMesh" Collapsed="true">
+    <Position X="8.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\GUIMesh.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GUIMeshVectorWrapper" Collapsed="true">
+    <Position X="10.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\GUIMeshVectorWrapper.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="GameObjectVectorWrapper" Collapsed="true">
+    <Position X="7" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\GameObjectVectorWrapper.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RawMesh" Collapsed="true">
+    <Position X="12.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>include\Rendering\RawMesh.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Character" Collapsed="true">
+    <Position X="8.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQAhgAAAAAAA=</HashCode>
+      <FileName>include\Rendering\ResourceManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="GuiStates" Collapsed="true">
+    <Position X="8.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAABAAAAA=</HashCode>
+      <FileName>include\Rendering\GUI\GuiStates.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ComponentType" Collapsed="true">
+    <Position X="7" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBA=</HashCode>
+      <FileName>include\Components\RenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

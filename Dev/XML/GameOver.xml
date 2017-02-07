@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+
+
+  <GameObject>
+    <canvas type ="menu">
+
+      
+
+      <rect shader="gui_plain">
+        <colour>
+          <x>0.0</x>
+          <y>0.8</y>
+          <z>1.0</z>
+          <w>1.0</w>
+        </colour>
+        <position>
+          <x>0.0</x>
+          <y>0.0</y>
+        </position>
+        <scale>
+          <x>1280.0</x>
+          <y>720.0</y>
+        </scale>
+      </rect>
+
+
+      <text shader="text">
+        <content>Game Over!</content>
+        <colour>
+          <x>1.0</x>
+          <y>1.0</y>
+          <z>1.0</z>
+          <w>1.0</w>
+        </colour>
+        <position>
+          <x>460.0</x>
+          <y>50.0</y>
+        </position>
+        <scale>
+          <x>1.0</x>
+          <y>1.0</y>
+        </scale>
+      </text>
+      
+
+      <button shader="gui_plain">
+        <content>Replay</content>
+        <onclick>loadMenu</onclick>
+        <colour>
+          <x>0.3</x>
+          <y>0.3</y>
+          <z>0.3</z>
+          <w>0.3</w>
+        </colour>
+
+        <colourHover>
+          <x>0.5</x>
+          <y>0.5</y>
+          <z>0.5</z>
+          <w>0.3</w>
+        </colourHover>
+        <position>
+          <x>520.0</x>
+          <y>200.0</y>
+        </position>
+        <scale>
+          <x>240.0</x>
+          <y>100.0</y>
+        </scale>
+      </button>
+
+      <button shader="gui_plain">
+        <content>Exit!</content>
+        <onclick>exit</onclick>
+        <colour>
+          <x>0.3</x>
+          <y>0.3</y>
+          <z>0.3</z>
+          <w>0.3</w>
+        </colour>
+
+        <colourHover>
+          <x>0.5</x>
+          <y>0.5</y>
+          <z>0.5</z>
+          <w>0.3</w>
+        </colourHover>
+        <position>
+          <x>540.0</x>
+          <y>400.0</y>
+        </position>
+        <scale>
+          <x>200.0</x>
+          <y>100.0</y>
+        </scale>
+      </button>
+
+
+    </canvas>
+  </GameObject>
+
+</scene>
