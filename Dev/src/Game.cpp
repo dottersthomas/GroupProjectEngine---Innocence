@@ -1,8 +1,7 @@
-#include "Game.h"
+#include "General\Game.h"
 #include "Rendering\ResourceManager.h"
-#include "Components\TransformComponent.h"
-#include "Components\RenderComponent.h"
-#include "Components\PlayerKeyboardControlComponent.h"
+#include "Physics\Components\TransformComponent.h"
+#include "Rendering\Components\RenderComponent.h"
 #include "Rendering\MeshFactory.h"
 
 #define TIXML_USE_STL
@@ -51,19 +50,6 @@ void Game::beginLoop() {
 
 	while (!glfwWindowShouldClose(m_WindowManager_.getWindow()))
 	{
-		ResourceManager::getInstance()->assignTextIdentifier("score", "Current Score : " + to_string(m_Score_));
-
-		if (m_Score_ >= 3) {
-			if (m_WindowManager_.getSceneManager()->LoadScene("XML/GameOver.xml")) {
-				m_WindowManager_.toggleCursorDraw(true);
-				m_WindowManager_.getSceneManager()->switchScene();
-				m_WindowManager_.getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
-
-				m_Score_ = 0;
-
-			}
-		}
-
 
 
 		// Measure speed
@@ -71,11 +57,10 @@ void Game::beginLoop() {
 		nbFrames++;
 
 		if (currentTime - lastTime >= 1.0) { 
-			ResourceManager::getInstance()->assignTextIdentifier("fps",  to_string(nbFrames) + "fps");
 
+			std::cout << nbFrames << std::endl;
 			nbFrames = 0;
 			lastTime += 1.0;
-
 
 		}
 
@@ -165,16 +150,6 @@ Game::Game() {
 	::glfwSetMouseButtonCallback(m_WindowManager_.getWindow(), Game::mouse_button_callback);
 
 
-
-	ResourceManager::getInstance()->LoadShader("Shaders/default_shader.vert", "Shaders/default_shader.frag", "default");
-	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "texture");
-	ResourceManager::getInstance()->LoadShader("Shaders/gui_plain_shader.vert", "Shaders/gui_plain_shader.frag", "gui_plain");
-	ResourceManager::getInstance()->LoadShader("Shaders/text_shader.vert", "Shaders/text_shader.frag", "text");
-
-	ResourceManager::getInstance()->loadTexture("Textures/font.bmp", GL_FALSE, "FONT");
-
-	ResourceManager::getInstance()->setupTextCharacters("FONT");
-
 	Proxy::getInstance()->AssignWindowManager(&m_WindowManager_);
 	Proxy::getInstance()->AssignGame(this);
 
@@ -182,18 +157,6 @@ Game::Game() {
 
 	m_Renderer_ = new Renderer(m_WindowManager_.getWindow());
 	m_GUIRenderer_ = new GUIRenderer(m_WindowManager_.getWindow());
-
-	if (m_WindowManager_.getSceneManager()->LoadScene("XML/MainMenu.xml")) {
-		m_WindowManager_.toggleCursorDraw(true);
-		m_WindowManager_.getSceneManager()->switchScene();
-		m_WindowManager_.getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
-		
-	}
-	else {
-		glfwTerminate();
-		std::exit(EXIT_FAILURE);
-	}
-
 
 }
 

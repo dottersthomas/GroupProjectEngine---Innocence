@@ -9,8 +9,8 @@
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\type_ptr.hpp"
 
-#include "Scene.h"
-#include "GameObjectVectorWrapper.h"
+#include "General\Scene.h"
+#include "General\GameObjectVectorWrapper.h"
 
 
 //The main game renderer for rendering all the RenderComponents within the scene.
@@ -19,7 +19,7 @@ class Renderer {
 private:
 
 	//The current scene.
-	Scene * m_CurrentScene_;
+	Scene * m_CurrentScene_ = nullptr;
 
 	//Vector of all game objects with a render component.
 	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjects_;

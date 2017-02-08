@@ -1,5 +1,5 @@
 #include "Rendering\MeshFactory.h"
-#include "OBJLoader.h"
+#include "General\OBJLoader.h"
 #include "Rendering\ResourceManager.h"
 
 MeshFactory::MeshFactory() {

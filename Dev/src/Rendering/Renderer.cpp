@@ -1,5 +1,5 @@
 #include "Rendering\Renderer.h"
-#include "Components\RenderComponent.h"
+#include "Rendering\Components\RenderComponent.h"
 
 Renderer::Renderer(GLFWwindow * pWindow) {
 	m_Window_ = pWindow;
@@ -9,6 +9,7 @@ Renderer::Renderer(GLFWwindow * pWindow) {
 
 	glEnable(GL_BLEND); 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	m_CurrentScene_ = nullptr;
 	
 }
 
@@ -25,7 +26,7 @@ void Renderer::Render() {
 	glm::mat4 View;
 
 	if (m_CurrentScene_ != nullptr) {
-		if (m_CurrentScene_->getBoundCamera() != NULL) {
+		if (m_CurrentScene_->getBoundCamera() != nullptr) {
 			View = m_CurrentScene_->getBoundCamera()->Bind();
 		}
 	}
