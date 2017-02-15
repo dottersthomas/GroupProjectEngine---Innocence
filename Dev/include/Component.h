@@ -15,8 +15,9 @@ class Component {
 	protected:
 		GameObject * m_GameObjectParent_;
 	public:
+	virtual ~Component() = default;
 
-		std::string M_ComponentName;
+	std::string M_ComponentName;
 
 
 		//Called every tick.

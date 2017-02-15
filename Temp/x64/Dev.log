@@ -1,31 +1,85 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(367,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  CanvasButton.cpp
-  Renderer.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\renderer.cpp(8): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
-  ThirdPersonCameraComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(37): warning C4305: '=': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(38): warning C4305: '=': truncation from 'double' to 'float'
-  FirstPersonCameraComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(32): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(34): warning C4305: '=': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(35): warning C4305: '=': truncation from 'double' to 'float'
-  TransformComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
+﻿  XMLParser.cpp
+  WindowManager.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\windowmanager.cpp(45): warning C4150: deletion of pointer to incomplete type 'GLFWwindow'; no destructor called
+  h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\glfw\glfw-3.2.1.bin.win64\include\glfw\glfw3.h(789): note: see declaration of 'GLFWwindow'
   SceneManager.cpp
+  Shader.cpp
+  Scene.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\scene.cpp(23): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Texture.cpp
+  TransformComponent.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
+  ResourceManager.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\resourcemanager.cpp(60): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\resourcemanager.cpp(246): warning C4838: conversion from 'int' to 'GLfloat' requires a narrowing conversion
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\resourcemanager.cpp(246): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\resourcemanager.cpp(246): warning C4838: conversion from 'GLuint' to 'GLint' requires a narrowing conversion
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\resourcemanager.cpp(156): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+  Renderer.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\renderer.cpp(8): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  RawMesh.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\rawmesh.cpp(8): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\rawmesh.cpp(37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\rawmesh.cpp(87): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  MeshFactory.cpp
+  Mesh.cpp
+  Text2D.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\ui\text2d.cpp(52): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\ui\text2d.cpp(86): warning C4244: '+=': conversion from 'GLfloat' to 'int', possible loss of data
+  GUIRenderer.cpp
+  GUIMesh.cpp
+  CanvasRect.cpp
+  CanvasButton.cpp
   Proxy.cpp
-  Game.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\game.cpp(90): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  OBJLoader.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\objloader.cpp(17): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\objloader.cpp(28): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\objloader.cpp(36): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\objloader.cpp(41): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\objloader.cpp(47): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\objloader.cpp(53): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
+  RenderComponent.cpp
   Generating Code...
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<FirstPersonCameraComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<ThirdPersonCameraComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<RenderComponent>': not all control paths return a value
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<CanvasComponent>': not all control paths return a value
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<RenderComponent>': not all control paths return a value
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<FirstPersonCameraComponent>': not all control paths return a value
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<ThirdPersonCameraComponent>': not all control paths return a value
+  Compiling...
+  Game.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\game.cpp(86): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  InputHandler.cpp
+  GameObject.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\general\gameobject.cpp(13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  ThirdPersonCameraComponent.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\thirdpersoncameracomponent.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\thirdpersoncameracomponent.cpp(35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\thirdpersoncameracomponent.cpp(37): warning C4305: '=': truncation from 'double' to 'float'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\thirdpersoncameracomponent.cpp(38): warning C4305: '=': truncation from 'double' to 'float'
+  InputComponent.cpp
+  CanvasComponent.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\ui\components\canvascomponent.cpp(12): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  FirstPersonCameraComponent.cpp
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\firstpersoncameracomponent.cpp(31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\firstpersoncameracomponent.cpp(32): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\firstpersoncameracomponent.cpp(34): warning C4305: '=': truncation from 'double' to 'float'
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\rendering\components\firstpersoncameracomponent.cpp(35): warning C4305: '=': truncation from 'double' to 'float'
+  Sound.cpp
+  AudioManager.cpp
+  Sound.h
+  Generating Code...
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
+h:\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
+H:\Documents\Games Programming\Year 3\Advanced Games Programming\Coursework\GroupProjectEngine\\Temp\x64\Sound.obj : warning LNK4042: object specified more than once; extras ignored
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\Dev\x64\Bin\Debug\Dev.exe
-  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\Dev\x64\Bin\Debug\Dev.pdb (Partial PDB)
+  Dev.vcxproj -> H:\Documents\Games Programming\Year 3\Advanced Games Programming\Coursework\GroupProjectEngine\x64\Bin\Debug\Dev.exe
+  Dev.vcxproj -> H:\Documents\Games Programming\Year 3\Advanced Games Programming\Coursework\GroupProjectEngine\x64\Bin\Debug\Dev.pdb (Partial PDB)
