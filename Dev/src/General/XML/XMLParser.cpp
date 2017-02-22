@@ -32,7 +32,7 @@ std::vector<XMLElement*> XMLParser::GetElements(std::string filter) {
 Scene * XMLParser::LoadScene() {
 	Scene * _Scene = new Scene("");
 	
-	/*XMLElement * sceneElem = m_Doc_.FirstChildElement("scene");
+	XMLElement * sceneElem = m_Doc_.FirstChildElement("scene");
 
 	XMLElement * gObject = sceneElem->FirstChildElement("GameObject");
 	while (gObject != nullptr) {
@@ -58,7 +58,7 @@ Scene * XMLParser::LoadScene() {
 		std::cout << gObject->Name() << std::endl;
 		gObject = gObject->NextSiblingElement("GameObject");
 	}
-*/
+
 	return _Scene;
 
 }
@@ -116,198 +116,166 @@ glm::vec4 XMLParser::GenerateVec4(XMLElement * element) {
 
 
 void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pIndex) {
-	//const char* componentName = pElement->Name();
+	const char* componentName = pElement->Name();
 
-	////Setup the Transform Component
-	//if (checkStrings(componentName, "position")) {
-	//	TransformComponent * tc = pScene->getGameObjects()->at(pIndex).GetComponentByType<TransformComponent>();
-	//
-	//	tc->setPosition(GenerateVec3(pElement));
-	//}
+	//Setup the Transform Component
+	if (checkStrings(componentName, "position")) {
+		TransformComponent * tc = pScene->getGameObjects()->at(pIndex).GetComponentByType<TransformComponent>();
+	
+		tc->setPosition(GenerateVec3(pElement));
+	}
 
-	////Setup the Animation Component
-	//if (checkStrings(componentName, "animate")) {
+	//Setup the Render Component
+	if (checkStrings(componentName, "mesh")) {
 
-	//	
-	//}
-
-	////Setup the Render Component
-	//if (checkStrings(componentName, "mesh")) {
-
-	//	MeshFactory factory;
+		MeshFactory factory;
 
 
-	//	const char* shader = pElement->Attribute("shader");
-	//	const char* name = pElement->Attribute("name");
+		const char* shader = pElement->Attribute("shader");
+		const char* name = pElement->Attribute("name");
 
-	//	int type = 0;
+		int type = 0;
 
-	//	pElement->QueryIntAttribute("type", &type);
+		pElement->QueryIntAttribute("type", &type);
 
-	//
-	//	RenderComponent * render;
-	//	if (pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>()) {
-	//		render = pScene->getGameObjects()->at(pIndex).GetComponentByType<RenderComponent>();
-	//	}
-	//	else {
-	//		render = new RenderComponent(&pScene->getGameObjects()->at(pIndex), std::string(shader), type);
-	//	}
-	//	XMLElement * child = pElement->FirstChildElement();
+	
+		RenderComponent * render;
+		if (pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>()) {
+			render = pScene->getGameObjects()->at(pIndex).GetComponentByType<RenderComponent>();
+		}
+		else {
+			render = new RenderComponent(&pScene->getGameObjects()->at(pIndex), std::string(shader), type);
+		}
+		XMLElement * child = pElement->FirstChildElement();
 
-	//	glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f,0.0f,0.0f);
-	//	glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
-	//	const char* path;
-	//	const char* texturePath;
-	//	while (child != nullptr)
-	//	{
-	//		const char* childName = child->Name();
-	//		if (checkStrings(childName, "path")) {
-	//			path = child->GetText();
-	//		}
-	//		if (checkStrings(childName, "pivot")) {
-	//			pivot = GenerateVec3(child);
-	//		}
-	//		if (checkStrings(childName, "position")) {
-	//			position = GenerateVec3(child);
-	//		}
-	//		if (checkStrings(childName, "rotation")) {
-	//			rotation = GenerateVec3(child);
-	//		}
-	//		if (checkStrings(childName, "scale")) {
-	//			scale = GenerateVec3(child);
-	//		}
-	//		if (checkStrings(childName, "texture")) {
-	//			texturePath = child->GetText();
-	//			ResourceManager::getInstance()->loadTexture(texturePath, GL_FALSE, texturePath);
+		glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f,0.0f,0.0f);
+		glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
+		const char* path;
+		const char* texturePath;
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
+			if (checkStrings(childName, "path")) {
+				path = child->GetText();
+			}
+			if (checkStrings(childName, "pivot")) {
+				pivot = GenerateVec3(child);
+			}
+			if (checkStrings(childName, "position")) {
+				position = GenerateVec3(child);
+			}
+			if (checkStrings(childName, "rotation")) {
+				rotation = GenerateVec3(child);
+			}
+			if (checkStrings(childName, "scale")) {
+				scale = GenerateVec3(child);
+			}
+			if (checkStrings(childName, "texture")) {
+				texturePath = child->GetText();
+				ResourceManager::getInstance()->loadTexture(texturePath, GL_FALSE, texturePath);
 
-	//		}
-	//		if (checkStrings(childName, "colour")) {
-	//			colour = GenerateVec4(child);
-	//		}
-	//		child = child->NextSiblingElement();
-	//	}
+			}
+			if (checkStrings(childName, "colour")) {
+				colour = GenerateVec4(child);
+			}
+			child = child->NextSiblingElement();
+		}
 
-	//	Mesh * mesh;
+		Mesh * mesh;
 
-	//	if(path != nullptr){
-	//		if(type == 1)
-	//			mesh = factory.create(path, position, rotation, scale , texturePath);
-	//		else
-	//			mesh = factory.create(path, position, rotation, scale, colour);
+		if(path != nullptr){
+			if(type == 1)
+				mesh = factory.create(path, position, rotation, scale , texturePath);
+			else
+				mesh = factory.create(path, position, rotation, scale, colour);
 
-	//	}
+		}
 
-	//	mesh->setPivotPoint(pivot);
-	//	mesh->setColour(colour);
+		mesh->setPivotPoint(pivot);
+		mesh->setColour(colour);
 
-	//
-	//	render->AttachMesh(mesh);
-	//	
-	//	if (!pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>()) {
-	//		pScene->getGameObjects()->at(pIndex).registerComponent(render);
-	//		render->setParent(&pScene->getGameObjects()->at(pIndex));
-	//	}
-	//}
+	
+		render->AttachMesh(mesh);
+		
+		if (!pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>()) {
+			pScene->getGameObjects()->at(pIndex).registerComponent(render);
+			render->setParent(&pScene->getGameObjects()->at(pIndex));
+		}
+	}
+	if (checkStrings(componentName, "firstpersoncamera")) {
 
-	////Setup the Interaction Component.
-	//if (checkStrings(componentName, "interaction")) {
-	//	float distance = 0.0;
-	//	pElement->QueryFloatText(&distance);
+		
+		XMLElement * child = pElement->FirstChildElement();
+		glm::vec3 position;
+		bool main = false;
 
-	//	TransformComponent * tc;
+		const char* name = pElement->Attribute("name");
 
-	//	//Search for a unique component.
+		pElement->QueryBoolAttribute("main", &main);
 
-	//	for (int i = 0; i < pScene->getGameObjects()->size(); i++) {
-	//		if (pScene->getGameObjects()->at(i).CheckComponentTypeExists<PlayerKeyboardControlComponent>())
-	//			tc = pScene->getGameObjects()->at(i).GetComponentByType<TransformComponent>();
-	//	}
+		
 
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
 
-	//	
-	//}
-	//if (checkStrings(componentName, "firstpersoncamera")) {
+			if (checkStrings(childName, "position")) {
+				position = GenerateVec3(child);
+			}
+			child = child->NextSiblingElement();
+		}
+		FirstPersonCameraComponent * camera = new FirstPersonCameraComponent(&pScene->getGameObjects()->at(pIndex), std::string(name), position);
+		pScene->getGameObjects()->at(pIndex).registerComponent(camera);
+		camera->setParent(&pScene->getGameObjects()->at(pIndex));
 
-	//	
-	//	XMLElement * child = pElement->FirstChildElement();
-	//	glm::vec3 position;
-	//	bool main = false;
+		if(main)
+			pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<FirstPersonCameraComponent>());
 
-	//	const char* name = pElement->Attribute("name");
+	}
 
-	//	pElement->QueryBoolAttribute("main", &main);
+	if (checkStrings(componentName, "thirdpersoncamera")) {
+		XMLElement * child = pElement->FirstChildElement();
+		glm::vec3 position;
+		bool main = true;
 
-	//	
+		const char* name = pElement->Attribute("name");
 
-	//	while (child != nullptr)
-	//	{
-	//		const char* childName = child->Name();
+		pElement->QueryBoolAttribute("main", &main);
 
-	//		if (checkStrings(childName, "position")) {
-	//			position = GenerateVec3(child);
-	//		}
-	//		child = child->NextSiblingElement();
-	//	}
-	//	FirstPersonCameraComponent * camera = new FirstPersonCameraComponent(&pScene->getGameObjects()->at(pIndex), std::string(name), position);
-	//	pScene->getGameObjects()->at(pIndex).registerComponent(camera);
-	//	camera->setParent(&pScene->getGameObjects()->at(pIndex));
-
-	//	if(main)
-	//		pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<FirstPersonCameraComponent>());
-
-	//}
-
-	//if (checkStrings(componentName, "thirdpersoncamera")) {
-	//	XMLElement * child = pElement->FirstChildElement();
-	//	glm::vec3 position;
-	//	bool main = true;
-
-	//	const char* name = pElement->Attribute("name");
-
-	//	pElement->QueryBoolAttribute("main", &main);
-
-	//	float distance = 10.0f;
+		float distance = 10.0f;
 
 
-	//	//TODO add distance modifiers to constructor.
-	//	ThirdPersonCameraComponent * camera;
+		//TODO add distance modifiers to constructor.
+		ThirdPersonCameraComponent * camera;
 
-	//	while (child != nullptr)
-	//	{
-	//		const char* childName = child->Name();
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
 
-	//		if (checkStrings(childName, "position")) {
-	//			position = GenerateVec3(child);
-	//		}
+			if (checkStrings(childName, "position")) {
+				position = GenerateVec3(child);
+			}
 
-	//		if (checkStrings(childName, "distance")) {
-	//			child->QueryFloatText(&distance);
-	//		}
-	//		child = child->NextSiblingElement();
-	//	}
+			if (checkStrings(childName, "distance")) {
+				child->QueryFloatText(&distance);
+			}
+			child = child->NextSiblingElement();
+		}
 
 
-	//	camera = new ThirdPersonCameraComponent(&pScene->getGameObjects()->at(pIndex), std::string(name), distance);
+		camera = new ThirdPersonCameraComponent(&pScene->getGameObjects()->at(pIndex), std::string(name), distance);
 
-	//	pScene->getGameObjects()->at(pIndex).registerComponent(camera);
-	//	camera->setParent(&pScene->getGameObjects()->at(pIndex));
+		pScene->getGameObjects()->at(pIndex).registerComponent(camera);
+		camera->setParent(&pScene->getGameObjects()->at(pIndex));
 
-	//	if (main)
-	//		pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<ThirdPersonCameraComponent>());
-	//}
+		if (main)
+			pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<ThirdPersonCameraComponent>());
+	}
 
-	////Setup the movement Component
-	//if (checkStrings(componentName, "playermovementcontroller")) {
-	//	PlayerKeyboardControlComponent * movement = new PlayerKeyboardControlComponent(&pScene->getGameObjects()->at(pIndex));
-	//	pScene->getGameObjects()->at(pIndex).registerComponent(movement);
-	//	movement->setParent(&pScene->getGameObjects()->at(pIndex));
-
-	//}
-
-	////Create the GUI here.
-	//if (checkStrings(componentName, "canvas")) {
-	//	ProcessCanvas(pScene, pElement, pIndex);
-	//}
+	//Create the GUI here.
+	if (checkStrings(componentName, "canvas")) {
+		ProcessCanvas(pScene, pElement, pIndex);
+	}
 
 
 }

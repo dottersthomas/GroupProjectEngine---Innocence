@@ -41,6 +41,7 @@ public:
 
 	//Load a scene with this path.
 	bool LoadScene(std::string pPath);
+	bool LoadScene(Scene * pScene);
 
 	//A scene is ready to be switched out/
 	void switchScene();

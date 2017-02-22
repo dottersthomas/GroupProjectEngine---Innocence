@@ -74,6 +74,36 @@ void Shader::SetMatrix4(const GLchar *name, const glm::mat4 &matrix)
 	glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void Shader::UpdateShaderUniforms() {
+	for (int i = 0; i < Uniforms.size(); i++) {
+		switch (Uniforms[i].M_Type)
+		{
+		case INT:
+			SetInteger(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Int);
+			break;
+		case FLOAT:
+			SetFloat(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Float);
+			break;
+		case VEC2:
+			SetVector2f(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Vec2);
+			break;
+		case VEC3:
+			SetVector3f(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Vec3);
+			break;
+		case VEC4:
+			SetVector4f(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Vec4);
+			break;
+		case MAT3:
+			SetMatrix3(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Mat3);
+			break;
+		case MAT4:
+			break;
+			SetMatrix4(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Mat4);
+		default:
+			break;
+		}
+	}
+}
 
 void Shader::checkCompileErrors(GLuint GameObject, std::string type)
 {
