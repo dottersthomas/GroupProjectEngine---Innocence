@@ -1,31 +1,81 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(367,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  CanvasButton.cpp
-  Renderer.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\renderer.cpp(8): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
-  ThirdPersonCameraComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(37): warning C4305: '=': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(38): warning C4305: '=': truncation from 'double' to 'float'
-  FirstPersonCameraComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(32): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(34): warning C4305: '=': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(35): warning C4305: '=': truncation from 'double' to 'float'
-  TransformComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
-  SceneManager.cpp
-  Proxy.cpp
-  Game.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\game.cpp(90): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<FirstPersonCameraComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<ThirdPersonCameraComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<RenderComponent>': not all control paths return a value
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\Dev\x64\Bin\Debug\Dev.exe
-  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\Dev\x64\Bin\Debug\Dev.pdb (Partial PDB)
+﻿  Game.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\glfw\glfw-3.2.1.bin.win64\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\game.cpp(90): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\proxy_functions_detail.hpp(100): warning C4503: '__LINE__Var': decorated name length exceeded, name was truncated
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\proxy_functions_detail.hpp(114): note: see reference to function template instantiation 'Ret chaiscript::dispatch::detail::call_func<Callable,std::shared_ptr<Class>,const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>&,0>(const chaiscript::dispatch::detail::Function_Signature<Func> &,std::integer_sequence<unsigned __int64,0>,const Callable &,const std::vector<_Ty,std::allocator<_Ty>> &,const chaiscript::Type_Conversions_State &)' being compiled
+          with
+          [
+              Ret=std::shared_ptr<chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>>,
+              Callable=chaiscript::dispatch::detail::Constructor<chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>> &>,
+              Class=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value,
+              Func=std::shared_ptr<chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>> (const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>> &)
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\proxy_functions.hpp(650): note: see reference to function template instantiation 'chaiscript::Boxed_Value chaiscript::dispatch::detail::call_func<Callable,std::shared_ptr<Class>,const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>&>(const chaiscript::dispatch::detail::Function_Signature<Func> &,const Callable &,const std::vector<_Ty,std::allocator<_Ty>> &,const chaiscript::Type_Conversions_State &)' being compiled
+          with
+          [
+              Callable=chaiscript::dispatch::detail::Constructor<chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>> &>,
+              Class=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value,
+              Func=std::shared_ptr<chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>> (const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>> &)
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\proxy_functions.hpp(649): note: while compiling class template member function 'chaiscript::Boxed_Value chaiscript::dispatch::Proxy_Function_Callable_Impl<std::shared_ptr<Class> (const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &),chaiscript::dispatch::detail::Constructor<Class,const std::map<_Kty,_Ty,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &>>::do_call(const std::vector<_Ty,std::allocator<_Ty>> &,const chaiscript::Type_Conversions_State &) const'
+          with
+          [
+              Class=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\chaiscript_defines.hpp(92): note: see reference to class template instantiation 'chaiscript::dispatch::Proxy_Function_Callable_Impl<std::shared_ptr<Class> (const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &),chaiscript::dispatch::detail::Constructor<Class,const std::map<_Kty,_Ty,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &>>' being compiled
+          with
+          [
+              Class=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\proxy_constructors.hpp(29): note: see reference to function template instantiation 'std::shared_ptr<chaiscript::dispatch::Proxy_Function_Base> chaiscript::make_shared<chaiscript::dispatch::Proxy_Function_Base,chaiscript::dispatch::Proxy_Function_Callable_Impl<std::shared_ptr<Class> (const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &),chaiscript::dispatch::detail::Constructor<Class,const std::map<_Kty,_Ty,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &>>,chaiscript::dispatch::detail::Constructor<Class,const std::map<_Kty,_Ty,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &>&>(chaiscript::dispatch::detail::Constructor<Class,const std::map<_Kty,_Ty,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &> &)' being compiled
+          with
+          [
+              Class=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\proxy_constructors.hpp(50): note: see reference to function template instantiation 'chaiscript::Proxy_Function chaiscript::dispatch::detail::build_constructor_<Bidir_Type,const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>&>(Class (__cdecl *)(const std::map<_Kty,_Ty,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &))' being compiled
+          with
+          [
+              Bidir_Type=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value,
+              Class=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\bootstrap_stl.hpp(131): note: see reference to function template instantiation 'chaiscript::Proxy_Function chaiscript::constructor<Bidir_Type(const std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>> &)>(void)' being compiled
+          with
+          [
+              Bidir_Type=chaiscript::bootstrap::standard_library::Bidir_Range<const std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,chaiscript::Boxed_Value>>>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\bootstrap_stl.hpp(179): note: see reference to function template instantiation 'void chaiscript::bootstrap::standard_library::detail::input_range_type_impl<chaiscript::bootstrap::standard_library::Bidir_Range<const ContainerType,std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>>>(const std::string &,chaiscript::Module &)' being compiled
+          with
+          [
+              ContainerType=std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>,
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\dispatchkit\bootstrap_stl.hpp(538): note: see reference to function template instantiation 'void chaiscript::bootstrap::standard_library::input_range_type<MapType>(const std::string &,chaiscript::Module &)' being compiled
+          with
+          [
+              MapType=std::map<std::string,chaiscript::Boxed_Value,std::less<std::string>,std::allocator<std::pair<const std::string,chaiscript::Boxed_Value>>>
+          ]
+  c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\lib\chaiscript-6.0.0\include\chaiscript\chaiscript_stdlib.hpp(52): note: see reference to function template instantiation 'void chaiscript::bootstrap::standard_library::map_type<std::map<std::string,chaiscript::Boxed_Value,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>>(const std::string &,chaiscript::Module &)' being compiled
+          with
+          [
+              _Kty=std::string,
+              _Ty=chaiscript::Boxed_Value
+          ]
+c:\users\harish bhagat\documents\games programming\year 3\advanced games programming\coursework\groupprojectengine\dev\src\game.cpp(187): warning C4503: 'chaiscript::dispatch::detail::call_func': decorated name length exceeded, name was truncated
+  Dev.vcxproj -> C:\Users\Harish Bhagat\Documents\Games Programming\Year 3\Advanced Games Programming\Coursework\GroupProjectEngine\x64\Bin\Debug\Dev.exe
+  Dev.vcxproj -> C:\Users\Harish Bhagat\Documents\Games Programming\Year 3\Advanced Games Programming\Coursework\GroupProjectEngine\x64\Bin\Debug\Dev.pdb (Partial PDB)

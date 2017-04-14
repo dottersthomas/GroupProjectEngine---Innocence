@@ -15,6 +15,8 @@
 #include "General\Proxy.h"
 
 #include <cstdlib>
+#include "Audio/AudioManager.h"
+#include "Audio/Sound.h"
 
 class Proxy;
 
@@ -38,7 +40,6 @@ private:
 	//Both renderer's are stored here, as only 1 of each needs to exist  at any one point.
 	Renderer * m_Renderer_;
 	GUIRenderer * m_GUIRenderer_;
-
 
 	void CreateScene();
 

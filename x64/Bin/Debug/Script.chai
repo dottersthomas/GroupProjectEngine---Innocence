@@ -1,0 +1,28 @@
+class Script
+{
+
+def Script()
+{ 
+}
+
+def Start()
+{
+print("Start");
+}
+
+def Update(dt)
+{ 
+print("Update");
+}
+
+def LateUpdate(dt)
+{
+print("LateUpdate");
+}
+
+def Destroy()
+{
+print("Destroy");
+}
+
+}

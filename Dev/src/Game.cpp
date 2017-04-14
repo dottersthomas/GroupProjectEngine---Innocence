@@ -3,6 +3,7 @@
 #include "Physics\Components\TransformComponent.h"
 #include "Rendering\Components\RenderComponent.h"
 #include "Rendering\MeshFactory.h"
+#include "Scripting/Script.h"
 
 #define TIXML_USE_STL
 
@@ -42,16 +43,12 @@ void Game::beginLoop() {
 	const float TICKS_PER_SECOND = 1.0f / 60.0f;
 	double tick = 0.0;
 
-	
-
 	//Start the Scenes Components.
 	if(m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr)
 		m_WindowManager_.getSceneManager()->getCurrentScene()->Start();
 
 	while (!glfwWindowShouldClose(m_WindowManager_.getWindow()))
 	{
-
-
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
@@ -83,7 +80,6 @@ void Game::beginLoop() {
 			frame = 0.25f;
 		}
 
-
 		tick += frame;
 
 		while (tick >= TICKS_PER_SECOND) {
@@ -103,7 +99,6 @@ void Game::beginLoop() {
 		}
 		m_Renderer_->Render();
 		m_GUIRenderer_->Render();
-
 
 		glfwSwapBuffers(m_WindowManager_.getWindow());
 		glfwPollEvents();
@@ -157,7 +152,6 @@ Game::Game() {
 
 	m_Renderer_ = new Renderer(m_WindowManager_.getWindow());
 	m_GUIRenderer_ = new GUIRenderer(m_WindowManager_.getWindow());
-
 }
 
 //Create the Scene here. Should be data driven.
