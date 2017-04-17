@@ -98,6 +98,30 @@ Texture ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, st
 	return Textures[name];
 }
 
+Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha, std::string name) {
+	Texture texture;
+	if (alpha)
+	{
+		texture.Internal_Format = GL_RGBA;
+		texture.Image_Format = GL_RGBA;
+	}
+	int width, height;
+	unsigned char * data;
+	if (alpha)
+		data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGBA);
+	else
+		data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGB);
+
+
+	texture = Texture(width, height, data);
+
+	SOIL_free_image_data(data);
+
+
+	Textures[name] = texture;
+	return Textures[name];
+}
+
 Texture ResourceManager::GetTexture(std::string name)
 {
 	return Textures[name];

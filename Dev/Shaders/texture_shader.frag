@@ -1,37 +1,109 @@
-#version 330
+#version 330 core
 
-uniform sampler2D tex;
+struct Material {
+    sampler2D diffuse;
+	sampler2D specular;  
+    float shininess;
+}; 
+
+struct DirLight {
+    vec3 direction;
+	
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+struct PointLight {
+    vec3 position;
+    
+    float constant;
+    float linear;
+    float quadratic;
+	
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+
+in vec3 FragPos;  
+in vec3 Normal;  
 in vec2 texCoord;
 
-in vec3 vertPos;
-in vec3 N;
-in vec3 lightPos;
-
-uniform vec3 La;			// Ambient light intensity
-uniform vec3 Ld;            // Diffuse light intensity
-
 out vec4 FragColour;
+  
+uniform vec3 viewPos;
+uniform Material material;
+uniform DirLight directionalLight;
+uniform PointLight pointLights[4];
 
-void main() {
-
-
- float attenuation = 1.0;
+uniform highp mat4 mView;
 
 
 
-   //Calculate the light vector
-   vec3 L = normalize(lightPos - vertPos);  
+// Function prototypes
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+
+void main()
+{
+   // Properties
+    vec3 norm = normalize(Normal);
+    vec3 viewDir = normalize(viewPos - FragPos);
     
+    // == ======================================
+    // Our lighting is set up in 3 phases: directional, point lights and an optional flashlight
+    // For each phase, a calculate function is defined that calculates the corresponding color
+    // per lamp. In the main() function we take all the calculated colors and sum them up for
+    // this fragment's final color.
+    // == ======================================	
+    // Phase 1: Directional lighting
+    vec3 result = CalcDirLight(directionalLight, norm, viewDir);
+    // Phase 2: Point lights
+    for(int i = 0; i < 4; i++)
+        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);    
+    // Phase 3: Spot light
+    // result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
+    
+    FragColour = vec4(result, 1.0);
 
-   vec4 ambient =  vec4(La, 1.0);
+} 
 
+// Calculates the color when using a directional light.
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
+{
+    vec3 lightDir = normalize(-light.direction);
+    // Diffuse shading
+    float diff = max(dot(normal, lightDir), 0.0);
+    // Specular shading
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    // Combine results
+    vec3 ambient = light.ambient * vec3(texture(material.diffuse, texCoord));
+    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, texCoord));
+    vec3 specular = light.specular * spec * vec3(texture(material.specular, texCoord));
+    return (ambient + diffuse + specular);
+}
 
-
-   //calculate Diffuse Light Intensity making sure it is not negative 
-   //and is clamped 0 to 1  
-   vec4 Id = attenuation  * texture(tex,texCoord) * vec4(Ld,1.0) * max(dot(N,L), 0.0);
-   Id = clamp(Id, 0.0, 1.0);     
-
-
-   FragColour = vec4(ambient + Id) * texture(tex,texCoord);
+// Calculates the color when using a point light.
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+{
+    vec3 lightDir = normalize(light.position - fragPos);
+    // Diffuse shading
+    float diff = max(dot(normal, lightDir), 0.0);
+    // Specular shading
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    // Attenuation
+    float distance = length(light.position - fragPos);
+    float attenuation = 1.0f ;    
+    // Combine results
+    vec3 ambient = light.ambient * vec3(texture(material.diffuse, texCoord));
+    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, texCoord));
+    vec3 specular = light.specular * spec * vec3(texture(material.specular, texCoord));
+   // ambient *= attenuation;
+  //  diffuse *= attenuation;
+   // specular *= attenuation;
+    return (ambient + diffuse + specular);
 }
