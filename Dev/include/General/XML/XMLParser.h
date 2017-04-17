@@ -9,6 +9,11 @@
 #include "General\Scene.h"
 
 #include "UI\Text2D.h"
+#include "Physics\Components\TransformComponent.h"
+#include "Rendering\Components\FirstPersonCameraComponent.h"
+#include "Rendering\Components\ThirdPersonCameraComponent.h"
+#include "Rendering\Components\RenderComponent.h"
+
 
 using namespace tinyxml2;
 

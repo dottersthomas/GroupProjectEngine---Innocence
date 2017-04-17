@@ -1,31 +1,4 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(367,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
 C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  CanvasButton.cpp
-  Renderer.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\renderer.cpp(8): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
-  ThirdPersonCameraComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(37): warning C4305: '=': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\thirdpersoncameracomponent.cpp(38): warning C4305: '=': truncation from 'double' to 'float'
-  FirstPersonCameraComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(32): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(34): warning C4305: '=': truncation from 'double' to 'float'
-h:\year3\imat3606\assignment 2\dev\dev\src\rendering\components\firstpersoncameracomponent.cpp(35): warning C4305: '=': truncation from 'double' to 'float'
-  TransformComponent.cpp
-h:\year3\imat3606\assignment 2\dev\dev\include\rendering\components\thirdpersoncameracomponent.h(31): warning C4305: 'initializing': truncation from 'double' to 'float'
-  SceneManager.cpp
-  Proxy.cpp
-  Game.cpp
-h:\year3\imat3606\assignment 2\dev\dev\src\game.cpp(90): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<FirstPersonCameraComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<ThirdPersonCameraComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<TransformComponent>': not all control paths return a value
-h:\year3\imat3606\assignment 2\dev\dev\include\general\gameobject.h(64): warning C4715: 'GameObject::GetComponentByType<RenderComponent>': not all control paths return a value
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\Dev\x64\Bin\Debug\Dev.exe
-  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\Dev\x64\Bin\Debug\Dev.pdb (Partial PDB)
+  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\GroupProjectEngine\x64\Bin\Debug\Dev.exe
+  Dev.vcxproj -> H:\Year3\IMAT3606\Assignment 2\GroupProjectEngine\x64\Bin\Debug\Dev.pdb (Partial PDB)
