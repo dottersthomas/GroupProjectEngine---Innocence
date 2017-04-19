@@ -8,6 +8,7 @@
 #include "Component.h"
 #include "Rendering\Mesh.h"
 #include "Physics\Components\TransformComponent.h"
+#include "Rendering\Material.h"
 
 //Type of Component to be rendered, if it is a solid colour, or if it uses a Texture for rendering.
 enum ComponentType {
@@ -35,6 +36,8 @@ private:
 
 	//If the render component should actually render.
 	bool shouldDraw = true;
+
+	Material m_Material_;
 
 public:
 
