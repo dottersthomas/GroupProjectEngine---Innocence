@@ -2,6 +2,25 @@
 
 RawMesh::RawMesh(std::vector<GLfloat> vertices) {
 
+	int x = vertices[0];
+	int y = vertices[1];
+	int z = vertices[2];
+
+	for (int i = 3; i < vertices.size(); i + 2) {
+		if (x > vertices[i] + 0) x = vertices[i] + 0;
+		if (y > vertices[i] + 1) z = vertices[i] + 1;
+		if (z > vertices[i] + 2) x = vertices[i] + 2;
+
+	}
+	m_MinPos_ = glm::vec3(x, y, z);
+
+	for (int i = 3; i < vertices.size(); i + 2) {
+		if (x < vertices[i] + 0) x = vertices[i] + 0;
+		if (y < vertices[i] + 1) z = vertices[i] + 1;
+		if (z < vertices[i] + 2) x = vertices[i] + 2;
+	}
+	m_MaxPos_ = glm::vec3(x, y, z);
+
 
 	//Create the VAO Data and populate it with the raw data passed.
 	VAO = new GLuint;
@@ -31,6 +50,25 @@ RawMesh::RawMesh(std::vector<GLfloat> vertices) {
 
 
 RawMesh::RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV) {
+
+	int x = vertices[0];
+	int y = vertices[1];
+	int z = vertices[2];
+
+	for (int i = 3; i < vertices.size(); i + 2) {
+		if (x > vertices[i] + 0) x = vertices[i] + 0;
+		if (y > vertices[i] + 1) z = vertices[i] + 1;
+		if (z > vertices[i] + 2) x = vertices[i] + 2;
+
+	}
+	m_MinPos_ = glm::vec3(x, y, z);
+
+	for (int i = 3; i < vertices.size(); i + 2) {
+		if (x < vertices[i] + 0) x = vertices[i] + 0;
+		if (y < vertices[i] + 1) z = vertices[i] + 1;
+		if (z < vertices[i] + 2) x = vertices[i] + 2;
+	}
+	m_MaxPos_ = glm::vec3(x, y, z);
 
 	//Create the VAO Data and populate it with the raw data passed.
 
@@ -81,6 +119,25 @@ RawMesh::RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV) {
 }
 
 RawMesh::RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV, std::vector<GLfloat> Normals) {
+
+	int x = vertices[0];
+	int y = vertices[1];
+	int z = vertices[2];
+
+	for (int i = 3; i < vertices.size(); i + 2) {
+		if (x > vertices[i] + 0) x = vertices[i] + 0;
+		if (y > vertices[i] + 1) z = vertices[i] + 1;
+		if (z > vertices[i] + 2) x = vertices[i] + 2;
+
+	}
+	m_MinPos_ = glm::vec3(x, y, z);
+
+	for (int i = 3; i < vertices.size(); i + 2) {
+		if (x < vertices[i] + 0) x = vertices[i] + 0;
+		if (y < vertices[i] + 1) z = vertices[i] + 1;
+		if (z < vertices[i] + 2) x = vertices[i] + 2;
+	}
+	m_MaxPos_ = glm::vec3(x, y, z);
 
 	//Create the VAO Data and populate it with the raw data passed.
 

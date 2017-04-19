@@ -2,7 +2,7 @@
 #define _RENDERING_MATERIAL_H_
 
 #include "Texture.h"
-
+#include "ShaderUniform.h"
 
 
 #include <iostream>
@@ -15,10 +15,10 @@ public:
 
 private:
 	//Textures.
-	std::string m_diffuseTexture_;
-	std::string m_specularTexture_;
+	ShaderUniform m_diffuseTexture_;
+	ShaderUniform m_specularTexture_;
 
-	std::string m_normalMap_;
+	ShaderUniform m_normalMap_;
 
 
 	float m_Shininess_;
