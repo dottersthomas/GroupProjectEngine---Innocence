@@ -194,6 +194,8 @@
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Rendering\Light.h" />
+    <ClInclude Include="include\Rendering\Material.h" />
     <ClInclude Include="include\Rendering\ShaderUniform.h" />
     <ClInclude Include="include\UI\Components\CanvasComponent.h" />
     <ClInclude Include="include\General\IO\Components\InputComponent.h" />

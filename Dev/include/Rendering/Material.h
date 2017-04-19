@@ -18,7 +18,7 @@ private:
 	std::string m_diffuseTexture_;
 	std::string m_specularTexture_;
 
-
+	std::string m_normalMap_;
 
 
 	float m_Shininess_;
