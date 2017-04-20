@@ -3,6 +3,7 @@
 #include "Physics\Components\TransformComponent.h"
 #include "Rendering\Components\RenderComponent.h"
 #include "Rendering\MeshFactory.h"
+#include "Scripting/LuaEngine.h"
 #include "Scripting/Script.h"
 
 #define TIXML_USE_STL
@@ -42,6 +43,19 @@ void Game::beginLoop() {
 
 	const float TICKS_PER_SECOND = 1.0f / 60.0f;
 	double tick = 0.0;
+
+	// Create engine
+	auto engine = std::make_shared<LuaEngine>();
+	Sound::registerLua(engine.get()->L());
+
+	// Execute scripts
+	GameObject go = GameObject("TestObject");
+	auto s1 = std::make_shared<Script>(engine, "test1.lua");
+	auto s2 = std::make_shared<Script>(engine, "test2.lua");
+	go.registerComponent(s1.get());
+	go.registerComponent(s2.get());
+	// TODO Line below causes error, scripts can be executed manually
+	// m_WindowManager_.getSceneManager()->getCurrentScene()->AddGameObject(go);
 
 	//Start the Scenes Components.
 	if(m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr)
@@ -84,7 +98,6 @@ void Game::beginLoop() {
 
 		while (tick >= TICKS_PER_SECOND) {
 			float fDelay = (tick / TICKS_PER_SECOND);
-
 
 			if (m_WindowManager_.getSceneManager()->NewSceneReady()) {
 				m_WindowManager_.getSceneManager()->switchScene();

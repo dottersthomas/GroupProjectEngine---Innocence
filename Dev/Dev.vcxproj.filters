@@ -105,6 +105,9 @@
     <ClCompile Include="include\Audio\Sound.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scripting\LuaEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Scripting\Script.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -219,6 +222,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Audio\AudioManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scripting\LuaEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Scripting\Script.h">

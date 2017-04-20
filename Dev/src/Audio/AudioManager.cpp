@@ -10,24 +10,24 @@ std::shared_ptr<AudioManager> instance;
 AudioManager::AudioManager()
 {
 	// Initialisation
-	_result = FMOD::System_Create(&_system);
+	m_Result = FMOD::System_Create(&m_System);
 
-	// TODO Replace with logging _system output
-	if (_result != FMOD_OK)
-		std::cout << "FMOD Error: " << FMOD_ErrorString(_result) << "\n";
+	// TODO Replace with logging m_System output
+	if (m_Result != FMOD_OK)
+		std::cout << "FMOD Error: " << FMOD_ErrorString(m_Result) << "\n";
 
 	/*
-	 *  First paramater is the number of virtual channels to use, FMOD will use any free _channel.
+	 *  First paramater is the number of virtual channels to use, FMOD will use any free m_Channel.
 	 *  If there are more sounds than channels, running sounds may get cut-off.
 	 *  */
-	_result = _system->init(512, FMOD_INIT_NORMAL, nullptr);
+	m_Result = m_System->init(512, FMOD_INIT_NORMAL, nullptr);
 }
 
 // --- Destructor
 
 AudioManager::~AudioManager()
 {
-	_system->release();
+	m_System->release();
 }
 
 // --- Methods
@@ -35,14 +35,14 @@ AudioManager::~AudioManager()
 void AudioManager::update() const
 {
 	// Needs to be updated every frame to prevent unwanted behaviour
-	_system->update();
+	m_System->update();
 }
 
 // --- Functions
 
 FMOD::System* AudioManager::getSystem() const
 {
-	return _system;
+	return m_System;
 }
 
 std::shared_ptr<AudioManager> AudioManager::getInstance()

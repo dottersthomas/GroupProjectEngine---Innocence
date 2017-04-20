@@ -13,8 +13,8 @@ private:
 	// Constructor
 	AudioManager();
 	// Variables
-	FMOD::System *_system;		// Base interface, all FMOD objects created from this
-	FMOD_RESULT _result;		// Error checking
+	FMOD::System *m_System;		// Base interface, all FMOD objects created from this
+	FMOD_RESULT m_Result;		// Error checking
 public:
 	// Destructor
 	~AudioManager();

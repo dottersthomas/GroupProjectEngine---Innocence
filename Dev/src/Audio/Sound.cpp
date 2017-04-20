@@ -4,122 +4,105 @@
 
 // --- Constructor(s)
 
-Sound::Sound()
+Sound::Sound(std::string path, const bool make3D)
 {
-	setup();
-}
+	// Initilaise variables
+	m_AudioManager = AudioManager::getInstance();
+	m_System = m_AudioManager->getSystem();
 
-Sound::Sound(std::string& path, const bool make2D)
-{
-	setup();
-	setPath(path, make2D);
-	_3D = !make2D;
+	// Set path
+	m_path = path;
+
+	// Assign to m_Channel
+	FMOD_MODE fMode = make3D ? FMOD_3D : FMOD_2D;
+	m_System->createSound(path.c_str(), fMode, nullptr, &m_AudioStream);
+	m_Looping = false;
+	m_Paused = false;
+	m_3D = make3D;
 }
 
 // --- Destructor
 
 Sound::~Sound()
 {
-	_audioStream->release();
+	m_AudioStream->release();
 }
 
 // --- Functions
 
 std::string Sound::getPath() const
 {
-	return _path;
+	return m_path;
 }
 
 bool Sound::is3D() const
 {
-	return _3D;
+	return m_3D;
 }
 
 bool Sound::isLooped() const
 {
-	return _looping;
+	return m_Looping;
 }
 
 bool Sound::isPaused() const
 {
-	return _paused;
+	return m_Paused;
 }
 
 float Sound::getVolume() const
 {
 	float volume;
-	_channel->getVolume(&volume);
+	m_Channel->getVolume(&volume);
 	return volume;
 }
 
 // --- Methods
 
-void Sound::loop(bool loop)
+void Sound::loop(const bool loop)
 {
+	// Required: Has to be set after the sound has begun playing
+
 	// Set boolean
-	_looping = loop;
-	// Set _channel options
-	_channel->setMode(_looping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
+	m_Looping = loop;
+	// Set m_Channel options
+	m_Channel->setMode(m_Looping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
 }
 
-void Sound::setPath(std::string& path, const bool make2D)
+void Sound::setVolume(const float volume)
 {
-	// TODO Fix naming conventions
-	_path = path;
-
-	// Assign to _channel
-	FMOD_MODE fMode = make2D ? FMOD_2D : FMOD_3D;
-	_system->createSound(path.c_str(), fMode, nullptr, &_audioStream);
-	_looping = false;
-	_paused = false;
-}
-
-void Sound::setup()
-{
-	_audioManager = AudioManager::getInstance();
-	_system = _audioManager->getSystem();
-}
-
-void Sound::setVolume(float volume) const
-{
-	_channel->setVolume(volume);
+	m_Channel->setVolume(volume);
 }
 
 void Sound::pause()
 {
-	_paused = true;
-	_channel->setPaused(_paused);
+	m_Paused = true;
+	m_Channel->setPaused(m_Paused);
 }
 
 void Sound::play()
 {
 	// Check if the sound has been loaded
 	bool soundPlaying;
-	_channel->isPlaying(&soundPlaying);
+	m_Channel->isPlaying(&soundPlaying);
 
 	if (!soundPlaying)
-		playOnce();
+		m_System->playSound(m_AudioStream, nullptr, false, &m_Channel);
 
-	_paused = false;
-	_channel->setPaused(_paused);
-}
-
-void Sound::playOnce()
-{
-	// Play audio once
-	_system->playSound(_audioStream, nullptr, false, &_channel);
+	m_Paused = false;
+	m_Channel->setPaused(m_Paused);
 }
 
 void Sound::playLoop()
 {
 	// Play audio on a loop
-	playOnce();
+	play();
 	loop(true);
 }
 
 void Sound::Start()
 {
-	
+
 }
 
 void Sound::Update(double dt)
@@ -130,10 +113,10 @@ void Sound::Update(double dt)
 
 void Sound::LateUpdate(double dt)
 {
-	
+
 }
 
 void Sound::Destroy()
 {
-	
+
 }
