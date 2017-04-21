@@ -46,6 +46,8 @@ private:
 
 	std::string m_currentShaderIdentifier_;	//Current shader in use.
 
+	int pointLights = 4;
+
 public:
 
 	//Get the instance of the resource manager.

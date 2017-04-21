@@ -1,4 +1,4 @@
-#version 330 core
+//#version 330 core
 
 struct Material {
     sampler2D diffuse;
@@ -36,7 +36,7 @@ out vec4 FragColour;
 uniform vec3 viewPos;
 uniform Material material;
 uniform DirLight directionalLight;
-uniform PointLight pointLights[4];
+uniform PointLight pointLights[POINT_LIGHTS];
 
 uniform highp mat4 mView;
 
@@ -61,7 +61,7 @@ void main()
     // Phase 1: Directional lighting
     vec3 result = CalcDirLight(directionalLight, norm, viewDir);
     // Phase 2: Point lights
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);    
     // Phase 3: Spot light
     // result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    

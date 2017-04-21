@@ -23,13 +23,16 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 		vertexShaderFile.close();
 		fragmentShaderFile.close();
 		// Convert stream into string
+		std::string details = "#version 330 core \n #define POINT_LIGHTS " + std::to_string(pointLights) + " \n";
 		vertexCode = vShaderStream.str();
-		fragmentCode = fShaderStream.str();
+		fragmentCode = details + fShaderStream.str();
 	}
 	catch (std::exception e)
 	{
 		std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
 	}
+
+	
 	const GLchar *vShaderCode = vertexCode.c_str();
 	const GLchar *fShaderCode = fragmentCode.c_str();
 	// 2. Now create shader GameObject from source code

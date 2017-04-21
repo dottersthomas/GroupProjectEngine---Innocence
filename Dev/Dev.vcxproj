@@ -192,6 +192,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
+    <ClCompile Include="src\Rendering\DirectionalLight.cpp" />
     <ClCompile Include="src\Rendering\ShaderUniform.cpp" />
     <ClCompile Include="src\UI\Components\CanvasComponent.cpp" />
     <ClCompile Include="src\General\IO\InputComponent.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Rendering\DirectionalLight.h" />
     <ClInclude Include="include\Rendering\Light.h" />
     <ClInclude Include="include\Rendering\Material.h" />
     <ClInclude Include="include\Rendering\ShaderUniform.h" />
