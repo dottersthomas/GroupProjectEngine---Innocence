@@ -134,7 +134,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
 
-      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\Lua\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\Lua\include;$(SolutionDir)\Lib\LuaBridge\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions> NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
