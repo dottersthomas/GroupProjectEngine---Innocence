@@ -19,16 +19,16 @@ public:
 
 
 	//Called every tick.
-	virtual void Update(double dt);
+	virtual void Update(double dt) = 0;
 
 	//Called at the end of every tick, mainly for maintenance uses.
-	virtual void LateUpdate(double dt);
+	virtual void LateUpdate(double dt) = 0;
 
 	//Called when the component is destroyed.
-	virtual void Destroy();
+	virtual void Destroy() = 0;
 
 	//Called when the component starts.
-	virtual void Start();
+	virtual void Start() = 0;
 
 	void setShader(std::string pShader) {
 		m_Shader_ = pShader;

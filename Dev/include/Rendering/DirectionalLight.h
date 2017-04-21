@@ -15,16 +15,16 @@ public:
 	DirectionalLight(std::string pShader, glm::vec3 dir, glm::vec3 amb, glm::vec3 diff, glm::vec3 spec);
 
 	//Called every tick.
-	void Update(double dt);
+	virtual void Update(double dt);
 
 	//Called at the end of every tick, mainly for maintenance uses.
-	void LateUpdate(double dt);
+	virtual void LateUpdate(double dt);
 
 	//Called when the component is destroyed.
-	void Destroy();
+	virtual void Destroy();
 
 	//Called when the component starts.
-	void Start();
+	virtual void Start();
 };
 
 
