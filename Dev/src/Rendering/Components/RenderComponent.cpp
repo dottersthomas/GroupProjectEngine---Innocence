@@ -39,16 +39,11 @@ void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView) {
 				ResourceManager::getInstance()->useShader(m_Shader_); //Error check for false shader switch.
 			}
 
+			ResourceManager::getInstance()->GetShader(m_Shader_).UpdateShaderUniforms();
+
 			//Set the Projection and View Matrices. 
 			ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("mProjection", pProj);
 			ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("mView", pView);
-
-			glm::vec3 worldLight = glm::vec3(10.0f, 10.0f, 10.0f);
-
-			ResourceManager::getInstance()->GetShader(m_Shader_).SetVector3f("Ld", 1.0f, 1.0f, 1.0f);
-			ResourceManager::getInstance()->GetShader(m_Shader_).SetVector3f("La", 0.2f, 0.2f, 0.2f);
-			
-			ResourceManager::getInstance()->GetShader(m_Shader_).SetVector3f("LightPosition", worldLight);
 
 			//Set a default colour.
 			for (t_Mesh_vector_Iterator_ iter = m_Meshes_.begin(); iter != m_Meshes_.end(); ++iter) {
@@ -58,7 +53,7 @@ void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView) {
 				s = transformComponent->getScale() + (*iter)->getScale();
 
 				if (m_RenderType_ == ComponentType::COLOUR) {
-					ResourceManager::getInstance()->GetShader(m_Shader_).SetVector4f("colour", (*iter)->getColour());
+				//	ResourceManager::getInstance()->GetShader(m_Shader_).SetVector4f("colour", (*iter)->getColour());
 				}
 				else {
 					//Assign and handle the texture for the mesh.
@@ -96,9 +91,9 @@ void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView) {
 
 
 				glm::mat4 mv = pView * model;
-				ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix3("NormalMatrix",
+				/*ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix3("NormalMatrix",
 					glm::mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2])));
-
+*/
 				//Draw the Mesh.
 
 				ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("mModel", model);

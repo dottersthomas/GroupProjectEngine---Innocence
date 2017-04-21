@@ -27,6 +27,12 @@ bool SceneManager::LoadScene(std::string pPath) {
 	return true;
 }
 
+bool SceneManager::LoadScene(Scene * pScene) {
+	m_Unswitched_ = pScene;
+	m_switch_ = true;
+	return true;
+}
+
 
 void SceneManager::switchScene() {
 	if (m_Unswitched_ != nullptr)

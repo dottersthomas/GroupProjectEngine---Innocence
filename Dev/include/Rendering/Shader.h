@@ -3,10 +3,13 @@
 
 
 #include <string>
+#include <vector>
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "ShaderUniform.h"
 
 
 // General purpsoe shader GameObject. Compiles from file, generates
@@ -18,7 +21,7 @@ public:
 	// State
 	GLuint ID;
 	// Constructor
-	Shader() { }
+	Shader() { Uniforms.reserve(100); }
 	// Sets the current shader as active
 	Shader  &Use();
 	// Compiles the shader from given source code
@@ -45,10 +48,16 @@ public:
 
 	void SetMatrix4(const GLchar *name, const glm::mat4 &matrix);
 
+	void SetUniform(ShaderUniform& pUniform) {
+		Uniforms.push_back(pUniform);
+	}
+	
+	void UpdateShaderUniforms();
 
 private:
 	// Checks if compilation or linking failed and if so, print the error logs
 	void checkCompileErrors(GLuint GameObject, std::string type);
+	std::vector<ShaderUniform> Uniforms;
 };
 
 
