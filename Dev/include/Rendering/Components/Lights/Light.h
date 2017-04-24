@@ -4,8 +4,8 @@
 #include <glm\glm.hpp>
 
 #include "Component.h"
-#include "ShaderUniform.h"
-#include "ResourceManager.h"
+#include "Rendering\ShaderUniform.h"
+#include "Rendering\ResourceManager.h"
 
 class Light : public Component {
 
@@ -30,6 +30,8 @@ public:
 	//Called when the component starts.
 	virtual void Start() = 0;
 
+	virtual void UpdateLightUniforms(int pos) = 0;
+
 	void setShader(std::string pShader) {
 		m_Shader_ = pShader;
 	}
@@ -50,9 +52,36 @@ public:
 		m_UniformName_ = pName;
 	}
 
-	void updateColourUniforms() {
+	std::string getUniformName() {
+		return m_UniformName_;
+	}
+
+	void updateColourUniforms(int pos) {
+
 		ShaderUniform ambient;
-		ambient.M_Address = "";
+		ambient.M_Address = m_UniformName_ + "[" + std::to_string(pos) + "].ambient";
+		ambient.M_Type = VEC3;
+		ambient.M_Vec3 = m_Ambient_;
+
+		ShaderUniform diffuse;
+		diffuse.M_Address = m_UniformName_ + "[" + std::to_string(pos) + "].diffuse";
+		diffuse.M_Type = VEC3;
+		diffuse.M_Vec3 = m_Diffuse_;
+
+		ShaderUniform specular;
+		specular.M_Address = m_UniformName_ + "[" + std::to_string(pos) + "].specular";
+		specular.M_Type = VEC3;
+		specular.M_Vec3 = m_Specular_;
+
+
+		ResourceManager::getInstance()->GetShader(m_Shader_).SetUniform(ambient);
+		ResourceManager::getInstance()->GetShader(m_Shader_).SetUniform(diffuse);
+		ResourceManager::getInstance()->GetShader(m_Shader_).SetUniform(specular);
+
+	}
+
+	std::string getShader() {
+		return m_Shader_;
 	}
 
 private:

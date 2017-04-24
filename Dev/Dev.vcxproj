@@ -195,12 +195,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Audio\Sound.h" />
+    <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Rendering\LightManager.cpp" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
     <ClCompile Include="src\Scripting\Script.cpp" />
-    <ClCompile Include="src\Rendering\DirectionalLight.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Rendering\ShaderUniform.cpp" />
     <ClCompile Include="src\UI\Components\CanvasComponent.cpp" />
     <ClCompile Include="src\General\IO\InputComponent.cpp" />
@@ -235,9 +237,11 @@
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
     <ClInclude Include="include\Scripting\ExtLib.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
+    <ClInclude Include="include\Rendering\LightManager.h" />
     <ClInclude Include="include\Scripting\Script.h" />
-    <ClInclude Include="include\Rendering\DirectionalLight.h" />
-    <ClInclude Include="include\Rendering\Light.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\DirectionalLight.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\Light.h" />
     <ClInclude Include="include\Rendering\Material.h" />
     <ClInclude Include="include\Rendering\ShaderUniform.h" />
     <ClInclude Include="include\UI\Components\CanvasComponent.h" />

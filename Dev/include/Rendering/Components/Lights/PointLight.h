@@ -1,0 +1,54 @@
+#ifndef _RENDERING_POINT_LIGHT_H_
+#define _RENDERING_POINT_LIGHT_H_
+
+#include "Rendering\Components\Lights\Light.h"
+
+class PointLight : public Light {
+
+public:
+	PointLight(){ }
+
+	PointLight(std::string pShader);
+	PointLight(std::string pShader, glm::vec3 pos, glm::vec3 amb, glm::vec3 diff, glm::vec3 spec, float constant, float linear, float quadratic);
+	//Called every tick.
+	virtual void Update(double dt);
+
+	//Called at the end of every tick, mainly for maintenance uses.
+	virtual void LateUpdate(double dt);
+
+	//Called when the component is destroyed.
+	virtual void Destroy();
+
+	//Called when the component starts.
+	virtual void Start();
+
+	virtual void UpdateLightUniforms(int pos);
+
+	void setPosition(glm::vec3 pPos) {
+		m_Position_ = pPos;
+	}
+
+	void setConstant(float pConstant) {
+		m_Constant_ = pConstant;
+	}
+
+	void setLinear(float pLinear) {
+		m_Linear_ = pLinear;
+	}
+
+	void setQuadratic(float pQuadratic) {
+		m_Quadratic_ = pQuadratic;
+	}
+
+private:
+	float m_Constant_;
+	float m_Linear_;
+	float m_Quadratic_;
+
+	glm::vec3 m_Position_;
+
+};
+
+
+
+#endif // !_RENDERING_POINT_LIGHT_H_

@@ -7,7 +7,6 @@
     <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
     <ClCompile Include="src\Scripting\Script.cpp" />
-    <ClCompile Include="src\Rendering\DirectionalLight.cpp" />
     <ClCompile Include="src\Rendering\ShaderUniform.cpp" />
     <ClCompile Include="src\UI\Components\CanvasComponent.cpp" />
     <ClCompile Include="src\General\IO\InputComponent.cpp" />
@@ -35,6 +34,9 @@
     <ClCompile Include="src\General\SceneManager.cpp" />
     <ClCompile Include="src\General\WindowManager.cpp" />
     <ClCompile Include="src\General\XML\XMLParser.cpp" />
+    <ClCompile Include="src\Rendering\LightManager.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioManager.h" />
@@ -42,8 +44,6 @@
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
     <ClInclude Include="include\Scripting\Script.h" />
-    <ClInclude Include="include\Rendering\DirectionalLight.h" />
-    <ClInclude Include="include\Rendering\Light.h" />
     <ClInclude Include="include\Rendering\Material.h" />
     <ClInclude Include="include\Rendering\ShaderUniform.h" />
     <ClInclude Include="include\UI\Components\CanvasComponent.h" />
@@ -81,6 +81,10 @@
     <ClInclude Include="include\General\XML\XMLParser.h" />
     <ClInclude Include="include\Scripting\LuaEngine.h" />
     <ClInclude Include="include\Scripting\ExtLib.h" />
+    <ClInclude Include="include\Rendering\LightManager.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\DirectionalLight.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\Light.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

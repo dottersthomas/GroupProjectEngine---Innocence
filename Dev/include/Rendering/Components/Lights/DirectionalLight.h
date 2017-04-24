@@ -1,7 +1,7 @@
 #ifndef _RENDERING_DIRECTIONAL_LIGHT_H_
 #define _RENDERING_DIRECTIONAL_LIGHT_H_
 
-#include "Light.h"
+#include "Rendering\Components\Lights\Light.h"
 
 class DirectionalLight : public Light{
 
@@ -25,6 +25,12 @@ public:
 
 	//Called when the component starts.
 	virtual void Start();
+
+	virtual void UpdateLightUniforms(int pos);
+
+	void setDirection(glm::vec3 pDir) {
+		m_Direction_ = pDir;
+	}
 };
 
 
