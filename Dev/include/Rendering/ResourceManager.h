@@ -36,6 +36,7 @@ private:
 	ResourceManager() { }
 	// Loads and generates a shader from file
 	Shader loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile);
+	std::string createShaderDefines();
 
 	std::map<std::string, Shader>    Shaders;	//All Shaders
 	std::map<std::string, Texture>   Textures;	//All Textures
@@ -46,7 +47,9 @@ private:
 
 	std::string m_currentShaderIdentifier_;	//Current shader in use.
 
-	int pointLights = 4;
+	int m_PointLights_ = 4;
+	int m_DirectionalLights_ = 1;
+	int m_SpotLights_ = 4;
 
 public:
 

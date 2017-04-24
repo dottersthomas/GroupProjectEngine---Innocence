@@ -60,7 +60,7 @@ void Renderer::Render() {
 				}
 			}
 			//No need to check again.
-			//m_CurrentScene_->M_bIsDirty = false;
+			m_CurrentScene_->M_bIsDirty = false;
 		}
 
 		//Render the scenes GameObjects. Possibly provide filtering to improve performance speed. Or maybe even have it within its own thread.
@@ -78,5 +78,10 @@ void Renderer::Render() {
 
 void Renderer::setScene(Scene * pScene) {
 	m_CurrentScene_ = pScene;
+}
+
+void Renderer::update(float dt) {
+
+	m_LightManager_.update(dt);
 }
 

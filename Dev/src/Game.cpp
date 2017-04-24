@@ -34,6 +34,8 @@ void Game::update(double dTime) {
 	if (m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr) {
 		m_WindowManager_.getSceneManager()->getCurrentScene()->Update(dTime);
 	}
+
+	m_Renderer_->update(dTime);
 }
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -58,6 +60,8 @@ void Game::beginLoop() {
 	auto s2 = std::make_shared<Script>(engine, "test2.lua");
 	go.registerComponent(s1.get());
 	go.registerComponent(s2.get());
+
+
 	// TODO Line below causes error, scripts can be executed manually
 	// m_WindowManager_.getSceneManager()->getCurrentScene()->AddGameObject(go);
 
@@ -223,26 +227,30 @@ Scene * Game::LoadTestScene() {
 	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // Decrease the influence
 	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // Low influence
 
-	ShaderUniform lightDirection;
-	lightDirection.M_Address = "directionalLight.direction";
-	lightDirection.M_Type = VEC3;
-	lightDirection.M_Vec3 = glm::vec3(-0.2f, -1.0f, -0.3f);
+	//ShaderUniform lightDirection;
+	//lightDirection.M_Address = "directionalLight[0].direction";
+	//lightDirection.M_Type = VEC3;
+	//lightDirection.M_Vec3 = glm::vec3(-0.2f, -1.0f, -0.3f);
 
-	ShaderUniform lightAmb;
-	lightAmb.M_Address = "directionalLight.ambient";
-	lightAmb.M_Type = VEC3;
-	lightAmb.M_Vec3 = glm::vec3(0.05f, 0.05f, 0.1f);
+	//ShaderUniform lightAmb;
+	//lightAmb.M_Address = "directionalLight[0].ambient";
+	//lightAmb.M_Type = VEC3;
+	//lightAmb.M_Vec3 = glm::vec3(0.05f, 0.05f, 0.1f);
 
-	ShaderUniform lightDiff;
-	lightDiff.M_Address = "directionalLight.diffuse";
-	lightDiff.M_Type = VEC3;
-	lightDiff.M_Vec3 = glm::vec3(0.2f, 0.2f, 0.7f);
+	//ShaderUniform lightDiff;
+	//lightDiff.M_Address = "directionalLight[0].diffuse";
+	//lightDiff.M_Type = VEC3;
+	//lightDiff.M_Vec3 = glm::vec3(0.2f, 0.2f, 0.7f);
 
-	ShaderUniform lightSpec;
-	lightSpec.M_Address = "directionalLight.specular";
-	lightSpec.M_Type = VEC3;
-	lightSpec.M_Vec3 = glm::vec3(0.7f, 0.7f, 0.7f);
+	//ShaderUniform lightSpec;
+	//lightSpec.M_Address = "directionalLight[0].specular";
+	//lightSpec.M_Type = VEC3;
+	//lightSpec.M_Vec3 = glm::vec3(0.7f, 0.7f, 0.7f);
 
+
+	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.1f), glm::vec3(0.2f, 0.2f, 0.7f), glm::vec3(0.7f, 0.7f, 0.7f));
+
+	m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
 
 	ShaderUniform materialDiff;
 	materialDiff.M_Address = "material.diffuse";
@@ -265,11 +273,10 @@ Scene * Game::LoadTestScene() {
 	camera.M_Vec3 = glm::vec3(2.0f, 1.0f, 5.0f);
 
 	ResourceManager::getInstance()->useShader("default");
-	ResourceManager::getInstance()->GetShader("default").SetUniform(lightDirection);
+	/*ResourceManager::getInstance()->GetShader("default").SetUniform(lightDirection);
 	ResourceManager::getInstance()->GetShader("default").SetUniform(lightAmb);
 	ResourceManager::getInstance()->GetShader("default").SetUniform(lightDiff);
-	ResourceManager::getInstance()->GetShader("default").SetUniform(lightSpec);
-	//ResourceManager::getInstance()->GetShader("default").SetUniform(materialAmb);
+	ResourceManager::getInstance()->GetShader("default").SetUniform(lightSpec);*/
 	ResourceManager::getInstance()->GetShader("default").SetUniform(materialDiff);
 	ResourceManager::getInstance()->GetShader("default").SetUniform(materialSpec);
 	ResourceManager::getInstance()->GetShader("default").SetUniform(materialShine);
@@ -324,25 +331,28 @@ Scene * Game::LoadTestScene() {
 		constant.M_Type = FLOAT;
 		constant.M_Float = 1.0f;
 
-
 		ShaderUniform linear;
 		linear.M_Address = "pointLights[" + to_string(i) + "].linear";
 		linear.M_Type = FLOAT;
 		linear.M_Float = 0.09f;
-
 
 		ShaderUniform quadratic;
 		quadratic.M_Address = "pointLights[" + to_string(i) + "].quadratic";
 		quadratic.M_Type = FLOAT;
 		quadratic.M_Float = 0.032f;
 
-		ResourceManager::getInstance()->GetShader("default").SetUniform(position);
+		/*ResourceManager::getInstance()->GetShader("default").SetUniform(position);
 		ResourceManager::getInstance()->GetShader("default").SetUniform(ambient);
 		ResourceManager::getInstance()->GetShader("default").SetUniform(diffuse);
 		ResourceManager::getInstance()->GetShader("default").SetUniform(specular);
 		ResourceManager::getInstance()->GetShader("default").SetUniform(constant);
 		ResourceManager::getInstance()->GetShader("default").SetUniform(linear);
-		ResourceManager::getInstance()->GetShader("default").SetUniform(quadratic);
+		ResourceManager::getInstance()->GetShader("default").SetUniform(quadratic);*/
+
+		PointLight * pointLight = new PointLight("default", glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z), glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), 1.0f, 0.09f, 0.032f);
+
+
+		m_Renderer_->getLightManager().RegisterPointLight(pointLight);
 
 	}
 

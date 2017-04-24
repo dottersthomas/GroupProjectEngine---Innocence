@@ -23,9 +23,9 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 		vertexShaderFile.close();
 		fragmentShaderFile.close();
 		// Convert stream into string
-		std::string details = "#version 330 core \n #define POINT_LIGHTS " + std::to_string(pointLights) + " \n";
+		std::string details = "#version 330 core \n #define POINT_LIGHTS " + std::to_string(m_PointLights_) + " \n";
 		vertexCode = vShaderStream.str();
-		fragmentCode = details + fShaderStream.str();
+		fragmentCode = createShaderDefines() + fShaderStream.str();
 	}
 	catch (std::exception e)
 	{
@@ -39,6 +39,18 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 	Shader shader;
 	shader.Compile(vShaderCode, fShaderCode);
 	return shader;
+}
+
+
+std::string ResourceManager::createShaderDefines() {
+
+	std::string version = "#version 330 core \n";
+	std::string pointLights = " #define POINT_LIGHTS " + std::to_string(m_PointLights_) + " \n"; 
+	std::string dirLights = " #define DIRECTIONAL_LIGHTS " + std::to_string(m_DirectionalLights_) + " \n";
+	std::string spotLights = " #define SPOT_LIGHTS " + std::to_string(m_SpotLights_) + " \n";
+
+	return version + pointLights + dirLights + spotLights;
+
 }
 
 

@@ -11,9 +11,12 @@ class Material {
 
 public:
 	Material() {}
-
+	
 
 private:
+
+	bool m_hasTextures_;
+
 	//Textures.
 	ShaderUniform m_diffuseTexture_;
 	ShaderUniform m_specularTexture_;
