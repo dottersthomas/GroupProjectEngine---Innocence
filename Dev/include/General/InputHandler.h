@@ -1,6 +1,9 @@
 #ifndef _INPUT_HANDLER_H_
 #define _INPUT_HANDLER_H_
 
+#include <lua.hpp>
+#include <LuaBridge.h>
+
 
 //Static class to be used anywhere, allows for the checking of key states with the only limit being the hardware.
 class InputHandler {
@@ -20,6 +23,17 @@ public:
 	static bool isKeyDown(int key);
 	static bool isButtonDown(int button);
 	
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<InputHandler>("Input")
+				.addStaticFunction("isKeyDown", &InputHandler::isKeyDown)
+				.addStaticFunction("isButtonDown", &InputHandler::isButtonDown)
+			.endClass();
+	}
+
 private:
 	InputHandler() {}
 

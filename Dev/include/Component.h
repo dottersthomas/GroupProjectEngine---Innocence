@@ -3,8 +3,9 @@
 
 #include <memory>
 #include <iostream>
-#include "General\GameObject.h"
 #include <functional>
+#include <lua.hpp>
+#include <LuaBridge.h>
 
 class GameObject;
 
@@ -36,6 +37,16 @@ public:
 		m_GameObjectParent_ = pParent;
 	}
 
+	// Register class with lua
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<Component>("Component")
+			.addData<GameObject*>("parent", &Component::m_GameObjectParent_)
+			.endClass();
+	}
 };
 
 #endif

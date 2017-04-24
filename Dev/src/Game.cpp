@@ -5,6 +5,7 @@
 #include "Rendering\MeshFactory.h"
 #include "Scripting/LuaEngine.h"
 #include "Scripting/Script.h"
+#include "Scripting/ExtLib.h"
 
 #include "Rendering\ShaderUniform.h"
 
@@ -50,16 +51,25 @@ void Game::beginLoop() {
 
 	// Create engine
 	auto engine = std::make_shared<LuaEngine>();
-	Sound::registerLua(engine.get()->L());
+	lua_State* L = engine.get()->L();
+	// Register classes with the engine
+	ExtLib::registerLua(L);
+	Component::registerLua(L);
+	TransformComponent::registerLua(L);
+	InputHandler::registerLua(L);
+	GameObject::registerLua(L);
+	Sound::registerLua(L);
 
 	// Execute scripts
 	GameObject go = GameObject("TestObject");
-	auto s1 = std::make_shared<Script>(engine, "test1.lua");
-	auto s2 = std::make_shared<Script>(engine, "test2.lua");
+
+	auto s1 = std::make_shared<Script>(engine, "test.lua", "Test");
+	auto s2 = std::make_shared<Script>(engine, "test2.lua", "Test2");
 	go.registerComponent(s1.get());
 	go.registerComponent(s2.get());
+	s1->Start();
 	// TODO Line below causes error, scripts can be executed manually
-	// m_WindowManager_.getSceneManager()->getCurrentScene()->AddGameObject(go);
+	//m_WindowManager_.getSceneManager()->getCurrentScene()->AddGameObject(go);
 
 	//Start the Scenes Components.
 	if(m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr)

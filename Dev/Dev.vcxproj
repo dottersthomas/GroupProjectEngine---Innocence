@@ -234,6 +234,7 @@
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Scripting\ExtLib.h" />
     <ClInclude Include="include\Scripting\Script.h" />
     <ClInclude Include="include\Rendering\DirectionalLight.h" />
     <ClInclude Include="include\Rendering\Light.h" />

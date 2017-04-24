@@ -108,7 +108,7 @@ void Sound::Start()
 void Sound::Update(double dt)
 {
 	// TODO Set listener position to gameObject position
-	glm::vec3 goPos = this->m_GameObjectParent_->GetComponentByType<TransformComponent>()->getPosition();
+	//glm::vec3 goPos = this->m_GameObjectParent_->GetComponentByType<TransformComponent>()->getPosition();
 }
 
 void Sound::LateUpdate(double dt)

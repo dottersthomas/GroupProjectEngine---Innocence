@@ -1,5 +1,6 @@
 #include "Rendering\Components\RenderComponent.h"
 #include "Rendering\ResourceManager.h"
+#include "General/GameObject.h"
 
 RenderComponent::RenderComponent(GameObject * pParent, std::string sShader, int pType) {
 	m_GameObjectParent_ = pParent;

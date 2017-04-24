@@ -80,6 +80,7 @@
     <ClInclude Include="include\General\WindowManager.h" />
     <ClInclude Include="include\General\XML\XMLParser.h" />
     <ClInclude Include="include\Scripting\LuaEngine.h" />
+    <ClInclude Include="include\Scripting\ExtLib.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

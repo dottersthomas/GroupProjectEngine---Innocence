@@ -1,15 +1,17 @@
 #include "Scripting/Script.h"
-#include <LuaBridge.h>
 #include "Scripting/LuaEngine.h"
 
-Script::Script(std::shared_ptr<LuaEngine> engine, std::string path)
+GameObject* Script::m_gameObject = nullptr;
+
+Script::Script(std::shared_ptr<LuaEngine> engine, std::string path, std::string tableName)
 {
 	m_Engine = engine;
 	m_L = m_Engine->L();
 	m_Path = path;
+	m_TableName = tableName;
 }
 
-Script::~Script(){}
+Script::~Script() {}
 
 std::string Script::getPath()
 {
@@ -20,39 +22,108 @@ void Script::Start()
 {
 	// Execute script
 	execute();
-	// Call function
-	luabridge::LuaRef lua_Start = luabridge::getGlobal(m_L, "Start");
-	lua_Start();
+	// Check if function exists, if so, execute
+	if (m_Lua_Start)
+	{
+		try
+		{
+			(*m_Lua_Start)();
+		}
+		catch (luabridge::LuaException const& e)
+		{
+			printError(e.what());
+		}
+	}
 }
 
 void Script::Update(double dt)
 {
 	// Execute script
 	execute();
-	// Call function
-	luabridge::LuaRef lua_Update = luabridge::getGlobal(m_L, "Update");
-	lua_Update(dt);
+	// Check if function exists, if so, execute
+	if (m_Lua_Update)
+	{
+		try
+		{
+			(*m_Lua_Update)(dt);
+		}
+		catch (luabridge::LuaException const& e)
+		{
+			printError(e.what());
+		}
+	}
 }
 
 void Script::LateUpdate(double dt)
 {
 	// Execute script
 	execute();
-	// Call function
-	luabridge::LuaRef lua_LateUpdate = luabridge::getGlobal(m_L, "LateUpdate");
-	lua_LateUpdate(dt);
+	// Check if function exists, if so, execute
+	if (m_Lua_LateUpdate)
+	{
+		try
+		{
+			(*m_Lua_LateUpdate)(dt);
+		}
+		catch (luabridge::LuaException const& e)
+		{
+			printError(e.what());
+		}
+	}
 }
 
 void Script::Destroy()
 {
 	// Execute script
 	execute();
-	// Call function
-	luabridge::LuaRef lua_Destroy = luabridge::getGlobal(m_L, "Destroy");
-	lua_Destroy();
+	// Check if function exists, if so, execute
+	if (m_Lua_Destroy)
+	{
+		try
+		{
+			(*m_Lua_Destroy)();
+		}
+		catch (luabridge::LuaException const& e)
+		{
+			printError(e.what());
+		}
+	}
 }
 
 void Script::execute()
 {
+	// Execute script
 	m_Engine->executeFile(m_Path.c_str());
+	// Load table
+	load();
+}
+
+void Script::load()
+{
+	// Register global variables
+	luabridge::setGlobal(m_L, m_GameObjectParent_, "gameObject");
+
+	// Load values
+	luabridge::LuaRef table = luabridge::getGlobal(m_L, m_TableName.c_str());
+
+	if (table.isTable())
+	{
+		// Register functions
+		if (table["Start"].isFunction())
+			m_Lua_Start = std::make_shared<luabridge::LuaRef>(table["Start"]);
+
+		if (table["Update"].isFunction())
+			m_Lua_Update = std::make_shared<luabridge::LuaRef>(table["Update"]);
+
+		if (table["LateUpdate"].isFunction())
+			m_Lua_LateUpdate = std::make_shared<luabridge::LuaRef>(table["LateUpdate"]);
+
+		if (table["Destroy"].isFunction())
+			m_Lua_Destroy = std::make_shared<luabridge::LuaRef>(table["Destroy"]);
+	}
+}
+
+void Script::printError(const char* e)
+{
+	std::cout << "[Scripting] Error: " << e << "\n";
 }

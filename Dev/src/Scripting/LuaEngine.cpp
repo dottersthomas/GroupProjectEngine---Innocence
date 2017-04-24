@@ -34,6 +34,9 @@ void LuaEngine::executeExpression(const char* expression)
 
 	int state = luaL_dostring(m_L, expression); // Execute expression
 	reportErrors(state); // Check for errors
+
+	 // Set last command variable
+	m_lastCommand = expression;
 }
 
 void LuaEngine::executeFile(const char* file)
@@ -42,6 +45,9 @@ void LuaEngine::executeFile(const char* file)
 
 	int state = luaL_dofile(m_L, file); // Execute file
 	reportErrors(state); // Check for errors
+
+	// Set last command variable
+	m_lastCommand = file;
 }
 
 void LuaEngine::reportErrors(int state)
