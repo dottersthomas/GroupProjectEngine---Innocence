@@ -30,13 +30,17 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 
 void Game::update(double dTime) {
+
 	//Update the scene, close to the initial loop to minimise time discrepancy.
 	//TODO implement custom timer for better time management.
 	if (m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr) {
 		m_WindowManager_.getSceneManager()->getCurrentScene()->Update(dTime);
 	}
 
+
 	m_Renderer_->update(dTime);
+
+
 }
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -128,7 +132,11 @@ void Game::beginLoop() {
 			tick -= TICKS_PER_SECOND;
 
 		}
+
+
 		m_Renderer_->Render();
+
+
 		m_GUIRenderer_->Render();
 
 		glfwSwapBuffers(m_WindowManager_.getWindow());

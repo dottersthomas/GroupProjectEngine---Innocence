@@ -1,6 +1,8 @@
 #include "Rendering\Renderer.h"
 #include "Rendering\Components\RenderComponent.h"
 
+
+
 Renderer::Renderer(GLFWwindow * pWindow) {
 	m_Window_ = pWindow;
 
@@ -24,6 +26,8 @@ void Renderer::Render() {
 	glm::mat4 Projection = glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.f);
 
 	glm::mat4 View;
+
+
 
 	if (m_CurrentScene_ != nullptr) {
 		if (m_CurrentScene_->getBoundCamera() != nullptr) {
@@ -70,6 +74,8 @@ void Renderer::Render() {
 			render->Render(Projection, View);
 
 		}
+
+
 	}
 
 

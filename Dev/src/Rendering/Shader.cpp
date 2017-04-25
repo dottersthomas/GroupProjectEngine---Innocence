@@ -75,30 +75,31 @@ void Shader::SetMatrix4(const GLchar *name, const glm::mat4 &matrix)
 }
 
 void Shader::UpdateShaderUniforms() {
-	for (int i = 0; i < Uniforms.size(); i++) {
-		switch (Uniforms[i].M_Type)
+
+	for (UniformIterator = Uniforms.begin(); UniformIterator != Uniforms.end(); UniformIterator++) {
+		switch (UniformIterator->second.M_Type)
 		{
 		case INT:
-			SetInteger(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Int);
+			SetInteger(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Int);
 			break;
 		case FLOAT:
-			SetFloat(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Float);
+			SetFloat(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Float);
 			break;
 		case VEC2:
-			SetVector2f(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Vec2);
+			SetVector2f(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Vec2);
 			break;
 		case VEC3:
-			SetVector3f(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Vec3);
+			SetVector3f(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Vec3);
 			break;
 		case VEC4:
-			SetVector4f(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Vec4);
+			SetVector4f(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Vec4);
 			break;
 		case MAT3:
-			SetMatrix3(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Mat3);
+			SetMatrix3(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Mat3);
 			break;
 		case MAT4:
 			break;
-			SetMatrix4(Uniforms[i].M_Address.c_str(), Uniforms[i].M_Mat4);
+			SetMatrix4(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Mat4);
 		default:
 			break;
 		}

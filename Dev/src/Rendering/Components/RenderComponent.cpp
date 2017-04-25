@@ -2,6 +2,9 @@
 #include "Rendering\ResourceManager.h"
 #include "General/GameObject.h"
 
+#include <GLFW\glfw3.h>
+
+
 RenderComponent::RenderComponent(GameObject * pParent, std::string sShader, int pType) {
 	m_GameObjectParent_ = pParent;
 	m_Shader_ = sShader;
@@ -39,8 +42,13 @@ void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView) {
 			if (ResourceManager::getInstance()->getCurrentShaderID() != m_Shader_) {
 				ResourceManager::getInstance()->useShader(m_Shader_); //Error check for false shader switch.
 			}
+			double bTime = glfwGetTime();
+
 
 			ResourceManager::getInstance()->GetShader(m_Shader_).UpdateShaderUniforms();
+
+			//std::cout << "after Render Update" << glfwGetTime() - bTime << std::endl;
+
 
 			//Set the Projection and View Matrices. 
 			ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("mProjection", pProj);

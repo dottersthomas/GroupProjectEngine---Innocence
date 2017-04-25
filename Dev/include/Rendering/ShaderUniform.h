@@ -32,7 +32,7 @@ struct ShaderUniform {
 
 
 	ShaderUniform() {}
-	ShaderUniform(ShaderUniform &&) {}
+	//ShaderUniform(ShaderUniform &) {}
 
 	ShaderUniform(const ShaderUniform&) = default;
 
