@@ -10,18 +10,62 @@
 class Material {
 
 public:
-	Material() {}
+	Material() {
+		m_hasTextures_ = false;
+
+	}
+
+	Material(std::string pDiffuse, std::string pSpecular, float pShine);
+
+	void UpdateUniforms(std::string pShader);
 	
+	void assignDiffuseTexture(std::string pDiffuse) {
+		m_diffuseTexture_ = pDiffuse;
+		m_hasTextures_ = true;
+	}
+
+	void assignSpecularTexture(std::string pSpecular) {
+		m_specularTexture_ = pSpecular;
+		m_hasTextures_ = true;
+	}
+
+	void assignDiffuseColour(glm::vec3 pColour) {
+		m_diffuseColour_ = pColour;
+	}
+
+
+	void assignSpecularColour(glm::vec3 pColour) {
+		m_specularColour_ = pColour;
+	}
+
+	void setShininess(float pShine) {
+		m_Shininess_ = pShine;
+	}
+
+	bool getTexturesAssigned() {
+		return m_hasTextures_;
+	}
+
+	std::string getDiffuseTexture() {
+		return m_diffuseTexture_;
+	}
+
+	std::string getSpecularTexture() {
+		return m_specularTexture_;
+	}
 
 private:
 
 	bool m_hasTextures_;
 
 	//Textures.
-	ShaderUniform m_diffuseTexture_;
-	ShaderUniform m_specularTexture_;
+	std::string m_diffuseTexture_;
+	std::string m_specularTexture_;
 
 	ShaderUniform m_normalMap_;
+
+	glm::vec3 m_diffuseColour_;
+	glm::vec3 m_specularColour_;
 
 
 	float m_Shininess_;

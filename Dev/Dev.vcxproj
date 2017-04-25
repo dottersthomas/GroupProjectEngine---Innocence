@@ -197,6 +197,7 @@
     <ClCompile Include="include\Audio\Sound.h" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
     <ClCompile Include="src\Rendering\LightManager.cpp" />
+    <ClCompile Include="src\Rendering\Material.cpp" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />

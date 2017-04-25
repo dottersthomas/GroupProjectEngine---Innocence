@@ -37,6 +37,7 @@
     <ClCompile Include="src\Rendering\LightManager.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Rendering\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioManager.h" />

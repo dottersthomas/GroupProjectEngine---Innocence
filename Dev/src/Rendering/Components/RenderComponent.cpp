@@ -42,13 +42,23 @@ void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView) {
 			if (ResourceManager::getInstance()->getCurrentShaderID() != m_Shader_) {
 				ResourceManager::getInstance()->useShader(m_Shader_); //Error check for false shader switch.
 			}
-			double bTime = glfwGetTime();
+
+
+			m_Material_.UpdateUniforms(m_Shader_);
+
+			if (m_Material_.getTexturesAssigned()) {
+				glActiveTexture(GL_TEXTURE0);
+				ResourceManager::getInstance()->GetTexture(m_Material_.getDiffuseTexture()).Bind();
+
+				glActiveTexture(GL_TEXTURE1);
+				ResourceManager::getInstance()->GetTexture(m_Material_.getSpecularTexture()).Bind();
+			}
+
+
+
 
 
 			ResourceManager::getInstance()->GetShader(m_Shader_).UpdateShaderUniforms();
-
-			//std::cout << "after Render Update" << glfwGetTime() - bTime << std::endl;
-
 
 			//Set the Projection and View Matrices. 
 			ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("mProjection", pProj);
