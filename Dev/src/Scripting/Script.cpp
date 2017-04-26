@@ -92,6 +92,8 @@ void Script::Destroy()
 
 void Script::execute()
 {
+	// Register globals
+	registerGlobals();
 	// Execute script
 	m_Engine->executeFile(m_Path.c_str());
 	// Load table
@@ -100,9 +102,6 @@ void Script::execute()
 
 void Script::load()
 {
-	// Register global variables
-	luabridge::setGlobal(m_L, m_GameObjectParent_, "gameObject");
-
 	// Load values
 	luabridge::LuaRef table = luabridge::getGlobal(m_L, m_TableName.c_str());
 
@@ -121,6 +120,12 @@ void Script::load()
 		if (table["Destroy"].isFunction())
 			m_Lua_Destroy = std::make_shared<luabridge::LuaRef>(table["Destroy"]);
 	}
+}
+
+void Script::registerGlobals()
+{
+	// Register global variables
+	luabridge::setGlobal(m_L, m_GameObjectParent_, "gameObject");
 }
 
 void Script::printError(const char* e)

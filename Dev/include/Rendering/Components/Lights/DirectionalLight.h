@@ -31,6 +31,17 @@ public:
 	void setDirection(glm::vec3 pDir) {
 		m_Direction_ = pDir;
 	}
+
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<DirectionalLight, Light>("DirectionalLight")
+				.addConstructor<void(*)(std::string)>()
+				.addData<glm::vec3>("direction", &DirectionalLight::m_Direction_)
+			.endClass();
+	}
 };
 
 

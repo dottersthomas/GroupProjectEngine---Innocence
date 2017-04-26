@@ -87,6 +87,8 @@ public:
 			.addConstructor<void(*)(const char* name)>()
 			.addData<const char*>("name", &GameObject::m_Name_, false)
 			.addData<TransformComponent*>("transform", &GameObject::m_Transform)
+			.addFunction("addComponent", &GameObject::registerComponent)
+			.addFunction("removeComponent", &GameObject::removeComponent)
 			.endClass();
 	}
 private:

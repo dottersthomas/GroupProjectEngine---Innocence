@@ -40,6 +40,20 @@ public:
 		m_Quadratic_ = pQuadratic;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<PointLight, Light>("PointLight")
+				.addConstructor<void(*)(std::string)>()
+				.addData<glm::vec3>("position", &PointLight::m_Position_)
+				.addData<float>("constant", &PointLight::m_Constant_)
+				.addData<float>("linear", &PointLight::m_Linear_)
+				.addData<float>("quadratic", &PointLight::m_Quadratic_)
+			.endClass();
+	}
+
 private:
 	float m_Constant_;
 	float m_Linear_;

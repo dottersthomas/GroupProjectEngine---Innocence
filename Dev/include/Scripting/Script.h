@@ -32,5 +32,6 @@ private:
 
 	void execute();
 	void load();
+	void registerGlobals();
 	void printError(const char* e);
 };

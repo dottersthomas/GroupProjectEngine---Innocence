@@ -52,7 +52,7 @@ public:
 		m_UniformName_ = pName;
 	}
 
-	std::string getUniformName() {
+	std::string getUniformName() const {
 		return m_UniformName_;
 	}
 
@@ -82,6 +82,20 @@ public:
 
 	std::string getShader() {
 		return m_Shader_;
+	}
+
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<Light>("Light")
+				.addData<std::string>("uniformName", &Light::m_UniformName_, false)
+				.addData<std::string>("shader", &Light::m_Shader_)
+				.addData<glm::vec3>("ambient", &Light::m_Ambient_)
+				.addData<glm::vec3>("diffuse", &Light::m_Diffuse_)
+				.addData<glm::vec3>("specular", &Light::m_Specular_)
+			.endClass();
 	}
 
 private:

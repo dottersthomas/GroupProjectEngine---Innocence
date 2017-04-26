@@ -1,20 +1,23 @@
 -- Test class for defining a standard script within lua
 
+s = Sound("test.mp3")
+gameObject:addComponent(s)
+
 Test = 
 {
 	Start = function()
-	
-	end
+		print(s.parent.name)
+	end,
 	
 	Update = function()
 		
-	end
+	end,
 	
 	LateUpdate = function()
 		
-	end
+	end,
 	
 	Destroy = function()
 		
-	end
+	end,
 }

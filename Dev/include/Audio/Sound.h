@@ -40,7 +40,7 @@ public:
 		using namespace luabridge;
 
 		getGlobalNamespace(L)
-			.beginClass<Sound>("Sound")
+			.deriveClass<Sound, Component>("Sound")
 			.addConstructor<void(*)(std::string, bool)>()
 			.addProperty("threeD", &Sound::is3D)
 			.addProperty("path", &Sound::getPath)
