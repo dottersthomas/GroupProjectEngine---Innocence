@@ -9,7 +9,7 @@ class LuaEngine;
 class Script : public Component
 {
 public:
-	Script(std::shared_ptr<LuaEngine> engine, std::string path, std::string tableName);
+	Script(std::string path, std::string tableName);
 	~Script();
 
 	std::string getPath();
@@ -19,7 +19,7 @@ public:
 	void Destroy() override;
 	void Start() override;
 private:
-	std::shared_ptr<LuaEngine> m_Engine;
+	LuaEngine* m_Engine;
 	lua_State* m_L;
 	std::string m_Path, m_TableName;
 

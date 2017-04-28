@@ -65,6 +65,9 @@ public:
 		}
 	}
 
+	// Finds a components and assigns it to a global variable which is returned to lua
+	luabridge::LuaRef luaGetComponent(std::string type);
+
 	//find a Component by its type. As each component should be unique, only one of its type should exist, so filtering by type is effective to find a specific component.
 	template<typename T>
 	bool CheckComponentTypeExists()
@@ -88,6 +91,7 @@ public:
 			.addData<const char*>("name", &GameObject::m_Name_, false)
 			.addData<TransformComponent*>("transform", &GameObject::m_Transform)
 			.addFunction("addComponent", &GameObject::registerComponent)
+			.addFunction("getComponent", &GameObject::luaGetComponent)
 			.addFunction("removeComponent", &GameObject::removeComponent)
 			.endClass();
 	}

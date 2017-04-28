@@ -1,15 +1,18 @@
 #pragma once
 
 #include <lua.hpp>
+#include <iostream>
 
 class LuaEngine
 {
 public:
-	LuaEngine();
-	LuaEngine(const LuaEngine& other);  // Non-Construction Copy
-	~LuaEngine();
+	static LuaEngine& getInstance()
+	{
+		static LuaEngine instance;
+		return instance;
+	}
 
-	LuaEngine& operator=(const LuaEngine&); // Prevents copy
+	~LuaEngine();
 
 	const char* m_lastCommand; // Last file/expression executed
 
@@ -17,7 +20,14 @@ public:
 
 	void executeExpression(const char* expression); // Executes Lua expression
 	void executeFile(const char* file); // Executes file
+
+	static void printError(const char* msg)
+	{
+		std::cerr << "[Scripting] Error: " << msg << "\n";
+	}
 private:
+	LuaEngine();
+
 	lua_State* m_L; // Member lua state
 
 	void reportErrors(int state); // Handle errors

@@ -1,5 +1,10 @@
 #include "General\GameObject.h"
 #include "Physics\Components\TransformComponent.h"
+#include "Scripting/LuaEngine.h"
+#include "Rendering/Components/CameraComponent.h"
+#include "Rendering/Components/FirstPersonCameraComponent.h"
+#include "Rendering/Components/RenderComponent.h"
+#include "Rendering/Components/ThirdPersonCameraComponent.h"
 
 
 GameObject::GameObject(const char* pName) {
@@ -42,6 +47,30 @@ void GameObject::LateUpdateComponents() {
 		(*iter)->LateUpdate(0.0);
 }
 
+luabridge::LuaRef GameObject::luaGetComponent(std::string type)
+{
+	const char* compName = "ScriptingEngine_currentComponent";
+	lua_State* L = (&LuaEngine::getInstance())->L();
 
+	// Find component type
+	if (type == "TransformComponent")
+		luabridge::setGlobal(L, GetComponentByType<TransformComponent>(), compName);
+	else if (type == "CameraComponent")
+		luabridge::setGlobal(L, GetComponentByType<CameraComponent>(), compName);
+	else if (type == "FirstPersonCameraComponent")
+		luabridge::setGlobal(L, GetComponentByType<FirstPersonCameraComponent>(), compName);
+	else if (type == "RenderComponentComponent")
+		luabridge::setGlobal(L, GetComponentByType<RenderComponent>(), compName);
+	else if (type == "ThirdPersonCameraComponent")
+		luabridge::setGlobal(L, GetComponentByType<ThirdPersonCameraComponent>(), compName);
+	else if (type == "CanvasComponent")
+		luabridge::setGlobal(L, GetComponentByType<CanvasComponent>(), compName);
+	else
+	{
+		luabridge::setGlobal(L, nullptr, compName); // Prevents errors
+		LuaEngine::printError("Component not found.");
+	}
 
-
+	// Return component
+	return luabridge::getGlobal(L, compName);
+}

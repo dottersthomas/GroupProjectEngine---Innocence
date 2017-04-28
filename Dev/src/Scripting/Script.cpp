@@ -3,9 +3,9 @@
 
 GameObject* Script::m_gameObject = nullptr;
 
-Script::Script(std::shared_ptr<LuaEngine> engine, std::string path, std::string tableName)
+Script::Script(std::string path, std::string tableName)
 {
-	m_Engine = engine;
+	m_Engine = &LuaEngine::getInstance();
 	m_L = m_Engine->L();
 	m_Path = path;
 	m_TableName = tableName;

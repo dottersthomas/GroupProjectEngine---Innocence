@@ -56,8 +56,8 @@ void Game::beginLoop() {
 	double tick = 0.0;
 
 	// Create engine
-	auto engine = std::make_shared<LuaEngine>();
-	lua_State* L = engine.get()->L();
+	auto engine = &LuaEngine::getInstance();
+	lua_State* L = engine->L();
 	// Register classes with the engine
 	ExtLib::registerLua(L);
 	Component::registerLua(L);
@@ -72,8 +72,8 @@ void Game::beginLoop() {
 	// Execute scripts
 	GameObject go = GameObject("TestObject");
 
-	auto s1 = std::make_shared<Script>(engine, "test.lua", "Test");
-	auto s2 = std::make_shared<Script>(engine, "test2.lua", "Test2");
+	auto s1 = std::make_shared<Script>("test.lua", "Test");
+	auto s2 = std::make_shared<Script>("test2.lua", "Test2");
 	go.registerComponent(s1.get());
 	go.registerComponent(s2.get());
 	s1->Start();

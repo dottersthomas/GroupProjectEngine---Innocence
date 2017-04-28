@@ -1,7 +1,5 @@
 #include "Scripting/LuaEngine.h"
 
-#include <iostream>
-
 // --- Constructor(s) and Destructor 
 
 LuaEngine::LuaEngine() : m_L(luaL_newstate())
@@ -54,7 +52,7 @@ void LuaEngine::reportErrors(int state)
 {
 	if (state != 0)
 	{
-		std::cerr << "[Scripting] Error: " << lua_tostring(m_L, state) << "\n";
+		printError(lua_tostring(m_L, state));
 		lua_pop(m_L, 1); // Remove error from stack
 	}
 }
