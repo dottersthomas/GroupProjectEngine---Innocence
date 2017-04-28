@@ -239,6 +239,7 @@
     <ClInclude Include="include\Scripting\ExtLib.h" />
     <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
     <ClInclude Include="include\Rendering\LightManager.h" />
+    <ClInclude Include="include\Scripting\LuaHelper.h" />
     <ClInclude Include="include\Scripting\Script.h" />
     <ClInclude Include="include\Rendering\Components\Lights\DirectionalLight.h" />
     <ClInclude Include="include\Rendering\Components\Lights\Light.h" />

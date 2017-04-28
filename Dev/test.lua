@@ -3,8 +3,10 @@
 Test = 
 {
 	Start = function()
-		t = gameObject:getComponent("TransformComponent") -- Can be shortened to gameObject.transform
-		print(t.position)
+		t = gameObject:getComponents("TransformComponent")
+		print(t[1].position)
+		r = gameObject:getComponent("TransformComponent")
+		print(r.position)
 	end,
 	
 	Update = function()
@@ -17,5 +19,5 @@ Test =
 	
 	Destroy = function()
 		
-	end,
+	end
 }
