@@ -7,7 +7,7 @@ Renderer::Renderer(GLFWwindow * pWindow) {
 	m_Window_ = pWindow;
 
 
-	glClearColor(0.2, 0.2, 0.4, 1.0);
+	glClearColor(0.75f, 0.52f, 0.3f, 1.0f);
 
 	glEnable(GL_BLEND); 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

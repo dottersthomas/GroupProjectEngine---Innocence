@@ -4,8 +4,11 @@
 #include "Texture.h"
 #include "ShaderUniform.h"
 
-
+#include <string>
+#include <fstream>
+#include <sstream>
 #include <iostream>
+#include <vector>
 
 class Material {
 
@@ -16,16 +19,20 @@ public:
 	}
 
 	Material(std::string pDiffuse, std::string pSpecular, float pShine);
+	Material(std::vector<std::string> pTextures, float pShine);
+	Material(glm::vec3 pDiffuse, glm::vec3 pSpecular, float pShine);
 
 	void UpdateUniforms(std::string pShader);
+
+	void BindTextures(std::string pShader);
 	
 	void assignDiffuseTexture(std::string pDiffuse) {
-		m_diffuseTexture_ = pDiffuse;
+		m_Textures_.push_back(pDiffuse);
 		m_hasTextures_ = true;
 	}
 
 	void assignSpecularTexture(std::string pSpecular) {
-		m_specularTexture_ = pSpecular;
+		m_Textures_.push_back(pSpecular);
 		m_hasTextures_ = true;
 	}
 
@@ -46,21 +53,11 @@ public:
 		return m_hasTextures_;
 	}
 
-	std::string getDiffuseTexture() {
-		return m_diffuseTexture_;
-	}
-
-	std::string getSpecularTexture() {
-		return m_specularTexture_;
-	}
-
 private:
 
 	bool m_hasTextures_;
 
-	//Textures.
-	std::string m_diffuseTexture_;
-	std::string m_specularTexture_;
+	std::vector<std::string> m_Textures_;
 
 	ShaderUniform m_normalMap_;
 

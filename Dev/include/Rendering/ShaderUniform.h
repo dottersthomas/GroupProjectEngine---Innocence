@@ -4,7 +4,7 @@
 #include <iostream>
 #include "glm\glm.hpp"
 
-static enum ShaderType {
+enum ShaderType {
 	BOOL,
 	INT,
 	FLOAT,

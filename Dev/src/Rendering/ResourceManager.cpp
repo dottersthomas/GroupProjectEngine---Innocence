@@ -23,7 +23,6 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 		vertexShaderFile.close();
 		fragmentShaderFile.close();
 		// Convert stream into string
-		std::string details = "#version 330 core \n #define POINT_LIGHTS " + std::to_string(m_PointLights_) + " \n";
 		vertexCode = vShaderStream.str();
 		fragmentCode = createShaderDefines() + fShaderStream.str();
 	}
@@ -50,7 +49,7 @@ std::string ResourceManager::createShaderDefines() {
 	std::string spotLights = " #define SPOT_LIGHTS " + std::to_string(m_SpotLights_) + " \n";
 
 	return version + pointLights + dirLights + spotLights;
-
+	//return "";
 }
 
 
@@ -113,27 +112,35 @@ Texture ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, st
 	return Textures[name];
 }
 
-Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha, std::string name) {
-	Texture texture;
-	if (alpha)
+Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha, std::string name, std::string type) {
+
+	auto iter = Textures.find(name);
+	if (iter == Textures.end())
 	{
-		texture.Internal_Format = GL_RGBA;
-		texture.Image_Format = GL_RGBA;
+		Texture texture;
+		if (alpha)
+		{
+			texture.Internal_Format = GL_RGBA;
+			texture.Image_Format = GL_RGBA;
+		}
+		int width, height;
+		unsigned char * data;
+		if (alpha)
+			data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGBA);
+		else
+			data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGB);
+
+
+		texture = Texture(width, height, data);
+
+		SOIL_free_image_data(data);
+
+		texture.type = type;
+
+
+		Textures[name] = texture;
 	}
-	int width, height;
-	unsigned char * data;
-	if (alpha)
-		data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGBA);
-	else
-		data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGB);
 
-
-	texture = Texture(width, height, data);
-
-	SOIL_free_image_data(data);
-
-
-	Textures[name] = texture;
 	return Textures[name];
 }
 

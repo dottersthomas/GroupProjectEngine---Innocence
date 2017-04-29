@@ -5,12 +5,23 @@
 #include <glm\glm.hpp>
 #include <vector>
 
+
+struct Vertex {
+	// Position
+	glm::vec3 Position;
+	// Normal
+	glm::vec3 Normal;
+	// TexCoords
+	glm::vec2 TexCoords;
+};
+
 //Raw Mesh data for the Mesh class.
 struct RawMesh{
 
 	//The Raw Data.
 	GLuint * VAO;
 	bool m_hasUVData_;
+	int M_Indices = 0;
 
 	int m_drawSize_;
 
@@ -25,6 +36,8 @@ struct RawMesh{
 	RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV);
 	RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV, std::vector<GLfloat> Normals);
 
+
+	RawMesh(std::vector<Vertex> vertices, std::vector<GLuint> indices);
 };
 
 #endif

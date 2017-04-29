@@ -4,11 +4,11 @@ struct Material {
 
 	int hasTexture;
 
-	vec3 colourDiffuse;
-	vec3 colourSpecular;
+	vec3 colour_diffuse;
+	vec3 colour_specular;
 
-    sampler2D diffuseTexture;
-	sampler2D specularTexture;  
+    sampler2D texture_diffuse1;
+	sampler2D texture_specular1;  
     float shininess;
 }; 
 
@@ -71,7 +71,8 @@ void main()
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);    
     // Phase 3: Spot light
     // result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
-    
+    vec3 diff = vec3(texture(material.texture_diffuse1, texCoord));
+  //  FragColour = vec4(diff, 1.0);
     FragColour = vec4(result, 1.0);
 
 } 
@@ -87,14 +88,14 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     // Combine results
 	if(material.hasTexture == 1){
-		vec3 ambient = light.ambient * vec3(texture(material.diffuseTexture, texCoord));
-		vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuseTexture, texCoord));
-		vec3 specular = light.specular * spec * vec3(texture(material.specularTexture, texCoord));
+		vec3 ambient = light.ambient * vec3(texture(material.texture_diffuse1, texCoord));
+		vec3 diffuse = light.diffuse * diff * vec3(texture(material.texture_diffuse1, texCoord));
+		vec3 specular = light.specular * spec * vec3(texture(material.texture_specular1, texCoord));
 		return (ambient + diffuse + specular);
 	}else{
-		vec3 ambient = light.ambient * colourDiffuse;
-		vec3 diffuse = light.diffuse * diff * colourDiffuse;
-		vec3 specular = light.specular * spec * colourSpecular;
+		vec3 ambient = light.ambient * material.colour_diffuse;
+		vec3 diffuse = light.diffuse * diff * material.colour_diffuse;
+		vec3 specular = light.specular * spec * material.colour_specular;
 		return (ambient + diffuse + specular);
 	
 	}
@@ -114,14 +115,15 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float attenuation = 1.0f ;    
     // Combine results
 	if(material.hasTexture == 1){
-		vec3 ambient = light.ambient * vec3(texture(material.diffuseTexture, texCoord));
-		vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuseTexture, texCoord));
-		vec3 specular = light.specular * spec * vec3(texture(material.specularTexture, texCoord));
+		vec3 ambient = light.ambient * vec3(texture(material.texture_diffuse1, texCoord));
+		vec3 diffuse = light.diffuse * diff * vec3(texture(material.texture_diffuse1, texCoord));
+		vec3 specular = light.specular * spec * vec3(texture(material.texture_specular1, texCoord));
 		return (ambient + diffuse + specular);
+
 	}else{
-		vec3 ambient = light.ambient * colourDiffuse;
-		vec3 diffuse = light.diffuse * diff * colourDiffuse;
-		vec3 specular = light.specular * spec * colourSpecular;
+		vec3 ambient = light.ambient * material.colour_diffuse;
+		vec3 diffuse = light.diffuse * diff * material.colour_diffuse;
+		vec3 specular = light.specular * spec * material.colour_specular;
 		return (ambient + diffuse + specular);
 
 	}

@@ -8,6 +8,7 @@
 #include "Scripting/ExtLib.h"
 
 #include "Rendering\ShaderUniform.h"
+#include "Rendering\AssimpLoader.h"
 
 #define TIXML_USE_STL
 
@@ -64,7 +65,7 @@ void Game::beginLoop() {
 	TransformComponent::registerLua(L);
 	InputHandler::registerLua(L);
 	GameObject::registerLua(L);
-	Sound::registerLua(L);
+	//Sound::registerLua(L);
 
 	// Execute scripts
 	GameObject go = GameObject("TestObject");
@@ -186,8 +187,8 @@ Game::Game() {
 	//ResourceManager::getInstance()->LoadShader("Shaders/default_shader.vert", "Shaders/default_shader.frag", "default");
 	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "default");
 
-	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2.png", false, "CrateDiffuse");
-	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2_specular.png", false, "CrateSpecular");
+	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2.png", false, "CrateDiffuse", "texture_diffuse");
+	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2_specular.png", false, "CrateSpecular", "texture_specular");
 
 	Proxy::getInstance()->AssignWindowManager(&m_WindowManager_);
 	Proxy::getInstance()->AssignGame(this);
@@ -213,6 +214,9 @@ void Game::CreateScene() {
 Scene * Game::LoadTestScene() {
 	Scene * _Scene = new Scene("");
 
+	AssimpLoader loader;
+	Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+
 	GameObject object("Cube");
 	int index = _Scene->AddGameObject(object);
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -227,12 +231,15 @@ Scene * Game::LoadTestScene() {
 
 	Mesh * mesh;
 
-	mesh = factory.create("Models/Crate.obj", position, rotation, scale, colour);
-	mesh->setPivotPoint(pivot);
-	mesh->setColour(colour);
+//	mesh = factory.create("Models/Crate.obj", position, rotation, scale, colour);
+//	mesh->setPivotPoint(pivot);
+//	mesh->setColour(colour);
 
+	Material crateMaterial("CrateDiffuse", "CrateSpecular", 32.0f);
 
-	render->AttachMesh(mesh);
+	render->attachMaterial(crateMaterial);
+//	render->AttachMesh(mesh);
+	render->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render);
 	render->setParent(&_Scene->getGameObjects()->at(index));
 	////////////////////////////////////////////
@@ -242,7 +249,7 @@ Scene * Game::LoadTestScene() {
 
 	m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
 
-	ShaderUniform materialDiff;
+	/*ShaderUniform materialDiff;
 	materialDiff.M_Address = "material.diffuse";
 	materialDiff.M_Type = INT;
 	materialDiff.M_Int = 0;
@@ -255,25 +262,25 @@ Scene * Game::LoadTestScene() {
 	ShaderUniform materialShine;
 	materialShine.M_Address = "material.shininess";
 	materialShine.M_Type = FLOAT;
-	materialShine.M_Float = 32.0f;
+	materialShine.M_Float = 32.0f;*/
 
 	ShaderUniform camera;
 	camera.M_Address = "viewPos";
 	camera.M_Type = VEC3;
-	camera.M_Vec3 = glm::vec3(2.0f, 1.0f, 5.0f);
+	camera.M_Vec3 = glm::vec3(0.0f, 0.0f, 3.0f);
 
 	ResourceManager::getInstance()->useShader("default");
-	ResourceManager::getInstance()->GetShader("default").SetUniform(materialDiff);
-	ResourceManager::getInstance()->GetShader("default").SetUniform(materialSpec);
-	ResourceManager::getInstance()->GetShader("default").SetUniform(materialShine);
+//	ResourceManager::getInstance()->GetShader("default").SetUniform(materialDiff);
+//	ResourceManager::getInstance()->GetShader("default").SetUniform(materialSpec);
+//	ResourceManager::getInstance()->GetShader("default").SetUniform(materialShine);
 	ResourceManager::getInstance()->GetShader("default").SetUniform(camera);
 
 
-	glActiveTexture(GL_TEXTURE0);
+	/*glActiveTexture(GL_TEXTURE0);
 	ResourceManager::getInstance()->GetTexture("CrateDiffuse").Bind();
 
 	glActiveTexture(GL_TEXTURE1);
-	ResourceManager::getInstance()->GetTexture("CrateSpecular").Bind();
+	ResourceManager::getInstance()->GetTexture("CrateSpecular").Bind();*/
 
 
 	glm::vec3 pointLightPositions[] = {
@@ -283,11 +290,20 @@ Scene * Game::LoadTestScene() {
 		glm::vec3(0.0f,  0.0f, -3.0f)
 	};
 
-	glm::vec3 pointLightColors[] = {
-		glm::vec3(1.0f, 1.0f, 1.0f),
+	/*glm::vec3 pointLightColors[] = {
+		glm::vec3(0.3f, 1.0f, 1.0f),
 		glm::vec3(0.3f, 0.3f, 0.7f),
-		glm::vec3(1.0f, 0.0f, 0.3f),
+		glm::vec3(0.3f, 0.0f, 0.3f),
 		glm::vec3(0.4f, 0.4f, 0.4f)
+	};*/
+
+	
+
+	glm::vec3 pointLightColors[] = {
+		glm::vec3(1.0f, 0.6f, 0.0f),
+		glm::vec3(1.0f, 0.0f, 0.0f),
+		glm::vec3(1.0f, 1.0, 0.0),
+		glm::vec3(0.2f, 0.2f, 1.0f)
 	};
 
 

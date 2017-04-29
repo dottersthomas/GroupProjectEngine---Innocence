@@ -9,6 +9,7 @@
 #include "Rendering\Mesh.h"
 #include "Physics\Components\TransformComponent.h"
 #include "Rendering\Material.h"
+#include "Rendering\Model.h"
 
 //Type of Component to be rendered, if it is a solid colour, or if it uses a Texture for rendering.
 enum ComponentType {
@@ -31,6 +32,8 @@ private:
 	t_Mesh_vector_ m_Meshes_;
 	TransformComponent* transformComponent;
 
+	std::vector<Model> m_Models_;
+
 	//Type to render.
 	int m_RenderType_;
 
@@ -52,11 +55,23 @@ public:
 	//Attach a mesh to the render component to be rendered. Rendering occurs in the order they are attached.
 	void AttachMesh(Mesh* pMesh);
 
+	void AttachModel(Model pModel) {
+		m_Models_.push_back(pModel);
+	}
+
 	//Render function.
 	void Render(glm::mat4 pProj, glm::mat4 pView);
 
 	void toggleDrawing(bool pToggle) {
 		shouldDraw = pToggle;
+	}
+
+	void attachMaterial(Material pMat) {
+		m_Material_ = pMat;
+	}
+
+	Material& getMaterial() {
+		return m_Material_;
 	}
 };
 
