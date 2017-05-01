@@ -7,7 +7,7 @@ bool InputHandler::keys[65536];
 bool InputHandler::buttons[8];
 
 void InputHandler::invokeKey(int key, int scancode, int action, int mods) {
-		keys[key] = action != GLFW_RELEASE;
+	keys[key] = action != GLFW_RELEASE;
 }
 
 bool InputHandler::isKeyDown(int key) {

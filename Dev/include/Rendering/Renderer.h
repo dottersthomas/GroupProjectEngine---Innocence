@@ -12,6 +12,8 @@
 #include "General\Scene.h"
 #include "General\GameObjectVectorWrapper.h"
 
+#include "Rendering\LightManager.h"
+
 
 //The main game renderer for rendering all the RenderComponents within the scene.
 class Renderer {
@@ -24,6 +26,7 @@ private:
 	//Vector of all game objects with a render component.
 	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjects_;
 	GLFWwindow * m_Window_;
+	LightManager m_LightManager_;
 
 public:
 	Renderer() {
@@ -34,6 +37,14 @@ public:
 	void Render();
 	
 	void setScene(Scene * pScene);
+
+	void update(float dt);
+
+	LightManager& getLightManager() {
+		return m_LightManager_;
+	}
+
+
 };
 
 

@@ -1,0 +1,7 @@
+*.db
+DB.VC.db
+*.opendb
+Temp/
+x64/
+Debug/
+.vs/

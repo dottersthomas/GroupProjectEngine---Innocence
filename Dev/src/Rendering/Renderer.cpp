@@ -29,10 +29,16 @@ void Renderer::Render() {
 		if (m_CurrentScene_->getBoundCamera() != nullptr) {
 			View = m_CurrentScene_->getBoundCamera()->Bind();
 		}
+		else
+			View = glm::lookAt(
+				glm::vec3(2.0f, 1.0f, 5.0f),
+				glm::vec3(0, 0, 0),
+				glm::vec3(0, 1, 0)
+			);
 	}
 	else
 		View = glm::lookAt(
-			glm::vec3(10, 10, 10),
+			glm::vec3(1.2f, 1.0f, 2.0f),
 			glm::vec3(0, 0, 0),
 			glm::vec3(0, 1, 0)
 		);
@@ -54,7 +60,7 @@ void Renderer::Render() {
 				}
 			}
 			//No need to check again.
-			//m_CurrentScene_->M_bIsDirty = false;
+			m_CurrentScene_->M_bIsDirty = false;
 		}
 
 		//Render the scenes GameObjects. Possibly provide filtering to improve performance speed. Or maybe even have it within its own thread.
@@ -72,5 +78,10 @@ void Renderer::Render() {
 
 void Renderer::setScene(Scene * pScene) {
 	m_CurrentScene_ = pScene;
+}
+
+void Renderer::update(float dt) {
+
+	m_LightManager_.update(dt);
 }
 

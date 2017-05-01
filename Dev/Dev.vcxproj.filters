@@ -1,245 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="include\Audio\Sound.h" />
+    <ClCompile Include="src\Scripting\LuaEngine.cpp" />
+    <ClCompile Include="src\Audio\Sound.cpp" />
+    <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
+    <ClCompile Include="src\Scripting\Script.cpp" />
+    <ClCompile Include="src\Rendering\ShaderUniform.cpp" />
+    <ClCompile Include="src\UI\Components\CanvasComponent.cpp" />
+    <ClCompile Include="src\General\IO\InputComponent.cpp" />
+    <ClCompile Include="src\Rendering\Components\ThirdPersonCameraComponent.cpp" />
+    <ClCompile Include="src\General\GameObject.cpp" />
+    <ClCompile Include="src\General\InputHandler.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Rendering\Components\RenderComponent.cpp" />
+    <ClCompile Include="src\General\OBJLoader.cpp" />
+    <ClCompile Include="src\General\Proxy.cpp" />
+    <ClCompile Include="src\UI\CanvasButton.cpp" />
+    <ClCompile Include="src\UI\CanvasRect.cpp" />
+    <ClCompile Include="src\UI\GUIMesh.cpp" />
+    <ClCompile Include="src\UI\GUIRenderer.cpp" />
+    <ClCompile Include="src\UI\Text2D.cpp" />
+    <ClCompile Include="src\Rendering\Mesh.cpp" />
+    <ClCompile Include="src\Rendering\MeshFactory.cpp" />
+    <ClCompile Include="src\Rendering\RawMesh.cpp" />
+    <ClCompile Include="src\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Rendering\ResourceManager.cpp" />
+    <ClCompile Include="src\Physics\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\Rendering\Texture.cpp" />
+    <ClCompile Include="src\General\Scene.cpp" />
+    <ClCompile Include="src\Rendering\Shader.cpp" />
+    <ClCompile Include="src\General\SceneManager.cpp" />
+    <ClCompile Include="src\General\WindowManager.cpp" />
+    <ClCompile Include="src\General\XML\XMLParser.cpp" />
+    <ClCompile Include="src\Rendering\LightManager.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Audio\AudioEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\MeshFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\RawMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\XML\XMLParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\InputHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\OBJLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\Proxy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\WindowManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\IO\InputComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Physics\Components\TransformComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Components\RenderComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Components\ThirdPersonCameraComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\CanvasButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\CanvasRect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\GUIMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\GUIRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\Text2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI\Components\CanvasComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\AudioManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\Sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="include\Audio\Sound.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LuaScript.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
+    <ClInclude Include="include\Component.h" />
+    <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Scripting\Script.h" />
+    <ClInclude Include="include\Rendering\Material.h" />
+    <ClInclude Include="include\Rendering\ShaderUniform.h" />
+    <ClInclude Include="include\UI\Components\CanvasComponent.h" />
+    <ClInclude Include="include\General\IO\Components\InputComponent.h" />
+    <ClInclude Include="include\Rendering\Components\ThirdPersonCameraComponent.h" />
+    <ClInclude Include="include\General\ComponentVectorWrapper.h" />
+    <ClInclude Include="include\General\Exceptions\ComponentMissingException.h" />
+    <ClInclude Include="include\UI\CanvasButton.h" />
+    <ClInclude Include="include\UI\CanvasElement.h" />
+    <ClInclude Include="include\UI\CanvasElementVectorWrapper.h" />
+    <ClInclude Include="include\UI\CanvasRect.h" />
+    <ClInclude Include="include\UI\GUIMesh.h" />
+    <ClInclude Include="include\UI\GUIMeshVectorWrapper.h" />
+    <ClInclude Include="include\UI\GUIRenderer.h" />
+    <ClInclude Include="include\UI\GuiStates.h" />
+    <ClInclude Include="include\General\GameObject.h" />
+    <ClInclude Include="include\General\Game.h" />
+    <ClInclude Include="include\General\InputHandler.h" />
+    <ClInclude Include="include\Rendering\Components\RenderComponent.h" />
+    <ClInclude Include="include\General\GameObjectVectorWrapper.h" />
+    <ClInclude Include="include\General\OBJLoader.h" />
+    <ClInclude Include="include\General\Proxy.h" />
+    <ClInclude Include="include\UI\Text2D.h" />
+    <ClInclude Include="include\Rendering\Mesh.h" />
+    <ClInclude Include="include\Rendering\MeshFactory.h" />
+    <ClInclude Include="include\Rendering\RawMesh.h" />
+    <ClInclude Include="include\Rendering\Renderer.h" />
+    <ClInclude Include="include\Rendering\ResourceManager.h" />
+    <ClInclude Include="include\Physics\Components\TransformComponent.h" />
+    <ClInclude Include="include\Rendering\Texture.h" />
+    <ClInclude Include="include\General\Scene.h" />
+    <ClInclude Include="include\Rendering\Shader.h" />
+    <ClInclude Include="include\General\SceneManager.h" />
+    <ClInclude Include="include\General\WindowManager.h" />
+    <ClInclude Include="include\General\XML\XMLParser.h" />
+    <ClInclude Include="include\Scripting\LuaEngine.h" />
+    <ClInclude Include="include\Scripting\ExtLib.h" />
+    <ClInclude Include="include\Rendering\LightManager.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\DirectionalLight.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\Light.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
+    <ClInclude Include="include\Scripting\LuaHelper.h" />
+    <ClInclude Include="include\Audio\AudioEngine.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Rendering\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\MeshFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\RawMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Components\RenderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Components\CameraComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Rendering\Components\ThirdPersonCameraComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\XML\XMLParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\Exceptions\ComponentMissingException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\Components\CanvasComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\IO\Components\InputComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics\Components\TransformComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\ComponentVectorWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\GameObjectVectorWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\InputHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\OBJLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\Proxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\General\WindowManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\CanvasButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\CanvasElement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\CanvasElementVectorWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\CanvasRect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\GUIMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\GUIMeshVectorWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\GUIRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\GuiStates.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI\Text2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Audio\AudioManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\LuaScript.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <Xml Include="XML\GameOver.xml" />
+    <Xml Include="XML\MainMenu.xml" />
+    <Xml Include="XML\Scene.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="glew32.dll" />
-    <None Include="Shaders\default_shader.vert" />
     <None Include="Shaders\default_shader.frag" />
+    <None Include="Shaders\default_shader.vert" />
+    <None Include="Shaders\gui_plain_shader.frag" />
+    <None Include="Shaders\gui_plain_shader.vert" />
     <None Include="Shaders\texture_shader.frag" />
     <None Include="Shaders\texture_shader.vert" />
-    <None Include="Shaders\gui_plain_shader.vert" />
-    <None Include="Shaders\gui_plain_shader.frag" />
-    <None Include="Shaders\text_shader.vert" />
     <None Include="Shaders\text_shader.frag" />
-    <None Include="ClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="XML\Scene.xml" />
-    <Xml Include="XML\MainMenu.xml" />
-    <Xml Include="XML\GameOver.xml" />
+    <None Include="Shaders\text_shader.vert" />
   </ItemGroup>
 </Project>

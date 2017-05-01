@@ -23,19 +23,34 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 		vertexShaderFile.close();
 		fragmentShaderFile.close();
 		// Convert stream into string
+		std::string details = "#version 330 core \n #define POINT_LIGHTS " + std::to_string(m_PointLights_) + " \n";
 		vertexCode = vShaderStream.str();
-		fragmentCode = fShaderStream.str();
+		fragmentCode = createShaderDefines() + fShaderStream.str();
 	}
 	catch (std::exception e)
 	{
 		std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
 	}
+
+	
 	const GLchar *vShaderCode = vertexCode.c_str();
 	const GLchar *fShaderCode = fragmentCode.c_str();
 	// 2. Now create shader GameObject from source code
 	Shader shader;
 	shader.Compile(vShaderCode, fShaderCode);
 	return shader;
+}
+
+
+std::string ResourceManager::createShaderDefines() {
+
+	std::string version = "#version 330 core \n";
+	std::string pointLights = " #define POINT_LIGHTS " + std::to_string(m_PointLights_) + " \n"; 
+	std::string dirLights = " #define DIRECTIONAL_LIGHTS " + std::to_string(m_DirectionalLights_) + " \n";
+	std::string spotLights = " #define SPOT_LIGHTS " + std::to_string(m_SpotLights_) + " \n";
+
+	return version + pointLights + dirLights + spotLights;
+
 }
 
 
@@ -98,6 +113,30 @@ Texture ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, st
 	return Textures[name];
 }
 
+Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha, std::string name) {
+	Texture texture;
+	if (alpha)
+	{
+		texture.Internal_Format = GL_RGBA;
+		texture.Image_Format = GL_RGBA;
+	}
+	int width, height;
+	unsigned char * data;
+	if (alpha)
+		data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGBA);
+	else
+		data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGB);
+
+
+	texture = Texture(width, height, data);
+
+	SOIL_free_image_data(data);
+
+
+	Textures[name] = texture;
+	return Textures[name];
+}
+
 Texture ResourceManager::GetTexture(std::string name)
 {
 	return Textures[name];
@@ -123,7 +162,7 @@ Shader ResourceManager::LoadShader(const GLchar *vShaderFile, const GLchar *fSha
 	return Shaders[name];
 }
 
-Shader ResourceManager::GetShader(std::string name)
+Shader& ResourceManager::GetShader(std::string name)
 {
 	return Shaders[name];
 }

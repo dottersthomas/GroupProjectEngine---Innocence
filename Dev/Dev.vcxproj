@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Build To DLL|Win32">
+      <Configuration>Build To DLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Build To DLL|x64">
+      <Configuration>Build To DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -52,6 +60,13 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Build To DLL|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Build To DLL|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -83,6 +98,7 @@
     <SourcePath>$(SolutionDir)/Dev/src;$(VC_SourcePath);</SourcePath>
     <OutDir>$(SolutionDir)$(Platform)\Bin\Debug\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\</IntDir>
+    <ExecutablePath>$(SolutionDir)$(Platform)\Bin\Debug\;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\Bin\Release</OutDir>
@@ -91,6 +107,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\Bin\Debug</OutDir>
     <IntDir>$(SolutionDir)\Temp</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Build To DLL|x64'">
+    <IncludePath>$(SolutionDir)/Dev/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)/Lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <SourcePath>$(SolutionDir)/Dev/src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,12 +134,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\lua\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\Lua\include;$(SolutionDir)\Lib\LuaBridge\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions> NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\tinyxml\lib\;$(SolutionDir)\Lib\glew\lib;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(SolutionDir)\Lib\fmod\lib;$(SolutionDir)\Lib\lua\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml2.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;fmod64_vc.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\SOIL\lib\;$(SolutionDir)\Lib\tinyxml\lib\;$(SolutionDir)\Lib\glew\lib;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(SolutionDir)\Lib\fmod\lib;$(SolutionDir)\Lib\Lua\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;tinyxml2.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;fmod64_vc.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <SubSystem>Console</SubSystem>
@@ -148,7 +170,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>.\Dev\include;.\Lib\glm;.\Lib\glew\include;.\Lib\freeglut\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Dev\include;.\Lib\glm;.\Lib\glew\include;.\Lib\freeglut\include;.\Lib\LuaBridge\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions> NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -161,12 +183,27 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Build To DLL|x64'">
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\SOIL\lib\;$(SolutionDir)\Lib\tinyxml\lib\;$(SolutionDir)\Lib\glew\lib;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;tinyxml2.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;_MBCS;</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Audio\Sound.h" />
-    <ClCompile Include="src\Audio\AudioManager.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Rendering\LightManager.cpp" />
+    <ClCompile Include="src\Scripting\LuaEngine.cpp" />
+    <ClCompile Include="src\Audio\AudioEngine.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
-    <ClCompile Include="src\LuaScript.cpp" />
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
+    <ClCompile Include="src\Scripting\Script.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Rendering\ShaderUniform.cpp" />
     <ClCompile Include="src\UI\Components\CanvasComponent.cpp" />
     <ClCompile Include="src\General\IO\InputComponent.cpp" />
     <ClCompile Include="src\Rendering\Components\ThirdPersonCameraComponent.cpp" />
@@ -195,11 +232,19 @@
     <ClCompile Include="src\General\XML\XMLParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Audio\AudioManager.h" />
-    <ClInclude Include="include\LuaScript.h" />
+    <ClInclude Include="include\Audio\AudioEngine.h" />
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Scripting\ExtLib.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
+    <ClInclude Include="include\Rendering\LightManager.h" />
+    <ClInclude Include="include\Scripting\LuaHelper.h" />
+    <ClInclude Include="include\Scripting\Script.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\DirectionalLight.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\Light.h" />
+    <ClInclude Include="include\Rendering\Material.h" />
+    <ClInclude Include="include\Rendering\ShaderUniform.h" />
     <ClInclude Include="include\UI\Components\CanvasComponent.h" />
     <ClInclude Include="include\General\IO\Components\InputComponent.h" />
     <ClInclude Include="include\Rendering\Components\ThirdPersonCameraComponent.h" />
@@ -233,6 +278,7 @@
     <ClInclude Include="include\General\SceneManager.h" />
     <ClInclude Include="include\General\WindowManager.h" />
     <ClInclude Include="include\General\XML\XMLParser.h" />
+    <ClInclude Include="include\Scripting\LuaEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
