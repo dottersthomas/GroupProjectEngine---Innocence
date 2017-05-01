@@ -3,10 +3,17 @@
 #include <lua.hpp>
 #include <LuaBridge.h>
 
+/// <summary>
+/// Provides helper functions that allow for interaction between Lua and C++.
+/// </summary>
 class LuaHelper
 {
 public:
-	// Converts an std container into a lua table
+	/// <summary>
+	/// Converts an std container into a Lua table.
+	/// </summary>
+	/// <param name="container">The container.</param>
+	/// <returns>luabridge::LuaRef</returns>
 	template<typename T>
 	static luabridge::LuaRef ToTable(T& container)
 	{
@@ -24,7 +31,13 @@ public:
 		return table;
 	}
 
-	// Registers a component or components as a global variable in lua
+	/// <summary>
+	/// Registers a component or components as a global variable in Lua.
+	/// </summary>
+	/// <param name="go">The GameObject the component is being registered to.</param>
+	/// <param name="findAll">if set to <c>true</c> find all components of the type specified.</param>
+	/// <param name="globalName">Name of the global variable the component should be registered to.</param>
+	/// <returns>luabridge::LuaRef</returns>
 	template<typename T>
 	static luabridge::LuaRef GetGlobalComponent(GameObject& go, bool findAll, const char* globalName)
 	{

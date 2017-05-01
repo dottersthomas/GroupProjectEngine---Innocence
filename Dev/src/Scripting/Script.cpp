@@ -31,7 +31,7 @@ void Script::Start()
 		}
 		catch (luabridge::LuaException const& e)
 		{
-			printError(e.what());
+			LuaEngine::printError(e.what());
 		}
 	}
 }
@@ -49,7 +49,7 @@ void Script::Update(double dt)
 		}
 		catch (luabridge::LuaException const& e)
 		{
-			printError(e.what());
+			LuaEngine::printError(e.what());
 		}
 	}
 }
@@ -67,7 +67,7 @@ void Script::LateUpdate(double dt)
 		}
 		catch (luabridge::LuaException const& e)
 		{
-			printError(e.what());
+			LuaEngine::printError(e.what());
 		}
 	}
 }
@@ -85,7 +85,7 @@ void Script::Destroy()
 		}
 		catch (luabridge::LuaException const& e)
 		{
-			printError(e.what());
+			LuaEngine::printError(e.what());
 		}
 	}
 }
@@ -126,9 +126,4 @@ void Script::registerGlobals()
 {
 	// Register global variables
 	luabridge::setGlobal(m_L, m_GameObjectParent_, "gameObject");
-}
-
-void Script::printError(const char* e)
-{
-	std::cout << "[Scripting] Error: " << e << "\n";
 }

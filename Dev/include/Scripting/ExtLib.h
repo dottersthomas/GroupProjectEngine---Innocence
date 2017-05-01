@@ -4,9 +4,16 @@
 #include <LuaBridge.h>
 #include <glm/glm.hpp>
 
+/// <summary>
+/// Used to register classes from external libraries with Lua.
+/// </summary>
 class ExtLib
 {
-public:
+public:	
+	/// <summary>
+	/// Registers classes with Lua.
+	/// </summary>
+	/// <param name="L">The lua_State to use.</param>
 	static void registerLua(lua_State* L)
 	{
 		using namespace luabridge;
