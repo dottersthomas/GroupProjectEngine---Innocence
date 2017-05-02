@@ -195,6 +195,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Audio\Sound.h" />
+    <ClCompile Include="src\Physics\Components\Box.cpp" />
+    <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
+    <ClCompile Include="src\Physics\Components\RigidBodycpp.cpp" />
+    <ClCompile Include="src\Physics\Physics.cpp" />
     <ClCompile Include="src\Rendering\AssimpLoader.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
     <ClCompile Include="src\Rendering\LightManager.cpp" />
@@ -236,6 +240,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioManager.h" />
+    <ClInclude Include="include\Physics\Components\Box.h" />
+    <ClInclude Include="include\Physics\Components\BoxCollider.h" />
+    <ClInclude Include="include\Physics\Components\Collider.h" />
+    <ClInclude Include="include\Physics\Components\RigidBodyh.h" />
+    <ClInclude Include="include\Physics\Physics.h" />
     <ClInclude Include="include\Rendering\AssimpLoader.h" />
     <ClInclude Include="include\Rendering\Colour.h" />
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
