@@ -24,8 +24,8 @@ void CanvasComponent::Render(glm::mat4 pProjection, glm::mat4 pView) {
 			
 
 
-			ResourceManager::getInstance()->GetShader((*iter)->RequestShader()).SetMatrix4("projection", pProjection);
-			ResourceManager::getInstance()->GetShader((*iter)->RequestShader()).SetMatrix4("view", pView);
+			ResourceManager::getInstance()->GetShader((*iter)->RequestShader())->SetMatrix4("projection", pProjection);
+			ResourceManager::getInstance()->GetShader((*iter)->RequestShader())->SetMatrix4("view", pView);
 
 			(*iter)->Render();
 

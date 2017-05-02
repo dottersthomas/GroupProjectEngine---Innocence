@@ -237,6 +237,7 @@
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioManager.h" />
     <ClInclude Include="include\Rendering\AssimpLoader.h" />
+    <ClInclude Include="include\Rendering\Colour.h" />
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />

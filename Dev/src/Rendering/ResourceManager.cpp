@@ -4,7 +4,7 @@
 
 ResourceManager * ResourceManager::s_instance = 0;
 
-Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile)
+Shader * ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile)
 {
 	// 1. Retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;
@@ -35,8 +35,8 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 	const GLchar *vShaderCode = vertexCode.c_str();
 	const GLchar *fShaderCode = fragmentCode.c_str();
 	// 2. Now create shader GameObject from source code
-	Shader shader;
-	shader.Compile(vShaderCode, fShaderCode);
+	Shader * shader = new Shader();
+	shader->Compile(vShaderCode, fShaderCode);
 	return shader;
 }
 
@@ -53,12 +53,12 @@ std::string ResourceManager::createShaderDefines() {
 }
 
 
-Texture ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, std::string name) {
-	Texture texture;
+Texture * ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, std::string name) {
+	Texture * texture;
 	if (alpha)
 	{
-		texture.Internal_Format = GL_RGBA;
-		texture.Image_Format = GL_RGBA;
+		texture->Internal_Format = GL_RGBA;
+		texture->Image_Format = GL_RGBA;
 	}
 
 
@@ -102,7 +102,7 @@ Texture ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, st
 
 
 	// Now generate texture
-	texture = Texture(width, height, data);
+	texture = new Texture(width, height, data);
 	// And finally free image data
 
 	//Everything is in memory now, the file can be closed
@@ -112,16 +112,16 @@ Texture ResourceManager::loadTexture(const GLchar *filePath, GLboolean alpha, st
 	return Textures[name];
 }
 
-Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha, std::string name, std::string type) {
+Texture * ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha, std::string name, std::string type) {
 
 	auto iter = Textures.find(name);
 	if (iter == Textures.end())
 	{
-		Texture texture;
+		Texture * texture;
 		if (alpha)
 		{
-			texture.Internal_Format = GL_RGBA;
-			texture.Image_Format = GL_RGBA;
+			texture->Internal_Format = GL_RGBA;
+			texture->Image_Format = GL_RGBA;
 		}
 		int width, height;
 		unsigned char * data;
@@ -131,11 +131,11 @@ Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha
 			data = SOIL_load_image(filePath, &width, &height, 0, SOIL_LOAD_RGB);
 
 
-		texture = Texture(width, height, data);
+		texture = new Texture(width, height, data);
 
 		SOIL_free_image_data(data);
 
-		texture.type = type;
+		texture->type = type;
 
 
 		Textures[name] = texture;
@@ -144,7 +144,7 @@ Texture ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alpha
 	return Textures[name];
 }
 
-Texture ResourceManager::GetTexture(std::string name)
+Texture* ResourceManager::GetTexture(std::string name)
 {
 	return Textures[name];
 }
@@ -156,20 +156,20 @@ bool ResourceManager::useShader(std::string pId) {
 	if (iter != Shaders.end())
 	{
 		// key 2 exists, do something with iter->second (the value)
-		iter->second.Use();
+		iter->second->Use();
 		m_currentShaderIdentifier_ = pId;
 		return true;
 	}
 	return false;
 }
 
-Shader ResourceManager::LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, std::string name)
+Shader * ResourceManager::LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, std::string name)
 {
 	Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile);
 	return Shaders[name];
 }
 
-Shader& ResourceManager::GetShader(std::string name)
+Shader* ResourceManager::GetShader(std::string name)
 {
 	return Shaders[name];
 }

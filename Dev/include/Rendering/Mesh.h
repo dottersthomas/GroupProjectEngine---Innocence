@@ -33,6 +33,8 @@ private:
 	
 	Material m_Material_;
 
+	glm::mat4 m_ModelMatrix_;
+
 public:
 
 	Mesh();
@@ -112,6 +114,14 @@ public:
 
 	std::string getTextureID() {
 		return m_TextureId_;
+	}
+
+	void setModelMatrix(glm::mat4 model) {
+		m_ModelMatrix_ = model;
+	}
+
+	glm::mat4 getModelMatrix() {
+		return m_ModelMatrix_;
 	}
 
 };

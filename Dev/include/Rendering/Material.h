@@ -3,6 +3,7 @@
 
 #include "Texture.h"
 #include "ShaderUniform.h"
+#include "Rendering\Colour.h"
 
 #include <string>
 #include <fstream>
@@ -18,31 +19,32 @@ public:
 
 	}
 
-	Material(std::string pDiffuse, std::string pSpecular, float pShine);
-	Material(std::vector<std::string> pTextures, float pShine);
+	Material(Texture * pDiffuse, Texture * pSpecular, float pShine);
+	Material(std::vector<Texture * > pTextures, float pShine);
 	Material(glm::vec3 pDiffuse, glm::vec3 pSpecular, float pShine);
+	Material(std::vector<Colour> pColours, float pShine);
 
 	void UpdateUniforms(std::string pShader);
 
 	void BindTextures(std::string pShader);
 	
-	void assignDiffuseTexture(std::string pDiffuse) {
+	void assignDiffuseTexture(Texture *  pDiffuse) {
 		m_Textures_.push_back(pDiffuse);
 		m_hasTextures_ = true;
 	}
 
-	void assignSpecularTexture(std::string pSpecular) {
+	void assignSpecularTexture(Texture *  pSpecular) {
 		m_Textures_.push_back(pSpecular);
 		m_hasTextures_ = true;
 	}
 
-	void assignDiffuseColour(glm::vec3 pColour) {
-		m_diffuseColour_ = pColour;
+	void assignDiffuseColour(Colour pColour) {
+		m_Colours_.push_back( pColour);
 	}
 
 
-	void assignSpecularColour(glm::vec3 pColour) {
-		m_specularColour_ = pColour;
+	void assignSpecularColour(Colour pColour) {
+		m_Colours_.push_back(pColour);
 	}
 
 	void setShininess(float pShine) {
@@ -53,19 +55,29 @@ public:
 		return m_hasTextures_;
 	}
 
+	void setNormalMapToggle(bool pMap) {
+		hasNormalMap = pMap;
+	}
+
+	bool getNormalMapAssigned() {
+		return hasNormalMap;
+	}
+
 private:
 
 	bool m_hasTextures_;
 
-	std::vector<std::string> m_Textures_;
+	std::vector<Texture * > m_Textures_;
+	std::vector<Colour> m_Colours_;
 
-	ShaderUniform m_normalMap_;
+	std::vector<ShaderUniform> uniforms;
 
-	glm::vec3 m_diffuseColour_;
-	glm::vec3 m_specularColour_;
+	bool hasNormalMap = false;
 
 
 	float m_Shininess_;
+
+	void CreateUniforms();
 
 
 };

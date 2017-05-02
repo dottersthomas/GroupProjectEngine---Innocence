@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "Colour.h"
 
 
 #include <GL/glew.h> // Contains all the necessery OpenGL includes
@@ -31,7 +32,7 @@ private:
 
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene, GLchar* path);
 
-	std::vector<std::string> processMaterialTexture(aiMaterial* mat, aiTextureType type, std::string typeName);
+	std::vector<Texture *> processMaterialTexture(aiMaterial* mat, aiTextureType type, std::string typeName);
 
 	std::string m_Directory_;
 

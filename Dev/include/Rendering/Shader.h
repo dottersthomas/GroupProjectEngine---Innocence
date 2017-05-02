@@ -55,6 +55,10 @@ public:
 	
 	void UpdateShaderUniforms();
 
+	void UpdatePackagedUniforms(std::vector<ShaderUniform>& uniforms);
+
+	void UpdateSingleUniform(ShaderUniform& uniform);
+
 private:
 	// Checks if compilation or linking failed and if so, print the error logs
 	void checkCompileErrors(GLuint GameObject, std::string type);

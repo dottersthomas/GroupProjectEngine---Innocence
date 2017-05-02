@@ -90,6 +90,7 @@
     <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
     <ClInclude Include="include\Rendering\AssimpLoader.h" />
     <ClInclude Include="include\Rendering\Model.h" />
+    <ClInclude Include="include\Rendering\Colour.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

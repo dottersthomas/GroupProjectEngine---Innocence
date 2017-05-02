@@ -5,6 +5,7 @@
 #include "Rendering\Mesh.h"
 #include "Rendering\ResourceManager.h"
 #include "Rendering\Material.h"
+#include "Physics\Components\TransformComponent.h"
 
 
 class Model {
@@ -14,7 +15,9 @@ public:
 	Model() {}
 	Model(std::vector<Mesh> mesh);
 
-	void Render(std::string pShader);
+	void Render(std::string pShader, TransformComponent * transform);
+
+	void Update(TransformComponent * transform, float dt);
 private:
 
 	Material m_Material_;

@@ -29,6 +29,8 @@ public:
 	virtual void UpdateLightUniforms(int pos);
 
 	void setDirection(glm::vec3 pDir) {
+		setDirty(true);
+
 		m_Direction_ = pDir;
 	}
 };

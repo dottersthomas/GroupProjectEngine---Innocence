@@ -3,7 +3,7 @@
 Model AssimpLoader::LoadModel(GLchar* path) {
 	Assimp::Importer importer;
 
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
@@ -34,7 +34,8 @@ Mesh AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene, GLchar* path)
 
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;
-	std::vector<std::string> textures;
+	std::vector<Texture *> textures;
+	std::vector<Colour> colours;
 
 	std::string registerPath;
 	for (GLuint i = 0; i < mesh->mNumVertices; i++) {
@@ -62,6 +63,18 @@ Mesh AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene, GLchar* path)
 		}
 		else
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+
+
+		vector.x = mesh->mTangents[i].x;
+		vector.y = mesh->mTangents[i].y;
+		vector.z = mesh->mTangents[i].z;
+		vertex.Tangent = vector;
+
+		vector.x = mesh->mBitangents[i].x;
+		vector.y = mesh->mBitangents[i].y;
+		vector.z = mesh->mBitangents[i].z;
+		vertex.BiTangent = vector;
+
 		vertices.push_back(vertex);
 	}
 
@@ -76,35 +89,52 @@ Mesh AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene, GLchar* path)
 	//Process Materials below.
 
 	if (mesh->mMaterialIndex >= 0) {
+
 		aiMaterial * material = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<std::string> diffuseMaps = processMaterialTexture(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<Texture *> diffuseMaps = processMaterialTexture(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-		std::vector<std::string> specularMaps = processMaterialTexture(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<Texture *> specularMaps = processMaterialTexture(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+
+		std::vector<Texture *> normalMaps = processMaterialTexture(material, aiTextureType_NORMALS, "texture_normal");
+		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+
+	
+		aiColor4D colour;
+		if (AI_SUCCESS == aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &colour))
+			colours.push_back(Colour(glm::vec3(colour.r, colour.g, colour.b), "colour_diffuse"));
+
+		if (AI_SUCCESS == aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &colour))
+			colours.push_back(Colour(glm::vec3(colour.r, colour.g, colour.b), "colour_specular"));
+
+
 	}
 
 	registerPath = path + std::to_string(m_Nodes_);
 
 	RawMesh rMesh(vertices, indices);
 	ResourceManager::getInstance()->RegisterMesh(registerPath, rMesh);
-	Material material = Material(textures, 32.0f);
-	
+	Material material;
+	if(textures.size() > 0)
+		material = Material(textures, 32.0f);
+	else
+		material = Material(colours, 32.0f);
+
 	return Mesh(ResourceManager::getInstance()->GetRawMesh(registerPath), material);
 }
 
 
-std::vector<std::string> AssimpLoader::processMaterialTexture(aiMaterial* mat, aiTextureType type, std::string typeName) {
+std::vector<Texture *> AssimpLoader::processMaterialTexture(aiMaterial* mat, aiTextureType type, std::string typeName) {
 
-	std::vector<std::string> textures;
+	std::vector<Texture *> textures;
 	for (GLuint i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
 		mat->GetTexture(type, i, &str);
 		std::string filePath = std::string(str.C_Str());
 		filePath = m_Directory_ + '/' + filePath;
 		std::cout << filePath << std::endl;
-		ResourceManager::getInstance()->loadTextureSOIL(filePath.c_str(), false, filePath, typeName);
-		textures.push_back(filePath);
+		textures.push_back(ResourceManager::getInstance()->loadTextureSOIL(filePath.c_str(), false, filePath, typeName));
 	}
 
 	return textures;

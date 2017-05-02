@@ -13,6 +13,10 @@ struct Vertex {
 	glm::vec3 Normal;
 	// TexCoords
 	glm::vec2 TexCoords;
+
+	glm::vec3 Tangent;
+
+	glm::vec3 BiTangent;
 };
 
 //Raw Mesh data for the Mesh class.

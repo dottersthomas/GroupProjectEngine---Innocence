@@ -20,6 +20,9 @@ PointLight::PointLight(std::string pShader, glm::vec3 pos, glm::vec3 amb, glm::v
 	m_Constant_ = constant;
 	m_Linear_ = linear;
 	m_Quadratic_ = quadratic;
+
+	setDirty(true);
+
 }
 
 
@@ -65,10 +68,11 @@ void PointLight::UpdateLightUniforms(int pos) {
 	lightQuadratic.M_Type = FLOAT;
 	lightQuadratic.M_Float = m_Quadratic_;
 
-	ResourceManager::getInstance()->GetShader(getShader()).SetUniform(lightPosition);
-	ResourceManager::getInstance()->GetShader(getShader()).SetUniform(lightConstant);
-	ResourceManager::getInstance()->GetShader(getShader()).SetUniform(lightLinear);
-	ResourceManager::getInstance()->GetShader(getShader()).SetUniform(lightQuadratic);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightPosition);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightConstant);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightLinear);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightQuadratic);
 
+	setDirty(false);
 
 }
