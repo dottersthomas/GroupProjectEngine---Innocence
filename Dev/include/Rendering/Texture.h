@@ -2,6 +2,7 @@
 #define _TEXTURE_H_
 
 #include <GL/glew.h>
+#include <iostream>
 
 
 class Texture {
@@ -21,6 +22,8 @@ public:
 	GLuint Wrap_T; // Wrapping mode on T axis
 	GLuint Filter_Min; // Filtering mode if texture pixels < screen pixels
 	GLuint Filter_Max; // Filtering mode if texture pixels > screen pixels
+
+	std::string type;
 	
 	Texture() {}
 	Texture(GLuint width, GLuint height, unsigned char* data);

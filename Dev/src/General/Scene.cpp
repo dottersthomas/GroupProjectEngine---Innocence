@@ -9,11 +9,19 @@
 Scene::Scene() {
 	m_CurrentCamera_ = nullptr;
 	m_SceneGameObjects_.reserve(100); // Temporary reservation of space, XML file loading will handle this efficiently itself.
+
+
+	m_SceneGameObjects_.push_back(m_RootNode_);
+	m_SceneGameObjects_[0].removeComponent(m_SceneGameObjects_[0].GetComponentByType<TransformComponent>());
+
 }
 
 Scene::Scene(std::string pName) {
 	m_Name_ = pName;
 	m_SceneGameObjects_.reserve(100); // Temporary reservation of space, XML file loading will handle this efficiently itself.
+
+	m_SceneGameObjects_.push_back(m_RootNode_);
+	m_SceneGameObjects_[0].removeComponent(m_SceneGameObjects_[0].GetComponentByType<TransformComponent>());
 }
 
 int Scene::AddGameObject(GameObject pGameObject) {

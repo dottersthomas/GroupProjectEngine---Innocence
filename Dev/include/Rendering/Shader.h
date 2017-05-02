@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -21,7 +22,7 @@ public:
 	// State
 	GLuint ID;
 	// Constructor
-	Shader() { Uniforms.reserve(100); }
+	Shader() {}
 	// Sets the current shader as active
 	Shader  &Use();
 	// Compiles the shader from given source code
@@ -48,16 +49,21 @@ public:
 
 	void SetMatrix4(const GLchar *name, const glm::mat4 &matrix);
 
-	void SetUniform(ShaderUniform& pUniform) {
-		Uniforms.push_back(pUniform);
+	void SetUniform(ShaderUniform pUniform) {
+		Uniforms[pUniform.M_Address] = pUniform;
 	}
 	
 	void UpdateShaderUniforms();
 
+	void UpdatePackagedUniforms(std::vector<ShaderUniform>& uniforms);
+
+	void UpdateSingleUniform(ShaderUniform& uniform);
+
 private:
 	// Checks if compilation or linking failed and if so, print the error logs
 	void checkCompileErrors(GLuint GameObject, std::string type);
-	std::vector<ShaderUniform> Uniforms;
+	std::map<std::string, ShaderUniform> Uniforms;
+	std::map<std::string, ShaderUniform>::iterator UniformIterator;
 };
 
 

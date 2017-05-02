@@ -59,6 +59,8 @@ public:
 	}
 
 private:
+
+	GameObject m_RootNode_ = GameObject("Root");
 	
 	GameObjectVectorWrapper::t_GameObject_Vector_ m_SceneGameObjects_;
 	

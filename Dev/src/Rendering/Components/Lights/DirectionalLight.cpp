@@ -14,6 +14,9 @@ DirectionalLight::DirectionalLight(std::string pShader, glm::vec3 dir, glm::vec3
 	setAmbient(amb);
 	setDiffuse(diff);
 	setSpecular(spec);
+
+	setDirty(true);
+
 }
 
 
@@ -45,6 +48,8 @@ void DirectionalLight::UpdateLightUniforms(int pos){
 	lightDirection.M_Type = VEC3;
 	lightDirection.M_Vec3 = m_Direction_;
 
-	ResourceManager::getInstance()->GetShader(getShader()).SetUniform(lightDirection);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightDirection);
+
+	setDirty(false);
 
 }

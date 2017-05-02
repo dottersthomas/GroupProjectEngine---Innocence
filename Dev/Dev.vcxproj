@@ -134,13 +134,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\Lua\include;$(SolutionDir)\Lib\LuaBridge\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Lib\assimp\include;$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\Lua\include;$(SolutionDir)\Lib\LuaBridge\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions> NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\SOIL\lib\;$(SolutionDir)\Lib\tinyxml\lib\;$(SolutionDir)\Lib\glew\lib;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(SolutionDir)\Lib\fmod\lib;$(SolutionDir)\Lib\Lua\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SOIL.lib;tinyxml2.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;fmod64_vc.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\assimp\lib\;$(SolutionDir)\Lib\SOIL\lib\;$(SolutionDir)\Lib\tinyxml\lib\;$(SolutionDir)\Lib\glew\lib;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(SolutionDir)\Lib\fmod\lib;$(SolutionDir)\Lib\Lua\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;SOIL.lib;tinyxml2.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;fmod64_vc.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <SubSystem>Console</SubSystem>
@@ -195,8 +195,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Audio\Sound.h" />
+    <ClCompile Include="src\Rendering\AssimpLoader.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
     <ClCompile Include="src\Rendering\LightManager.cpp" />
+    <ClCompile Include="src\Rendering\Material.cpp" />
+    <ClCompile Include="src\Rendering\Model.cpp" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
@@ -233,9 +236,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioManager.h" />
+    <ClInclude Include="include\Rendering\AssimpLoader.h" />
+    <ClInclude Include="include\Rendering\Colour.h" />
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Rendering\Model.h" />
     <ClInclude Include="include\Scripting\ExtLib.h" />
     <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
     <ClInclude Include="include\Rendering\LightManager.h" />

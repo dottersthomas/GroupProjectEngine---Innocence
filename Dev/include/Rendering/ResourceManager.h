@@ -35,11 +35,11 @@ private:
 	// Private constructor, that is we do not want any actual resource manager GameObjects. Its members and functions should be publicly available (static).
 	ResourceManager() { }
 	// Loads and generates a shader from file
-	Shader loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile);
+	Shader * loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile);
 	std::string createShaderDefines();
 
-	std::map<std::string, Shader>    Shaders;	//All Shaders
-	std::map<std::string, Texture>   Textures;	//All Textures
+	std::map<std::string, Shader *>    Shaders;	//All Shaders
+	std::map<std::string, Texture*>   Textures;	//All Textures
 	std::map<std::string, RawMesh>	 Meshes;	//All Raw Mesh data
 	std::map<GLchar, Character> Characters;		//All Characters
 	std::map<std::string, t_Click_Handler> buttonClickFunctions;	//All The click Callbacks.
@@ -79,15 +79,15 @@ public:
 	}
 
 	//Load a shader and compile it.
-	Shader LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, std::string name);
+	Shader * LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, std::string name);
 	// Retrieves a stored sader
-	Shader& GetShader(std::string name);
+	Shader * GetShader(std::string name);
 
-	Texture loadTexture(const GLchar *file, GLboolean alpha, std::string name);
+	Texture * loadTexture(const GLchar *file, GLboolean alpha, std::string name);
 
-	Texture loadTextureSOIL(const GLchar *file, GLboolean alpha, std::string name);
+	Texture * loadTextureSOIL(const GLchar *file, GLboolean alpha, std::string name, std::string type);
 
-	Texture GetTexture(std::string name);
+	Texture* GetTexture(std::string name);
 
 	//Register a mesh to prevent reloading the file.
 	RawMesh * RegisterMesh(std::string pPath, RawMesh pMesh);

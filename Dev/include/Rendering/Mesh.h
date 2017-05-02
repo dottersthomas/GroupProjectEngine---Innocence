@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "RawMesh.h"
+#include "Material.h"
 
 class Mesh {
 private:
@@ -20,7 +21,7 @@ private:
 	//Local position data relative to the master transform.
 	glm::vec3 m_LocalPosition_ = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 m_LocalRotation_ = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 m_Scale_;
+	glm::vec3 m_Scale_ = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	//By Default is the origin. This is the pivot point to rotate around.
 	glm::vec3 m_PivotPoint_ = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -30,13 +31,22 @@ private:
 	//Possible texture Id.
 	std::string m_TextureId_;
 	
+	Material m_Material_;
+
+	glm::mat4 m_ModelMatrix_;
+
 public:
 
 	Mesh();
 	Mesh(RawMesh rMesh, glm::vec4 m_Colour_ = glm::vec4(0.6, 0.6, 0.6, 1.0));
+	Mesh(RawMesh rMesh, Material pMat);
 	~Mesh() {
 	/*	if(VAO != 0)
 			delete VAO;*/
+	}
+
+	Material& getMaterial() {
+		return m_Material_;
 	}
 
 	//toggle If UV data is present.
@@ -47,6 +57,10 @@ public:
 	//Get the raw render data to be passed to the GPU.
 	GLuint * getRenderData() {
 		return rawMesh.VAO;
+	}
+
+	int getIndices() {
+		return rawMesh.M_Indices;
 	}
 
 
@@ -100,6 +114,14 @@ public:
 
 	std::string getTextureID() {
 		return m_TextureId_;
+	}
+
+	void setModelMatrix(glm::mat4 model) {
+		m_ModelMatrix_ = model;
+	}
+
+	glm::mat4 getModelMatrix() {
+		return m_ModelMatrix_;
 	}
 
 };

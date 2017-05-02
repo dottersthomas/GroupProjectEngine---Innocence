@@ -12,3 +12,8 @@ Mesh::Mesh(RawMesh rMesh, glm::vec4 m_Colour_) {
 	
 }
 
+Mesh::Mesh(RawMesh rMesh, Material pMat) {
+	rawMesh = rMesh;
+	m_Material_ = pMat;
+}
+

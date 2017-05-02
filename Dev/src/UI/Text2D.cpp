@@ -31,10 +31,10 @@ void Text2D::Update(float dt) {
 
 void Text2D::Render() {
 	if (ResourceManager::getInstance()->getCurrentShaderID() != m_Shader_) {
-		ResourceManager::getInstance()->GetShader(m_Shader_).Use();
+		ResourceManager::getInstance()->GetShader(m_Shader_)->Use();
 	}
 
-	ResourceManager::getInstance()->GetShader(m_Shader_).SetVector4f("textColor", getColour());
+	ResourceManager::getInstance()->GetShader(m_Shader_)->SetVector4f("textColor", getColour());
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(this->quadVAO);

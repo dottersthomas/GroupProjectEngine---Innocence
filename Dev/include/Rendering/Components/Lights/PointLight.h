@@ -25,18 +25,28 @@ public:
 	virtual void UpdateLightUniforms(int pos);
 
 	void setPosition(glm::vec3 pPos) {
+
+		setDirty(true);
+
 		m_Position_ = pPos;
 	}
 
 	void setConstant(float pConstant) {
+
+		setDirty(true);
+
 		m_Constant_ = pConstant;
 	}
 
 	void setLinear(float pLinear) {
+		setDirty(true);
+
 		m_Linear_ = pLinear;
 	}
 
 	void setQuadratic(float pQuadratic) {
+		setDirty(true);
+
 		m_Quadratic_ = pQuadratic;
 	}
 

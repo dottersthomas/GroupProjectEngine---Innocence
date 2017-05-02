@@ -14,7 +14,7 @@ void CanvasRect::Update(float dt) {
 void CanvasRect::Render() {
 
 	//Set the colour.
-	ResourceManager::getInstance()->GetShader(m_Shader_).SetVector4f("elementColour", m_Colour_);
+	ResourceManager::getInstance()->GetShader(m_Shader_)->SetVector4f("elementColour", m_Colour_);
 
 
 	m_Model_ = glm::mat4(1.0f);
@@ -24,7 +24,7 @@ void CanvasRect::Render() {
 
 	m_Model_ = glm::scale(m_Model_, glm::vec3(m_Scale_, 1.0f)); // Last scale
 
-	ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("model", m_Model_);
+	ResourceManager::getInstance()->GetShader(m_Shader_)->SetMatrix4("model", m_Model_);
 
 
 	//No texture will be used so no need to concern the render process with it.

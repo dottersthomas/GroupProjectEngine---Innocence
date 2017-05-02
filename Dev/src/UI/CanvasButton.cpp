@@ -45,9 +45,9 @@ void CanvasButton::Render() {
 	//Set the colour.
 
 	if(m_CurrentState_ == GuiStates::NORMAL)
-		ResourceManager::getInstance()->GetShader(m_Shader_).SetVector4f("elementColour", m_Colour_);
+		ResourceManager::getInstance()->GetShader(m_Shader_)->SetVector4f("elementColour", m_Colour_);
 	else if (m_CurrentState_ == GuiStates::HOVERED)
-		ResourceManager::getInstance()->GetShader(m_Shader_).SetVector4f("elementColour", m_HoverColour_);
+		ResourceManager::getInstance()->GetShader(m_Shader_)->SetVector4f("elementColour", m_HoverColour_);
 
 
 	m_Model_ = glm::mat4(1.0f);
@@ -57,7 +57,7 @@ void CanvasButton::Render() {
 
 	m_Model_ = glm::scale(m_Model_, glm::vec3(m_Scale_, 1.0f)); // Last scale
 
-	ResourceManager::getInstance()->GetShader(m_Shader_).SetMatrix4("model", m_Model_);
+	ResourceManager::getInstance()->GetShader(m_Shader_)->SetMatrix4("model", m_Model_);
 
 
 	//No texture will be used so no need to concern the render process with it.

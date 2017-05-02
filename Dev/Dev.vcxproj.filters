@@ -37,6 +37,9 @@
     <ClCompile Include="src\Rendering\LightManager.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Rendering\Material.cpp" />
+    <ClCompile Include="src\Rendering\AssimpLoader.cpp" />
+    <ClCompile Include="src\Rendering\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioManager.h" />
@@ -85,7 +88,13 @@
     <ClInclude Include="include\Rendering\Components\Lights\DirectionalLight.h" />
     <ClInclude Include="include\Rendering\Components\Lights\Light.h" />
     <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
+<<<<<<< HEAD
     <ClInclude Include="include\Scripting\LuaHelper.h" />
+=======
+    <ClInclude Include="include\Rendering\AssimpLoader.h" />
+    <ClInclude Include="include\Rendering\Model.h" />
+    <ClInclude Include="include\Rendering\Colour.h" />
+>>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

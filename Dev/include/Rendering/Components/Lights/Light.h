@@ -37,18 +37,25 @@ public:
 	}
 
 	void setAmbient(glm::vec3 amb) {
+		setDirty(true);
 		m_Ambient_ = amb;
 	}
 
 	void setDiffuse(glm::vec3 diff) {
+		setDirty(true);
+
 		m_Diffuse_ = diff;
 	}
 
 	void setSpecular(glm::vec3 spec) {
+		setDirty(true);
+
 		m_Specular_ = spec;
 	}
 
 	void setUniformName(std::string pName) {
+		setDirty(true);
+
 		m_UniformName_ = pName;
 	}
 
@@ -74,9 +81,12 @@ public:
 		specular.M_Vec3 = m_Specular_;
 
 
-		ResourceManager::getInstance()->GetShader(m_Shader_).SetUniform(ambient);
-		ResourceManager::getInstance()->GetShader(m_Shader_).SetUniform(diffuse);
-		ResourceManager::getInstance()->GetShader(m_Shader_).SetUniform(specular);
+		ResourceManager::getInstance()->GetShader(m_Shader_)->SetUniform(ambient);
+		ResourceManager::getInstance()->GetShader(m_Shader_)->SetUniform(diffuse);
+		ResourceManager::getInstance()->GetShader(m_Shader_)->SetUniform(specular);
+
+		setDirty(false);	
+
 
 	}
 
@@ -97,6 +107,13 @@ public:
 				.addData<glm::vec3>("specular", &Light::m_Specular_)
 			.endClass();
 	}
+	bool isDirty() {
+		return m_IsDirty_;
+	}
+
+	void setDirty(bool dirty) {
+		m_IsDirty_ = dirty;
+	}
 
 private:
 	std::string m_Shader_;
@@ -105,6 +122,8 @@ private:
 	glm::vec3 m_Ambient_;
 	glm::vec3 m_Diffuse_;
 	glm::vec3 m_Specular_;
+
+	bool m_IsDirty_ = true;
 
 };
 
