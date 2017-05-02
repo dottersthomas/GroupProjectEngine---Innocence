@@ -65,7 +65,7 @@ void Game::beginLoop() {
 	TransformComponent::registerLua(L);
 	InputHandler::registerLua(L);
 	GameObject::registerLua(L);
-	Sound::registerLua(L);
+	//Sound::registerLua(L);
 	Light::registerLua(L);
 	PointLight::registerLua(L);
 	DirectionalLight::registerLua(L);
@@ -224,12 +224,12 @@ Scene * Game::LoadTestScene() {
 	//Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
 	//Model model = loader.LoadModel("Models/Talia/Talia.dae");
 	Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
-
+	//Model model;
 	GameObject object("Model");
 	int index = _Scene->AddGameObject(object);
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
-	tc->setPosition(glm::vec3(0.0f, -3.0f, 0.0f));
+	tc->setPosition(glm::vec3(-2.0f, -2.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
 
@@ -247,6 +247,20 @@ Scene * Game::LoadTestScene() {
 	index = _Scene->AddGameObject(GameObject("OBJ"));
 	tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
+	tc->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+
+
+	RenderComponent * render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+
+	render2->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render2);
+	render2->setParent(&_Scene->getGameObjects()->at(index));
+
+
+
 
 	////////////////////////////////////////////
 	//Uniforms

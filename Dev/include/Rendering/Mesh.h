@@ -124,6 +124,9 @@ public:
 		return m_ModelMatrix_;
 	}
 
+	RawMesh& getRawMesh() {
+		return rawMesh;
+	}
 };
 
 #endif

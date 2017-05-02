@@ -18,12 +18,23 @@ public:
 	void Render(std::string pShader, TransformComponent * transform);
 
 	void Update(TransformComponent * transform, float dt);
+
+	glm::vec3 getBoundingMin() {
+		return m_MinPos_;
+	}
+
+	glm::vec3 getBoundingMax() {
+		return m_MaxPos_;
+	}
+
 private:
 
 	Material m_Material_;
 
 	std::vector<Mesh> m_Meshes_;
 
+	glm::vec3 m_MinPos_;
+	glm::vec3 m_MaxPos_;
 };
 
 

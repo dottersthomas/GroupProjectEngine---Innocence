@@ -73,6 +73,10 @@ public:
 	Material& getMaterial() {
 		return m_Material_;
 	}
+
+	std::vector<Model>& getModels() {
+		return m_Models_;
+	}
 };
 
 
