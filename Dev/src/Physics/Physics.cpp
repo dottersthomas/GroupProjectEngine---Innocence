@@ -32,10 +32,18 @@ void Physics::CollisionDetection()
 				collided = AABBAABBCollision(test, test2);
 				if (collided)
 				{
-					Stop(*iter);
+					CollisionData cd = CollisionData(*iter2);
+					ResolveCollision(*iter,cd);
+				}
+				else
+				{
+					if (test->getTrigger() == true && test->getCollided() == true)
+					{
+						test->OnTriggerExit();
+					}
 				}
 		
-					std::cout << collided << endl;
+				//	std::cout << collided << endl;
 				
 			}
 		}
@@ -95,7 +103,27 @@ bool Physics::AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2)
 		box1.GetMin().z <= box2.GetMax().z);
 }
 
-void Physics::ResolveCollision() {
+void Physics::ResolveCollision(GameObject& go, CollisionData cd) {
+
+	BoxCollider * bc = go.GetComponentByType<BoxCollider>();
+	if (bc->getTrigger())
+	{
+		if (!bc->getCollided())
+		{
+			bc->OnTriggerEnter(cd);
+		}
+		else
+		{
+			if (bc->getCollided())
+			{
+				bc->OnTriggerStay(cd);
+			}
+		}
+	}
+	else
+	{
+		bc->OnCollided(cd);
+	}
 
 }
 

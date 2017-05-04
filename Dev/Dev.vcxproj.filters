@@ -109,6 +109,7 @@
     <ClInclude Include="include\Physics\Components\Collider.h" />
     <ClInclude Include="include\Physics\Physics.h" />
     <ClInclude Include="include\Physics\Components\RigidBody.h" />
+    <ClInclude Include="include\Physics\Components\CollisionData.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

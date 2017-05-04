@@ -13,7 +13,11 @@ private:
 	Box boundingBox;
 
 public:
-	BoxCollider(GameObject * pParent);
+	BoxCollider(GameObject * pParent, bool isTrigger);
+	BoxCollider()
+	{
+
+	}
 	~BoxCollider();
 	void LateUpdate(double dt);
 	void Destroy();

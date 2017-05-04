@@ -14,6 +14,10 @@
 class GameObject
 {
 public:
+	GameObject()
+	{
+
+	}
 	GameObject(const char* pName);
 	~GameObject();
 

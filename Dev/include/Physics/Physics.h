@@ -51,7 +51,7 @@ public:
 
 	bool AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2);
 	
-	void ResolveCollision();
+	void ResolveCollision(GameObject& go,CollisionData cd);
 
 	void setScene(Scene * pScene);
 

@@ -1,8 +1,9 @@
 #include "Physics\Components\BoxCollider.h"
 
-BoxCollider::BoxCollider(GameObject * pParent)
+BoxCollider::BoxCollider(GameObject * pParent, bool isTrigger)
 {
 	m_GameObjectParent_ = pParent;
+	BoxCollider::isTrigger = isTrigger;
 	RenderComponent * rc = m_GameObjectParent_->GetComponentByType<RenderComponent>();
 	vector<Model> model = rc->getModels();
 

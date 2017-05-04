@@ -142,9 +142,9 @@ void Game::beginLoop() {
 			}
 			
 			rotation += 3.142 / 1000.0f;
-			TransformComponent* temp = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
+			TransformComponent* temp = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
 			//temp->setRotation(glm::vec3(temp->getRotation().x, temp->getRotation().y,  rotation));
-			RigidBody * rb = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
+			RigidBody * rb = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
 			
 			update(tick * 1/ fDelay);
 
@@ -213,7 +213,7 @@ Game::Game() {
 
 	WindowManager::getInstance().toggleCursorDraw(false);
 	
-	m_Physics_ = new Physics(m_WindowManager_.getWindow());
+	m_Physics_ = new Physics(WindowManager::getInstance().getWindow());
 
 	m_Renderer_ = new Renderer(WindowManager::getInstance().getWindow());
 	m_GUIRenderer_ = new GUIRenderer(WindowManager::getInstance().getWindow());
@@ -275,15 +275,15 @@ Scene * Game::LoadTestScene() {
 	glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 
-	Script* s1 = new Script("PlayerController.lua", "Test");
+	
 
 	render->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render);
-	_Scene->getGameObjects()->at(index).registerComponent(s1);
-	render->setParent(&_Scene->getGameObjects()->at(index));
-	s1->setParent(&_Scene->getGameObjects()->at(index));
 	
-	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index));
+	render->setParent(&_Scene->getGameObjects()->at(index));
+
+	
+	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
 	bc->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 0, 1));
 	_Scene->getGameObjects()->at(index).registerComponent(bc);
 	bc->setParent(&_Scene->getGameObjects()->at(index));
@@ -303,7 +303,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
 	render2->setParent(&_Scene->getGameObjects()->at(index));
 
-	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index));
+	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index),true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc2);
 	bc2->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -312,7 +312,9 @@ Scene * Game::LoadTestScene() {
 	rb->setParent(&_Scene->getGameObjects()->at(index));
 	rb->SetAcc(glm::vec3(-100, 0, 0));
 
-
+	Script* s1 = new Script("PlayerController.lua", "Test");
+	_Scene->getGameObjects()->at(index).registerComponent(s1);
+	s1->setParent(&_Scene->getGameObjects()->at(index));
 
 
 	////////////////////////////////////////////
