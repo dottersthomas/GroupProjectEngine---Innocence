@@ -4,7 +4,7 @@
 
 // --- Constructor(s)
 
-Sound::Sound(std::string path, const bool make3D)
+Sound::Sound(std::string path, bool make3D)
 {
 	// Initilaise variables
 	m_AudioEngine = AudioEngine::getInstance();

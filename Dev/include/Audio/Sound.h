@@ -22,7 +22,7 @@ public:
 	/// </summary>
 	/// <param name="path">The path to the audio file.</param>
 	/// <param name="make3D">Used to determine whether or not the sound should be 3D.</param>
-	Sound(std::string path, const bool make3D);
+	Sound(std::string path, bool make3D);
 
 	/// <summary>
 	/// Finalizes an instance of the <see cref="Sound"/> class.
@@ -105,7 +105,7 @@ public:
 
 		getGlobalNamespace(L)
 			.deriveClass<Sound, Component>("Sound")
-			.addConstructor<void(*)(std::string, bool)>()
+			.addConstructor<void(*)(std::string path, bool make3D)>()
 			.addProperty("threeD", &Sound::is3D)
 			.addProperty("path", &Sound::getPath)
 			.addProperty("loop", &Sound::isLooped, &Sound::loop)
