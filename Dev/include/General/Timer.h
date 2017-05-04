@@ -30,7 +30,7 @@ public:
 			.addFunction("start", &Timer::start)
 			.addFunction("pause", &Timer::pause)
 			.addFunction("reset", &Timer::reset)
-			.addFunction("currentTime", &Timer::getTime)
+			.addProperty("currentTime", &Timer::getTime)
 			.endClass();
 	}
 };
