@@ -7,6 +7,7 @@
 #include "GameObjectVectorWrapper.h"
 #include "ComponentVectorWrapper.h"
 #include "Rendering\Components\CameraComponent.h"
+#include "Rendering\Environment.h"
 
 
 //Main Scene class. This holds effectivly the entire game.
@@ -58,6 +59,10 @@ public:
 			return m_CurrentCamera_;
 	}
 
+	Environment * getEnvironment() {
+		return m_Environment_;
+	}
+
 private:
 
 	GameObject m_RootNode_ = GameObject("Root");
@@ -69,6 +74,8 @@ private:
 
 
 	std::string m_Name_;
+
+	Environment * m_Environment_;
 
 
 

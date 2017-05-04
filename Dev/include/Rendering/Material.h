@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "ShaderUniform.h"
 #include "Rendering\Colour.h"
+#include "Rendering\CubeMapTexture.h"
 
 #include <string>
 #include <fstream>
@@ -16,7 +17,7 @@ class Material {
 public:
 	Material() {
 		m_hasTextures_ = false;
-
+		m_hasCubeMaps_ = false;
 	}
 
 	Material(Texture * pDiffuse, Texture * pSpecular, float pShine);
@@ -36,6 +37,11 @@ public:
 	void assignSpecularTexture(Texture *  pSpecular) {
 		m_Textures_.push_back(pSpecular);
 		m_hasTextures_ = true;
+	}
+
+	void assignCubeMap(CubeMapTexture * pMap) {
+		m_CubeMaps_.push_back(pMap);
+		m_hasCubeMaps_ = true;
 	}
 
 	void assignDiffuseColour(Colour pColour) {
@@ -66,8 +72,9 @@ public:
 private:
 
 	bool m_hasTextures_;
-
-	std::vector<Texture * > m_Textures_;
+	bool m_hasCubeMaps_;
+	std::vector<Texture *> m_Textures_;
+	std::vector<CubeMapTexture *> m_CubeMaps_;
 	std::vector<Colour> m_Colours_;
 
 	std::vector<ShaderUniform> uniforms;

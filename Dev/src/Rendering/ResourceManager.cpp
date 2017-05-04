@@ -118,11 +118,7 @@ Texture * ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alp
 	if (iter == Textures.end())
 	{
 		Texture * texture;
-		if (alpha)
-		{
-			texture->Internal_Format = GL_RGBA;
-			texture->Image_Format = GL_RGBA;
-		}
+		
 		int width, height;
 		unsigned char * data;
 		if (alpha)
@@ -133,6 +129,12 @@ Texture * ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alp
 
 		texture = new Texture(width, height, data);
 
+		if (alpha)
+		{
+			texture->Internal_Format = GL_RGBA;
+			texture->Image_Format = GL_RGBA;
+		}
+
 		SOIL_free_image_data(data);
 
 		texture->type = type;
@@ -142,6 +144,22 @@ Texture * ResourceManager::loadTextureSOIL(const GLchar *filePath, GLboolean alp
 	}
 
 	return Textures[name];
+}
+
+CubeMapTexture * ResourceManager::loadCubemap(std::vector<const GLchar* > file, GLboolean alpha, std::string name, std::string type){
+	std::vector<unsigned char*> data;
+	std::vector<glm::vec2> sizes;
+	int width, height;
+
+	for (GLuint i = 0; i < file.size(); i++){
+
+		data.push_back(SOIL_load_image(file[i], &width, &height, 0, SOIL_LOAD_RGB));
+		sizes.push_back(glm::vec2(width, height));
+	}
+	CubeMapTexture * texture = new CubeMapTexture(sizes, data);
+	texture->type = type;
+
+	return texture;
 }
 
 Texture* ResourceManager::GetTexture(std::string name)

@@ -197,9 +197,12 @@
     <ClCompile Include="include\Audio\Sound.h" />
     <ClCompile Include="src\Rendering\AssimpLoader.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Rendering\CubeMapTexture.cpp" />
+    <ClCompile Include="src\Rendering\Environment.cpp" />
     <ClCompile Include="src\Rendering\LightManager.cpp" />
     <ClCompile Include="src\Rendering\Material.cpp" />
     <ClCompile Include="src\Rendering\Model.cpp" />
+    <ClCompile Include="src\Rendering\SkyBox.cpp" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
@@ -241,7 +244,10 @@
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Rendering\CubeMapTexture.h" />
+    <ClInclude Include="include\Rendering\Environment.h" />
     <ClInclude Include="include\Rendering\Model.h" />
+    <ClInclude Include="include\Rendering\SkyBox.h" />
     <ClInclude Include="include\Scripting\ExtLib.h" />
     <ClInclude Include="include\Rendering\Components\Lights\PointLight.h" />
     <ClInclude Include="include\Rendering\LightManager.h" />
@@ -293,6 +299,8 @@
     <None Include="Shaders\default_shader.vert" />
     <None Include="Shaders\gui_plain_shader.frag" />
     <None Include="Shaders\gui_plain_shader.vert" />
+    <None Include="Shaders\skybox_shader.frag" />
+    <None Include="Shaders\skybox_shader.vert" />
     <None Include="Shaders\texture_shader.frag" />
     <None Include="Shaders\texture_shader.vert" />
     <None Include="Shaders\text_shader.frag" />
