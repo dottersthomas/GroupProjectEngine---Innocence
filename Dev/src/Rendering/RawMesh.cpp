@@ -8,16 +8,16 @@ RawMesh::RawMesh(std::vector<GLfloat> vertices) {
 
 	for (int i = 3; i < vertices.size(); i += 3) {
 		if (x > vertices[i + 0]) x = vertices[i + 0];
-		if (y > vertices[i + 1]) z = vertices[i + 1];
-		if (z > vertices[i + 2]) x = vertices[i + 2];
+		if (y > vertices[i + 1]) y = vertices[i + 1];
+		if (z > vertices[i + 2]) z = vertices[i + 2];
 
 	}
 	m_MinPos_ = glm::vec3(x, y, z);
 
 	for (int i = 3; i < vertices.size(); i += 3) {
 		if (x < vertices[i + 0]) x = vertices[i + 0];
-		if (y < vertices[i + 1]) z = vertices[i + 1];
-		if (z < vertices[i + 2]) x = vertices[i + 2];
+		if (y < vertices[i + 1]) y = vertices[i + 1];
+		if (z < vertices[i + 2]) z = vertices[i + 2];
 	}
 	m_MaxPos_ = glm::vec3(x, y, z);
 
@@ -58,16 +58,16 @@ RawMesh::RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV) {
 
 	for (int i = 3; i < vertices.size(); i += 3) {
 		if (x > vertices[i + 0]) x = vertices[i + 0];
-		if (y > vertices[i + 1]) z = vertices[i + 1];
-		if (z > vertices[i + 2]) x = vertices[i + 2];
+		if (y > vertices[i + 1]) y = vertices[i + 1];
+		if (z > vertices[i + 2]) z = vertices[i + 2];
 
 	}
 	m_MinPos_ = glm::vec3(x, y, z);
 
 	for (int i = 3; i < vertices.size(); i += 3) {
 		if (x < vertices[i + 0]) x = vertices[i + 0];
-		if (y < vertices[i + 1]) z = vertices[i + 1];
-		if (z < vertices[i + 2]) x = vertices[i + 2];
+		if (y < vertices[i + 1]) y = vertices[i + 1];
+		if (z < vertices[i + 2]) z = vertices[i + 2];
 	}
 	m_MaxPos_ = glm::vec3(x, y, z);
 
@@ -127,16 +127,16 @@ RawMesh::RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV, std::ve
 
 	for (int i = 3; i < vertices.size(); i += 3) {
 		if (x > vertices[i + 0]) x = vertices[i + 0];
-		if (y > vertices[i + 1]) z = vertices[i + 1];
-		if (z > vertices[i + 2]) x = vertices[i + 2];
+		if (y > vertices[i + 1]) y = vertices[i + 1];
+		if (z > vertices[i + 2]) z = vertices[i + 2];
 
 	}
 	m_MinPos_ = glm::vec3(x, y, z);
 
 	for (int i = 3; i < vertices.size(); i += 3) {
 		if (x < vertices[i + 0]) x = vertices[i + 0];
-		if (y < vertices[i + 1]) z = vertices[i + 1];
-		if (z < vertices[i + 2]) x = vertices[i + 2];
+		if (y < vertices[i + 1]) y = vertices[i + 1];
+		if (z < vertices[i + 2]) z = vertices[i + 2];
 	}
 	m_MaxPos_ = glm::vec3(x, y, z);
 
@@ -208,6 +208,29 @@ RawMesh::RawMesh(std::vector<GLfloat> vertices, std::vector<GLfloat> UV, std::ve
 
 
 RawMesh::RawMesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
+
+	int x = vertices[0].Position[0];
+	int y = vertices[0].Position[1];
+	int z = vertices[0].Position[2];
+
+	for (int i = 1; i < vertices.size(); i++) {
+		if (x > vertices[i].Position[0]) x = vertices[i].Position[0];
+		if (y > vertices[i].Position[1]) y = vertices[i].Position[1];
+		if (z > vertices[i].Position[2]) z = vertices[i].Position[2];
+
+	}
+	m_MinPos_ = glm::vec3(x, y, z);
+
+	for (int i = 1; i < vertices.size(); i++) {
+		if (x < vertices[i].Position[0]) x = vertices[i].Position[0];
+		if (y < vertices[i].Position[1]) y = vertices[i].Position[1];
+		if (z < vertices[i].Position[2]) z = vertices[i].Position[2];
+
+	}
+	m_MaxPos_ = glm::vec3(x, y, z);
+
+
+
 	VAO = new GLuint;
 	GLuint VBO, EBO;
 	// Create buffers/arrays

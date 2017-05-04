@@ -4,7 +4,7 @@
 FirstPersonCameraComponent::FirstPersonCameraComponent(GameObject * pParent, std::string pName, glm::vec3 pPosition) {
 
 	m_GameObjectParent_ = pParent;
-	M_ComponentName = pName;
+	m_ComponentName = pName;
 
 
 	int width, height;

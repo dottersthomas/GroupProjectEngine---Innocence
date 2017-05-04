@@ -11,7 +11,7 @@ RenderComponent::RenderComponent(GameObject * pParent, std::string sShader, int 
 
 	transformComponent = m_GameObjectParent_->GetComponentByType<TransformComponent>();
 	m_RenderType_ = pType;
-	M_ComponentName = "RENDER_COMPONENT";
+	m_ComponentName = "RENDER_COMPONENT";
 }
 
 void RenderComponent::Update(double dt) {

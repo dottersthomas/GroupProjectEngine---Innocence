@@ -49,6 +49,17 @@ public:
 	void Start();
 
 	glm::mat4 Bind();
+
+	// Register class with lua
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<ThirdPersonCameraComponent, CameraComponent>("ThirdPersonCameraComponent")
+			.addData<glm::vec3>("position", &ThirdPersonCameraComponent::m_Position_)
+			.endClass();
+	}
 };
 
 #endif

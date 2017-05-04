@@ -6,9 +6,11 @@
 #include "Scripting/LuaEngine.h"
 #include "Scripting/Script.h"
 #include "Scripting/ExtLib.h"
+#include "General\Timer.h"
 
 #include "Rendering\ShaderUniform.h"
 #include "Rendering\AssimpLoader.h"
+#include "Rendering\Components\ThirdPersonCameraComponent.h"
 
 #define TIXML_USE_STL
 
@@ -34,8 +36,8 @@ void Game::update(double dTime) {
 
 	//Update the scene, close to the initial loop to minimise time discrepancy.
 	//TODO implement custom timer for better time management.
-	if (m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr) {
-		m_WindowManager_.getSceneManager()->getCurrentScene()->Update(dTime);
+	if (WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr) {
+		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Update(dTime);
 	}
 
 
@@ -69,25 +71,28 @@ void Game::beginLoop() {
 	Light::registerLua(L);
 	PointLight::registerLua(L);
 	DirectionalLight::registerLua(L);
+	Timer::registerLua(L);
+	CameraComponent::registerLua(L);
+	FirstPersonCameraComponent::registerLua(L);
+	ThirdPersonCameraComponent::registerLua(L);
+	WindowManager::registerLua(L);
+	SceneManager::registerLua(L);
+	Scene::registerLua(L);
 
 	// Execute scripts
-	GameObject go = GameObject("TestObject");
+	//GameObject go = GameObject("TestObject");
 
-	auto s1 = std::make_shared<Script>("test.lua", "Test");
-	auto s2 = std::make_shared<Script>("test2.lua", "Test2");
-	go.registerComponent(s1.get());
-	go.registerComponent(s2.get());
-	s1->Start();
-
+	//auto s1 = std::make_shared<Script>("PlayerController.lua", "Test");
+	//go.registerComponent(s1.get());
 
 	// TODO Line below causes error, scripts can be executed manually
-	//m_WindowManager_.getSceneManager()->getCurrentScene()->AddGameObject(go);
+	//WindowManager::getInstance().getSceneManager()->getCurrentScene()->AddGameObject(go);
 
 	//Start the Scenes Components.
-	if(m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr)
-		m_WindowManager_.getSceneManager()->getCurrentScene()->Start();
+	if(WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr)
+		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 
-	while (!glfwWindowShouldClose(m_WindowManager_.getWindow()))
+	while (!glfwWindowShouldClose(WindowManager::getInstance().getWindow()))
 	{
 		// Measure speed
 		double currentTime = glfwGetTime();
@@ -103,7 +108,7 @@ void Game::beginLoop() {
 
 		//float ratio;
 		int width, height;
-		glfwGetFramebufferSize(m_WindowManager_.getWindow(), &width, &height);
+		glfwGetFramebufferSize(WindowManager::getInstance().getWindow(), &width, &height);
 		//ratio = width / (float)height;
 		glViewport(0, 0, width, height);
 
@@ -125,13 +130,13 @@ void Game::beginLoop() {
 		while (tick >= TICKS_PER_SECOND) {
 			float fDelay = (tick / TICKS_PER_SECOND);
 
-			if (m_WindowManager_.getSceneManager()->NewSceneReady()) {
-				m_WindowManager_.getSceneManager()->switchScene();
-				m_WindowManager_.getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
-				m_WindowManager_.getSceneManager()->getCurrentScene()->Start();
+			if (WindowManager::getInstance().getSceneManager()->NewSceneReady()) {
+				WindowManager::getInstance().getSceneManager()->switchScene();
+				WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
+				WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 			}
 
-			update(fDelay);
+			update(tick * 1/fDelay);
 
 			tick -= TICKS_PER_SECOND;
 
@@ -143,7 +148,7 @@ void Game::beginLoop() {
 
 		m_GUIRenderer_->Render();
 
-		glfwSwapBuffers(m_WindowManager_.getWindow());
+		glfwSwapBuffers(WindowManager::getInstance().getWindow());
 		glfwPollEvents();
 	}
 
@@ -152,13 +157,13 @@ void Game::beginLoop() {
 }
 
 void Game::switchScene(std::string pPath) {
-	m_WindowManager_.getSceneManager()->LoadScene(pPath);
+	WindowManager::getInstance().getSceneManager()->LoadSceneFromPath(pPath);
 
 	//Start the Scenes Components.
-	if (m_WindowManager_.getSceneManager()->getCurrentScene() != nullptr)
-		m_WindowManager_.getSceneManager()->getCurrentScene()->Start();
+	if (WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr)
+		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 
-	m_WindowManager_.getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
+	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
 
 }
 
@@ -170,12 +175,12 @@ Game::Game() {
 	if (!glfwInit())
 		std::exit(EXIT_FAILURE);
 
-	m_WindowManager_.createWindow("Game", 0, 0, 1280, 720);
-	m_WindowManager_.toggleVSYNC(false);
+	WindowManager::getInstance().createWindow("Game", 0, 0, 1280, 720);
+	WindowManager::getInstance().toggleVSYNC(false);
 	
-	glfwMakeContextCurrent(m_WindowManager_.getWindow()); 
+	glfwMakeContextCurrent(WindowManager::getInstance().getWindow()); 
 
-	if (!m_WindowManager_.getWindow())
+	if (!WindowManager::getInstance().getWindow())
 	{
 		glfwTerminate();	
 		std::exit(EXIT_FAILURE);
@@ -183,9 +188,9 @@ Game::Game() {
 
 	glewInit();
 
-	glfwSetKeyCallback(m_WindowManager_.getWindow(), key_callback);
+	glfwSetKeyCallback(WindowManager::getInstance().getWindow(), key_callback);
 
-	::glfwSetMouseButtonCallback(m_WindowManager_.getWindow(), Game::mouse_button_callback);
+	::glfwSetMouseButtonCallback(WindowManager::getInstance().getWindow(), Game::mouse_button_callback);
 
 	//ResourceManager::getInstance()->LoadShader("Shaders/default_shader.vert", "Shaders/default_shader.frag", "default");
 	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "default");
@@ -193,20 +198,20 @@ Game::Game() {
 	/*ResourceManager::getInstance()->loadTextureSOIL("Textures/container2.png", false, "CrateDiffuse", "texture_diffuse");
 	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2_specular.png", false, "CrateSpecular", "texture_specular");*/
 
-	Proxy::getInstance()->AssignWindowManager(&m_WindowManager_);
+	Proxy::getInstance()->AssignWindowManager(&WindowManager::getInstance());
 	Proxy::getInstance()->AssignGame(this);
 
-	m_WindowManager_.toggleCursorDraw(false);
+	WindowManager::getInstance().toggleCursorDraw(false);
 
-	m_Renderer_ = new Renderer(m_WindowManager_.getWindow());
-	m_GUIRenderer_ = new GUIRenderer(m_WindowManager_.getWindow());
+	m_Renderer_ = new Renderer(WindowManager::getInstance().getWindow());
+	m_GUIRenderer_ = new GUIRenderer(WindowManager::getInstance().getWindow());
 
 
-	//m_WindowManager_.getSceneManager()->LoadScene("XML/Scene.xml");
-	m_WindowManager_.getSceneManager()->LoadScene(LoadTestScene());
+	//WindowManager::getInstance().getSceneManager()->LoadScene("XML/Scene.xml");
+	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTestScene());
 
-	m_WindowManager_.getSceneManager()->switchScene();
-	m_WindowManager_.getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
+	WindowManager::getInstance().getSceneManager()->switchScene();
+	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
 
 }
 
@@ -224,12 +229,12 @@ Scene * Game::LoadTestScene() {
 	//Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
 	//Model model = loader.LoadModel("Models/Talia/Talia.dae");
 	Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
-
+	//Model model;
 	GameObject object("Model");
 	int index = _Scene->AddGameObject(object);
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
-	tc->setPosition(glm::vec3(0.0f, -3.0f, 0.0f));
+	tc->setPosition(glm::vec3(-2.0f, -2.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
 
@@ -238,15 +243,31 @@ Scene * Game::LoadTestScene() {
 	glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 
+	Script* s1 = new Script("PlayerController.lua", "Test");
 
 	render->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render);
+	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	render->setParent(&_Scene->getGameObjects()->at(index));
-
+	s1->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("OBJ"));
 	tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
+	tc->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+
+
+	RenderComponent * render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+
+	render2->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render2);
+	render2->setParent(&_Scene->getGameObjects()->at(index));
+
+
+
 
 	////////////////////////////////////////////
 	//Uniforms

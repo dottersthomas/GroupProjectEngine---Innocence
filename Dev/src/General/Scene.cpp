@@ -80,3 +80,9 @@ void Scene::Destroy() {
 	//Clear the GameObjects vector.
 	m_SceneGameObjects_.clear();
 }
+
+luabridge::LuaRef Scene::luaGetGameObjects()
+{
+	// Get gameObjects and convert to lua table
+	return LuaHelper::ToTable(static_cast<std::vector<GameObject>>(*(getGameObjects())));
+}

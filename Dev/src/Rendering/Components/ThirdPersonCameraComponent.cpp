@@ -3,7 +3,7 @@
 
 ThirdPersonCameraComponent::ThirdPersonCameraComponent(GameObject * pParent, std::string pName, float pDistance, glm::vec3 pTargetRelative) {
 	m_GameObjectParent_ = pParent;
-	M_ComponentName = pName;
+	m_ComponentName = pName;
 
 	m_CameraDistance_ = pDistance;
 

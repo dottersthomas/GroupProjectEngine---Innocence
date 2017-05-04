@@ -41,8 +41,6 @@ WindowManager::WindowManager(std::string pTitle, int pXPos, int pYPos, int pWidt
 
 }
 WindowManager::~WindowManager() {
-	delete m_SceneManager_;
-	delete m_Window_;
 }
 
 GLFWwindow * WindowManager::createWindow(std::string pTitle, int pXPos, int pYPos, int pWidth, int pHeight) {

@@ -3,6 +3,10 @@
 Model AssimpLoader::LoadModel(GLchar* path) {
 	Assimp::Importer importer;
 
+	meshes.clear();
+	m_Nodes_ = 0;
+	m_Directory_ = "";
+
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {

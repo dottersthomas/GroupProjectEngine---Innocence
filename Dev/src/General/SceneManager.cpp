@@ -14,7 +14,7 @@ SceneManager::SceneManager() {
 	m_switch_ = false;
 }
 
-bool SceneManager::LoadScene(std::string pPath) {
+bool SceneManager::LoadSceneFromPath(std::string pPath) {
 	XMLParser parser;
 	parser.Parse(pPath);
 	m_Unswitched_ = nullptr;

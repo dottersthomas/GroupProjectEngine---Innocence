@@ -13,7 +13,7 @@
 TransformComponent::TransformComponent(GameObject * pParent) {
 	m_GameObjectParent_ = pParent;
 
-	M_ComponentName = "TRANSFORM_COMPONENT";
+	m_ComponentName = "TRANSFORM_COMPONENT";
 
 }
 

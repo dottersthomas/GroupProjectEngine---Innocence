@@ -40,7 +40,7 @@ public:
 	}
 
 	//Load a scene with this path.
-	bool LoadScene(std::string pPath);
+	bool LoadSceneFromPath(std::string pPath);
 	bool LoadScene(Scene * pScene);
 
 	//A scene is ready to be switched out/
@@ -61,6 +61,17 @@ public:
 		return m_switch_;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<SceneManager>("SceneManager")
+			.addData("currentScene", &SceneManager::m_CurrentScene_, false)
+			.addFunction("loadScene", &SceneManager::LoadSceneFromPath)
+			.addFunction("deleteScene", &SceneManager::DeleteScene)
+			.endClass();
+	}
 };
 
 

@@ -1,12 +1,8 @@
 #include "General\XML\XMLParser.h"
 #include "UI\CanvasButton.h"
 
-XMLParser::XMLParser() {
-
-}
-
-bool XMLParser::Parse(std::string pPath) {
-
+bool XMLParser::Parse(std::string pPath)
+{
 	XMLError error = m_Doc_.LoadFile(pPath.c_str());
 
 	if (error != XML_SUCCESS)
@@ -16,12 +12,12 @@ bool XMLParser::Parse(std::string pPath) {
 	return true;
 }
 
-std::vector<XMLElement*> XMLParser::GetElements(std::string filter) {
+std::vector<XMLElement*> XMLParser::GetElements(std::string filter)
+{
 
 	std::vector<XMLElement*> temp;
 	for (XMLElement* e = m_Root_->FirstChildElement(filter.c_str()); e != NULL; e = e->NextSiblingElement(filter.c_str()))
 	{
-		
 		temp.push_back(e);
 	}
 
@@ -29,13 +25,15 @@ std::vector<XMLElement*> XMLParser::GetElements(std::string filter) {
 }
 
 
-Scene * XMLParser::LoadScene() {
+Scene * XMLParser::LoadScene()
+{
 	Scene * _Scene = new Scene("");
-	
+
 	XMLElement * sceneElem = m_Doc_.FirstChildElement("scene");
 
 	XMLElement * gObject = sceneElem->FirstChildElement("GameObject");
-	while (gObject != nullptr) {
+	while (gObject != nullptr)
+	{
 
 		const char* objName = gObject->Attribute("name");
 		GameObject object(objName);
@@ -63,20 +61,24 @@ Scene * XMLParser::LoadScene() {
 
 }
 
-glm::vec3 XMLParser::GenerateVec3(XMLElement * element) {
+glm::vec3 XMLParser::GenerateVec3(XMLElement * element)
+{
 
 	XMLElement * child = element->FirstChildElement();
 	float x = 0, y = 0, z = 0;
 	while (child != nullptr)
 	{
 		const char* childName = child->Name();
-		if (checkStrings(childName, "x")) {
+		if (checkStrings(childName, "x"))
+		{
 			child->QueryFloatText(&x);
 		}
-		if (checkStrings(childName, "y")) {
+		if (checkStrings(childName, "y"))
+		{
 			child->QueryFloatText(&y);
 		}
-		if (checkStrings(childName, "z")) {
+		if (checkStrings(childName, "z"))
+		{
 			child->QueryFloatText(&z);
 		}
 
@@ -87,23 +89,28 @@ glm::vec3 XMLParser::GenerateVec3(XMLElement * element) {
 
 }
 
-glm::vec4 XMLParser::GenerateVec4(XMLElement * element) {
+glm::vec4 XMLParser::GenerateVec4(XMLElement * element)
+{
 
 	XMLElement * child = element->FirstChildElement();
 	float x = 0, y = 0, z = 0, w = 0;
 	while (child != nullptr)
 	{
 		const char* childName = child->Name();
-		if (checkStrings(childName, "x")) {
+		if (checkStrings(childName, "x"))
+		{
 			child->QueryFloatText(&x);
 		}
-		if (checkStrings(childName, "y")) {
+		if (checkStrings(childName, "y"))
+		{
 			child->QueryFloatText(&y);
 		}
-		if (checkStrings(childName, "z")) {
+		if (checkStrings(childName, "z"))
+		{
 			child->QueryFloatText(&z);
 		}
-		if (checkStrings(childName, "w")) {
+		if (checkStrings(childName, "w"))
+		{
 			child->QueryFloatText(&w);
 		}
 
@@ -115,18 +122,21 @@ glm::vec4 XMLParser::GenerateVec4(XMLElement * element) {
 }
 
 
-void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pIndex) {
+void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pIndex)
+{
 	const char* componentName = pElement->Name();
 
 	//Setup the Transform Component
-	if (checkStrings(componentName, "position")) {
+	if (checkStrings(componentName, "position"))
+	{
 		TransformComponent * tc = pScene->getGameObjects()->at(pIndex).GetComponentByType<TransformComponent>();
-	
+
 		tc->setPosition(GenerateVec3(pElement));
 	}
 
 	//Setup the Render Component
-	if (checkStrings(componentName, "mesh")) {
+	if (checkStrings(componentName, "mesh"))
+	{
 
 		MeshFactory factory;
 
@@ -138,44 +148,53 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 
 		pElement->QueryIntAttribute("type", &type);
 
-	
+
 		RenderComponent * render;
-		if (pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>()) {
+		if (pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>())
+		{
 			render = pScene->getGameObjects()->at(pIndex).GetComponentByType<RenderComponent>();
 		}
-		else {
+		else
+		{
 			render = new RenderComponent(&pScene->getGameObjects()->at(pIndex), std::string(shader), type);
 		}
 		XMLElement * child = pElement->FirstChildElement();
 
-		glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f,0.0f,0.0f);
+		glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f, 0.0f, 0.0f);
 		glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 		const char* path;
 		const char* texturePath;
 		while (child != nullptr)
 		{
 			const char* childName = child->Name();
-			if (checkStrings(childName, "path")) {
+			if (checkStrings(childName, "path"))
+			{
 				path = child->GetText();
 			}
-			if (checkStrings(childName, "pivot")) {
+			if (checkStrings(childName, "pivot"))
+			{
 				pivot = GenerateVec3(child);
 			}
-			if (checkStrings(childName, "position")) {
+			if (checkStrings(childName, "position"))
+			{
 				position = GenerateVec3(child);
 			}
-			if (checkStrings(childName, "rotation")) {
+			if (checkStrings(childName, "rotation"))
+			{
 				rotation = GenerateVec3(child);
 			}
-			if (checkStrings(childName, "scale")) {
+			if (checkStrings(childName, "scale"))
+			{
 				scale = GenerateVec3(child);
 			}
-			if (checkStrings(childName, "texture")) {
+			if (checkStrings(childName, "texture"))
+			{
 				texturePath = child->GetText();
 				ResourceManager::getInstance()->loadTexture(texturePath, GL_FALSE, texturePath);
 
 			}
-			if (checkStrings(childName, "colour")) {
+			if (checkStrings(childName, "colour"))
+			{
 				colour = GenerateVec4(child);
 			}
 			child = child->NextSiblingElement();
@@ -183,9 +202,10 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 
 		Mesh * mesh;
 
-		if(path != nullptr){
-			if(type == 1)
-				mesh = factory.create(path, position, rotation, scale , texturePath);
+		if (path != nullptr)
+		{
+			if (type == 1)
+				mesh = factory.create(path, position, rotation, scale, texturePath);
 			else
 				mesh = factory.create(path, position, rotation, scale, colour);
 
@@ -194,17 +214,19 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 		mesh->setPivotPoint(pivot);
 		mesh->setColour(colour);
 
-	
+
 		render->AttachMesh(mesh);
-		
-		if (!pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>()) {
+
+		if (!pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>())
+		{
 			pScene->getGameObjects()->at(pIndex).registerComponent(render);
 			render->setParent(&pScene->getGameObjects()->at(pIndex));
 		}
 	}
-	if (checkStrings(componentName, "firstpersoncamera")) {
+	if (checkStrings(componentName, "firstpersoncamera"))
+	{
 
-		
+
 		XMLElement * child = pElement->FirstChildElement();
 		glm::vec3 position;
 		bool main = false;
@@ -213,13 +235,14 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 
 		pElement->QueryBoolAttribute("main", &main);
 
-		
+
 
 		while (child != nullptr)
 		{
 			const char* childName = child->Name();
 
-			if (checkStrings(childName, "position")) {
+			if (checkStrings(childName, "position"))
+			{
 				position = GenerateVec3(child);
 			}
 			child = child->NextSiblingElement();
@@ -228,12 +251,13 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 		pScene->getGameObjects()->at(pIndex).registerComponent(camera);
 		camera->setParent(&pScene->getGameObjects()->at(pIndex));
 
-		if(main)
+		if (main)
 			pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<FirstPersonCameraComponent>());
 
 	}
 
-	if (checkStrings(componentName, "thirdpersoncamera")) {
+	if (checkStrings(componentName, "thirdpersoncamera"))
+	{
 		XMLElement * child = pElement->FirstChildElement();
 		glm::vec3 position;
 		bool main = true;
@@ -252,11 +276,13 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 		{
 			const char* childName = child->Name();
 
-			if (checkStrings(childName, "position")) {
+			if (checkStrings(childName, "position"))
+			{
 				position = GenerateVec3(child);
 			}
 
-			if (checkStrings(childName, "distance")) {
+			if (checkStrings(childName, "distance"))
+			{
 				child->QueryFloatText(&distance);
 			}
 			child = child->NextSiblingElement();
@@ -273,7 +299,8 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 	}
 
 	//Create the GUI here.
-	if (checkStrings(componentName, "canvas")) {
+	if (checkStrings(componentName, "canvas"))
+	{
 		ProcessCanvas(pScene, pElement, pIndex);
 	}
 
@@ -281,7 +308,8 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 }
 
 //Process the GUI and create a canvas component for the overlay.
-void XMLParser::ProcessCanvas(Scene * pScene, XMLElement * pElement, int pIndex) {
+void XMLParser::ProcessCanvas(Scene * pScene, XMLElement * pElement, int pIndex)
+{
 	//const char* componentName = pElement->Name();
 
 	//const char* type = pElement->Attribute("type");

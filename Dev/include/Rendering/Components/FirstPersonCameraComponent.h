@@ -51,6 +51,16 @@ public:
 		return m_fSpeed_;
 	}
 
+	// Register class with lua
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<FirstPersonCameraComponent, CameraComponent>("FirstPersonCameraComponent")
+			.addData<glm::vec3>("position", &FirstPersonCameraComponent::m_Position_)
+			.endClass();
+	}
 };
 
 #endif
