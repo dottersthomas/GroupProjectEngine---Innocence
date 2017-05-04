@@ -14,6 +14,8 @@ Scene::Scene() {
 	m_SceneGameObjects_.push_back(m_RootNode_);
 	m_SceneGameObjects_[0].removeComponent(m_SceneGameObjects_[0].GetComponentByType<TransformComponent>());
 
+	m_Environment_ = new Environment();
+
 }
 
 Scene::Scene(std::string pName) {
@@ -22,6 +24,8 @@ Scene::Scene(std::string pName) {
 
 	m_SceneGameObjects_.push_back(m_RootNode_);
 	m_SceneGameObjects_[0].removeComponent(m_SceneGameObjects_[0].GetComponentByType<TransformComponent>());
+	m_Environment_ = new Environment();
+
 }
 
 int Scene::AddGameObject(GameObject pGameObject) {

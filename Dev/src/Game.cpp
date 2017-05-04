@@ -48,6 +48,7 @@ void Game::update(double dTime) {
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
+float timer = 0;
 
 void Game::beginLoop() {
 
@@ -91,8 +92,10 @@ void Game::beginLoop() {
 	//Start the Scenes Components.
 	if(WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr)
 		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
+	//TransformComponent * comp = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
 
 	while (!glfwWindowShouldClose(WindowManager::getInstance().getWindow()))
+
 	{
 		// Measure speed
 		double currentTime = glfwGetTime();
@@ -135,8 +138,10 @@ void Game::beginLoop() {
 				WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
 				WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 			}
+			timer += 3.142f / 1000;
 
 			update(tick * 1/fDelay);
+			//comp->setRotation(glm::vec3(comp->getRotation().x, timer, comp->getRotation().z));
 
 			tick -= TICKS_PER_SECOND;
 
@@ -192,7 +197,7 @@ Game::Game() {
 
 	::glfwSetMouseButtonCallback(WindowManager::getInstance().getWindow(), Game::mouse_button_callback);
 
-	//ResourceManager::getInstance()->LoadShader("Shaders/default_shader.vert", "Shaders/default_shader.frag", "default");
+	ResourceManager::getInstance()->LoadShader("Shaders/skybox_shader.vert", "Shaders/skybox_shader.frag", "skybox");
 	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "default");
 
 	/*ResourceManager::getInstance()->loadTextureSOIL("Textures/container2.png", false, "CrateDiffuse", "texture_diffuse");
@@ -225,10 +230,21 @@ void Game::CreateScene() {
 Scene * Game::LoadTestScene() {
 	Scene * _Scene = new Scene("");
 
+	std::vector<const GLchar*> faces;
+
+	faces.push_back("Textures/hw_hourglass/hourglass_rt.png");
+	faces.push_back("Textures/hw_hourglass/hourglass_lf.png");
+	faces.push_back("Textures/hw_hourglass/hourglass_up.png");
+	faces.push_back("Textures/hw_hourglass/hourglass_dn.png");
+	faces.push_back("Textures/hw_hourglass/hourglass_bk.png");
+	faces.push_back("Textures/hw_hourglass/hourglass_ft.png");
+
+	_Scene->getEnvironment()->setSkyBox(new SkyBox("skybox", faces));
+
 	AssimpLoader loader;
-	//Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+	Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
 	//Model model = loader.LoadModel("Models/Talia/Talia.dae");
-	Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
+	//Model model = loader.LoadModel("Models/raw/newScene.fbx");
 	//Model model;
 	GameObject object("Model");
 	int index = _Scene->AddGameObject(object);
@@ -236,7 +252,7 @@ Scene * Game::LoadTestScene() {
 	tc->setParent(&_Scene->getGameObjects()->at(index));
 	tc->setPosition(glm::vec3(-2.0f, -2.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+	tc->setScale(glm::vec3(2.0f, 2.0f, 2.0f));
 
 	RenderComponent * render = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 
@@ -256,11 +272,11 @@ Scene * Game::LoadTestScene() {
 	tc->setParent(&_Scene->getGameObjects()->at(index));
 	tc->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 	RenderComponent * render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+	model = loader.LoadModel("Models/Grass pack/Grass_02.obj");
 
 	render2->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
@@ -279,7 +295,7 @@ Scene * Game::LoadTestScene() {
 	ShaderUniform camera;
 	camera.M_Address = "viewPos";
 	camera.M_Type = VEC3;
-	camera.M_Vec3 = glm::vec3(4.0f, 3.0f, 0.0f);
+	camera.M_Vec3 = glm::vec3(40.0f, 40.0f, 40.0f);
 
 	ResourceManager::getInstance()->useShader("default");
 

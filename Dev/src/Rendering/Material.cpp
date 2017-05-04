@@ -9,6 +9,7 @@ Material::Material(Texture * pDiffuse, Texture * pSpecular, float pShine) {
 	m_Textures_.push_back(pSpecular);
 
 	m_Shininess_ = pShine;
+	m_hasCubeMaps_ = false;
 
 	CreateUniforms();
 
@@ -19,6 +20,7 @@ Material::Material(glm::vec3 pDiffuse, glm::vec3 pSpecular, float pShine) {
 //	m_specularColour_ = pSpecular;
 
 	m_Shininess_ = pShine;
+	m_hasCubeMaps_ = false;
 
 	CreateUniforms();
 
@@ -29,6 +31,7 @@ Material::Material(std::vector<Texture * > pTextures, float pShine) {
 
 	if (m_Textures_.size() == 0)
 		m_hasTextures_ = false;
+	m_hasCubeMaps_ = false;
 
 	pTextures.erase(pTextures.begin(), pTextures.end());
 
@@ -42,6 +45,7 @@ Material::Material(std::vector<Colour> pColours, float pShine) {
 	m_Colours_ = pColours;
 
 	m_hasTextures_ = false;
+	m_hasCubeMaps_ = false;
 
 	m_Shininess_ = pShine;
 
@@ -112,32 +116,66 @@ void Material::BindTextures(std::string pShader) {
 			{
 				glActiveTexture(GL_TEXTURE0 + i); // Active proper texture unit before binding
 												  // Retrieve texture number (the N in diffuse_textureN)
-				Texture* texture = m_Textures_[i];
+					Texture* texture = m_Textures_[i];
 
-				//std::stringstream ss;
-				std::string number;
-				std::string name = texture->type;
-				if (name == "texture_diffuse")
-					//ss << diffuseNr++; // Transfer GLuint to stream
-					number = std::to_string(diffuseNr++);
-				else if (name == "texture_specular")
-					//ss << specularNr++; // Transfer GLuint to stream
-					number = std::to_string(specularNr++);
+					//std::stringstream ss;
+					std::string number;
+					std::string name = texture->type;
+					if (name == "texture_diffuse")
+						//ss << diffuseNr++; // Transfer GLuint to stream
+						number = std::to_string(diffuseNr++);
+					else if (name == "texture_specular")
+						//ss << specularNr++; // Transfer GLuint to stream
+						number = std::to_string(specularNr++);
 
-				else if (name == "texture_normal")
-					//ss << normalNr++;
-					number = std::to_string(normalNr++);
-				//number = ss.str();
-				// Now set the sampler to the correct texture unit
+					else if (name == "texture_normal")
+						//ss << normalNr++;
+						number = std::to_string(normalNr++);
+					else
+						number = std::to_string(0);
+					//number = ss.str();
+					// Now set the sampler to the correct texture unit
 
-				ShaderUniform uniform;
-				uniform.M_Address = std::string("material.") + std::string(name + number);
-				uniform.M_Type = INT;
-				uniform.M_Int = i;
+					ShaderUniform uniform;
+					if (std::atoi(number.c_str()) > 0)
+						uniform.M_Address = std::string("material.") + std::string(name + number);
+					else
+						uniform.M_Address = std::string("material.") + std::string(name);
+					uniform.M_Type = INT;
+					uniform.M_Int = i;
 
-				ResourceManager::getInstance()->GetShader(pShader)->UpdateSingleUniform(uniform);
-				// And finally bind the texture
-				texture->Bind();
+					ResourceManager::getInstance()->GetShader(pShader)->UpdateSingleUniform(uniform);
+					// And finally bind the texture
+					texture->Bind();
+				
+
 			}
 		}
+		if (m_CubeMaps_.size() > 0) {
+			if (m_hasCubeMaps_) {
+
+				for (int i = 0; i < m_CubeMaps_.size(); i++) {
+
+					CubeMapTexture* texture = m_CubeMaps_[i];
+
+					//std::stringstream ss;
+					std::string number = "0";
+					std::string name = texture->type;
+
+					ShaderUniform uniform;
+					if (std::atoi(number.c_str()) > 0)
+						uniform.M_Address = std::string("material.") + std::string(name + number);
+					else
+						uniform.M_Address = std::string("material.") + std::string(name);
+					uniform.M_Type = INT;
+					uniform.M_Int = i;
+
+					ResourceManager::getInstance()->GetShader(pShader)->UpdateSingleUniform(uniform);
+					// And finally bind the texture
+					texture->Bind();
+				}
+			}
+		}
+
+	
 }

@@ -35,7 +35,7 @@ void Renderer::Render() {
 		}
 		else
 			View = glm::lookAt(
-				glm::vec3(2.0f, 1.0f, 5.0f),
+				glm::vec3(40.0f, 40.0f, 40.0f),
 				glm::vec3(0, 0, 0),
 				glm::vec3(0, 1, 0)
 			);
@@ -67,6 +67,10 @@ void Renderer::Render() {
 			m_CurrentScene_->M_bIsDirty = false;
 		}
 
+		m_CurrentScene_->getEnvironment()->Render(Projection, View);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//Render the scenes GameObjects. Possibly provide filtering to improve performance speed. Or maybe even have it within its own thread.
 		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjects_.begin(); iter != m_sceneGameObjects_.end(); ++iter) {
 			//Get the render component from the GameObject list and let it render itself.

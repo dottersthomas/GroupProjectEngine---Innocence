@@ -41,6 +41,9 @@
     <ClCompile Include="src\Rendering\Model.cpp" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
     <ClCompile Include="src\General\Timer.cpp" />
+    <ClCompile Include="src\Rendering\SkyBox.cpp" />
+    <ClCompile Include="src\Rendering\Environment.cpp" />
+    <ClCompile Include="src\Rendering\CubeMapTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
@@ -94,6 +97,9 @@
     <ClInclude Include="include\Rendering\Colour.h" />
     <ClInclude Include="include\Audio\AudioEngine.h" />
     <ClInclude Include="include\General\Timer.h" />
+    <ClInclude Include="include\Rendering\SkyBox.h" />
+    <ClInclude Include="include\Rendering\Environment.h" />
+    <ClInclude Include="include\Rendering\CubeMapTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />
@@ -111,5 +117,7 @@
     <None Include="Shaders\texture_shader.vert" />
     <None Include="Shaders\text_shader.frag" />
     <None Include="Shaders\text_shader.vert" />
+    <None Include="Shaders\skybox_shader.vert" />
+    <None Include="Shaders\skybox_shader.frag" />
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@
 #include "Shader.h"
 #include "RawMesh.h"
 #include "Texture.h"
+#include "CubeMapTexture.h"
 
 #include "SOIL.h"
 
@@ -86,6 +87,8 @@ public:
 	Texture * loadTexture(const GLchar *file, GLboolean alpha, std::string name);
 
 	Texture * loadTextureSOIL(const GLchar *file, GLboolean alpha, std::string name, std::string type);
+
+	CubeMapTexture * loadCubemap(std::vector<const GLchar* > file, GLboolean alpha, std::string name, std::string type);
 
 	Texture* GetTexture(std::string name);
 

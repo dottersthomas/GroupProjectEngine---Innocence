@@ -138,7 +138,7 @@ std::vector<Texture *> AssimpLoader::processMaterialTexture(aiMaterial* mat, aiT
 		std::string filePath = std::string(str.C_Str());
 		filePath = m_Directory_ + '/' + filePath;
 		std::cout << filePath << std::endl;
-		textures.push_back(ResourceManager::getInstance()->loadTextureSOIL(filePath.c_str(), false, filePath, typeName));
+		textures.push_back(ResourceManager::getInstance()->loadTextureSOIL(filePath.c_str(), true, filePath, typeName));
 	}
 
 	return textures;
