@@ -47,7 +47,7 @@ void Scene::Update(double dt){
 
 		//Late update.
 		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_SceneGameObjects_.begin(); iter != m_SceneGameObjects_.end(); ++iter) {
-			(*iter).LateUpdateComponents();
+			(*iter).LateUpdateComponents(dt);
 
 		}
 	}

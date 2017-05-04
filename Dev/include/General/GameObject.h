@@ -28,7 +28,7 @@ public:
 	void UpdateComponents(double dt);
 
 	//Late update all components.
-	void LateUpdateComponents();
+	void LateUpdateComponents(double dt);
 
 	ComponentVectorWrapper::t_Components_Vector_& getComponents()
 	{

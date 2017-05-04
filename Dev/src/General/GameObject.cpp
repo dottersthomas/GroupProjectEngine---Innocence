@@ -51,10 +51,10 @@ void GameObject::UpdateComponents(double dt)
 		(*iter)->Update(dt);
 }
 
-void GameObject::LateUpdateComponents()
+void GameObject::LateUpdateComponents(double dt)
 {
 	for (ComponentVectorWrapper::t_Component_Iter iter = m_Components_.begin(); iter != m_Components_.end(); ++iter)
-		(*iter)->LateUpdate(0.0);
+		(*iter)->LateUpdate(dt);
 }
 
 luabridge::LuaRef GameObject::luaGetComponent(std::string type)
