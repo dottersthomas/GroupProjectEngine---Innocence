@@ -24,6 +24,8 @@ private:
 	//Model Matrix.
 	glm::mat4 m_Model_;
 
+	
+
 	//If the transform is dirty and requires and update.
 	bool m_bDirty_;
 

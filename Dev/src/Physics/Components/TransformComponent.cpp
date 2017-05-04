@@ -30,10 +30,12 @@ void TransformComponent::Update(double dt) {
 		setRotation(glm::vec3(getRotation().x, m_GameObjectParent_->GetComponentByType<ThirdPersonCameraComponent>()->m_fHorizontalAngle_, getRotation().z));
 
 
-	if (m_bDirty_) {
+	
 
 
 		float angleZ = -std::asin(m_Direction_.z);
+
+		m_Model_ = glm::mat4(1.0f);
 
 		m_Model_ = glm::translate(m_Model_, m_Position_);  // First translate (transformations are: scale happens first, then rotation and then final translation happens; reversed order)
 
@@ -45,7 +47,7 @@ void TransformComponent::Update(double dt) {
 
 		m_Model_ = glm::scale(m_Model_, m_Scale_); // Last scale
 		m_bDirty_ = false;
-	}
+	
 
 }
 void TransformComponent::LateUpdate(double dt) {

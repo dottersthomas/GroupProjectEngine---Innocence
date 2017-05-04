@@ -19,6 +19,14 @@ Box::Box(glm::vec3 minPoints, glm::vec3 maxPoints)
 	maxX = maxPoints.x;
 	maxY = maxPoints.y;
 	maxZ = maxPoints.z;
+
+	ominX = minX;
+	ominY = minY;
+	ominZ = minZ;
+	omaxX = maxX;
+	omaxY = maxY;
+	omaxZ = maxZ;
+	
 }
 Box::~Box()
 {
@@ -33,6 +41,15 @@ glm::vec3 Box::GetMin()
 {
 	return glm::vec3(minX, minY, minZ);
 }
+glm::vec3 Box::GetOMax()
+{
+	return glm::vec3(omaxX, omaxY, omaxZ);
+}
+glm::vec3 Box::GetOMin()
+{
+	return glm::vec3(ominX, ominY, ominZ);
+}
+
 void Box::SetMax(float x, float y, float z)
 {
 	maxX = x;

@@ -4,6 +4,7 @@
 #include "Physics\Components\Collider.h"
 #include "Physics\Components\Box.h"
 #include "Rendering\Components\RenderComponent.h"
+#include "glm\gtx\transform.hpp"
 
 
 class BoxCollider : public Collider
@@ -19,6 +20,7 @@ public:
 	void Start();
 	void Update(double dt);
 
+	void CustomBounds(glm::vec3 min, glm::vec3 max);
 
 	Box GetBounds()
 	{

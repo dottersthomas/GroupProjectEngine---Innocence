@@ -1,6 +1,7 @@
 #include "General\Game.h"
 #include "Rendering\ResourceManager.h"
 #include "Physics\Components\TransformComponent.h"
+
 #include "Rendering\Components\RenderComponent.h"
 #include "Rendering\MeshFactory.h"
 #include "Scripting/LuaEngine.h"
@@ -40,7 +41,7 @@ void Game::update(double dTime) {
 		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Update(dTime);
 	}
 
-
+	m_Physics_->update(dTime);
 	m_Renderer_->update(dTime);
 
 
@@ -93,6 +94,7 @@ void Game::beginLoop() {
 	if(WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr)
 		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 	//TransformComponent * comp = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
+	float rotation = 0;
 
 	while (!glfwWindowShouldClose(WindowManager::getInstance().getWindow()))
 
@@ -138,16 +140,19 @@ void Game::beginLoop() {
 				WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
 				WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 			}
-			timer += 3.142f / 1000;
-
-			update(tick * 1/fDelay);
-			//comp->setRotation(glm::vec3(comp->getRotation().x, timer, comp->getRotation().z));
+			
+			rotation += 3.142 / 1000.0f;
+			TransformComponent* temp = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
+			//temp->setRotation(glm::vec3(temp->getRotation().x, temp->getRotation().y,  rotation));
+			RigidBody * rb = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
+			
+			update(tick * 1/ fDelay);
 
 			tick -= TICKS_PER_SECOND;
 
 		}
 
-
+		m_Physics_->updateObjects();
 		m_Renderer_->Render();
 
 
@@ -207,6 +212,8 @@ Game::Game() {
 	Proxy::getInstance()->AssignGame(this);
 
 	WindowManager::getInstance().toggleCursorDraw(false);
+	
+	m_Physics_ = new Physics(m_WindowManager_.getWindow());
 
 	m_Renderer_ = new Renderer(WindowManager::getInstance().getWindow());
 	m_GUIRenderer_ = new GUIRenderer(WindowManager::getInstance().getWindow());
@@ -217,6 +224,9 @@ Game::Game() {
 
 	WindowManager::getInstance().getSceneManager()->switchScene();
 	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
+
+	WindowManager::getInstance().getSceneManager()->UpdatePhysics(m_Physics_);
+
 
 }
 
@@ -242,17 +252,23 @@ Scene * Game::LoadTestScene() {
 	_Scene->getEnvironment()->setSkyBox(new SkyBox("skybox", faces));
 
 	AssimpLoader loader;
-	Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
-	//Model model = loader.LoadModel("Models/Talia/Talia.dae");
-	//Model model = loader.LoadModel("Models/raw/newScene.fbx");
+
+	//Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+	Model model = loader.LoadModel("Models/plane.obj");
+	//Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
 	//Model model;
+
+
+
 	GameObject object("Model");
 	int index = _Scene->AddGameObject(object);
+
+
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
-	tc->setPosition(glm::vec3(-2.0f, -2.0f, 0.0f));
+	tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(2.0f, 2.0f, 2.0f));
+	tc->setScale(glm::vec3(10.0f, 10.0f, 10.0f));
 
 	RenderComponent * render = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 
@@ -266,6 +282,11 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	render->setParent(&_Scene->getGameObjects()->at(index));
 	s1->setParent(&_Scene->getGameObjects()->at(index));
+	
+	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index));
+	bc->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 0, 1));
+	_Scene->getGameObjects()->at(index).registerComponent(bc);
+	bc->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("OBJ"));
 	tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -281,6 +302,15 @@ Scene * Game::LoadTestScene() {
 	render2->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
 	render2->setParent(&_Scene->getGameObjects()->at(index));
+
+	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index));
+	_Scene->getGameObjects()->at(index).registerComponent(bc2);
+	bc2->setParent(&_Scene->getGameObjects()->at(index));
+
+	RigidBody * rb = new RigidBody();
+	_Scene->getGameObjects()->at(index).registerComponent(rb);
+	rb->setParent(&_Scene->getGameObjects()->at(index));
+	rb->SetAcc(glm::vec3(-100, 0, 0));
 
 
 

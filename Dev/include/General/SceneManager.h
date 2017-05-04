@@ -9,6 +9,7 @@
 
 #include "Rendering\ResourceManager.h"
 #include "Physics\Components\TransformComponent.h"
+#include "Physics\Physics.h"
 #include "Rendering\Components\RenderComponent.h"
 #include "Rendering\Components\FirstPersonCameraComponent.h"
 #include "UI\Components\CanvasComponent.h"
@@ -55,6 +56,8 @@ public:
 
 	//Update the renderers with the current scene data.
 	void UpdateRenderers(Renderer * pRenderer, GUIRenderer * pGUIRenderer);
+
+	void UpdatePhysics(Physics * pPhysics);
 
 	//Check if a new scene is ready to be switched.
 	bool NewSceneReady() {
