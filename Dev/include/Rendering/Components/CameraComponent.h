@@ -4,7 +4,8 @@
 #include "Component.h"
 #include <glm\glm.hpp>
 
-class CameraComponent : public Component {
+class CameraComponent : public Component
+{
 
 protected:
 
@@ -13,12 +14,14 @@ public:
 
 	//Abstract Camera Component to be inherited for the other camera types.
 	CameraComponent() {}
-	CameraComponent(GameObject * pParent) {
+	CameraComponent(GameObject * pParent)
+	{
 		m_GameObjectParent_ = pParent;
 	}
 
 
-	void SetActive(bool pActive) {
+	void SetActive(bool pActive)
+	{
 		m_Active_ = pActive;
 	}
 
@@ -32,7 +35,16 @@ public:
 	//Used to bind the camera to be the current active camera. This is used by the renderer only.
 	virtual glm::mat4 Bind() = 0;
 
+	// Register class with lua
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
 
+		getGlobalNamespace(L)
+			.beginClass<CameraComponent>("CameraComponent")
+			.addData("active", &CameraComponent::m_Active_)
+			.endClass();
+	}
 };
 
 #endif

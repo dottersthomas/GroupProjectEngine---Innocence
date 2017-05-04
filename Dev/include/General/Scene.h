@@ -7,7 +7,7 @@
 #include "GameObjectVectorWrapper.h"
 #include "ComponentVectorWrapper.h"
 #include "Rendering\Components\CameraComponent.h"
-
+#include "Scripting\LuaHelper.h"
 
 //Main Scene class. This holds effectivly the entire game.
 class Scene {
@@ -37,6 +37,8 @@ public:
 		return m_Name_;
 	}
 
+	luabridge::LuaRef luaGetGameObjects();
+
 	GameObjectVectorWrapper::t_GameObject_Vector_ * getGameObjects() {
 		return &m_SceneGameObjects_;
 	}
@@ -52,10 +54,23 @@ public:
 
 	//Get the currently bound camera.
 	CameraComponent * getBoundCamera() {
-		if (m_CurrentCamera_ == nullptr)
-			return nullptr;
-		else
-			return m_CurrentCamera_;
+		return m_CurrentCamera_;
+	}
+
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<Scene>("Scene")
+			.addConstructor<void(*)(std::string name)>()
+			.addData("name", &Scene::m_Name_, false)
+			.addData("mainCamera", &Scene::m_CurrentCamera_, false)
+			.addFunction("attachMainCamera", &Scene::attachMainCameraComponent)
+			.addFunction("addGameObject", &Scene::AddGameObject)
+			.addFunction("removeGameObject", &Scene::RemoveGameObject)
+			.addFunction("getGameObjects", &Scene::luaGetGameObjects)
+			.endClass();
 	}
 
 private:

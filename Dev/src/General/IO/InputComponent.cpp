@@ -2,7 +2,7 @@
 
 
 InputComponent::InputComponent() {
-	M_ComponentName = "INPUT_COMPONENT";
+	m_ComponentName = "INPUT_COMPONENT";
 }
 
 void InputComponent::Update(double dt) {

@@ -2,6 +2,7 @@
 
 #include <lua.hpp>
 #include <LuaBridge.h>
+#include "LuaEngine.h"
 
 /// <summary>
 /// Provides helper functions that allow for interaction between Lua and C++.
@@ -38,8 +39,9 @@ public:
 	/// <param name="findAll">if set to <c>true</c> find all components of the type specified.</param>
 	/// <param name="globalName">Name of the global variable the component should be registered to.</param>
 	/// <returns>luabridge::LuaRef</returns>
+
 	template<typename T>
-	static luabridge::LuaRef GetGlobalComponent(GameObject& go, bool findAll, const char* globalName)
+	static luabridge::LuaRef GetGlobalComponent(GameObject& go, bool findAll, const char* globalName, const char* tag)
 	{
 		// Get lua state
 		auto L = LuaEngine::getInstance().L();
@@ -48,7 +50,22 @@ public:
 		if (findAll)
 		{
 			auto vec = go.GetComponentsByType<T>();
-			luabridge::setGlobal(L, LuaHelper::ToTable(vec), globalName);
+			// Check for tag
+			if (tag != "")
+			{
+				// Find by tag
+				std::vector<T*> elements;
+
+				for (auto& e : vec)
+				{
+					if (static_cast<Component*>(e)->getTag() == tag)
+						elements.push_back(e);
+				}
+
+				luabridge::setGlobal(L, LuaHelper::ToTable(elements), globalName);
+			}
+			else
+				luabridge::setGlobal(L, LuaHelper::ToTable(vec), globalName);
 		}
 		else
 			luabridge::setGlobal(L, go.GetComponentByType<T>(), globalName);

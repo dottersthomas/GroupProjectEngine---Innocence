@@ -17,16 +17,15 @@
 
 using namespace tinyxml2;
 
-class XMLParser {
-
-
+class XMLParser
+{
 private:
 	//The Document to be loaded.
 	XMLDocument m_Doc_;
 	XMLNode * m_Root_;
 public:
 
-	XMLParser();
+	XMLParser() {}
 	//Parse the file.
 	bool Parse(std::string pPath);
 
@@ -39,20 +38,14 @@ public:
 	void ProcessComponent(Scene * pScene, XMLElement * pElement, int pIndex);
 	void ProcessCanvas(Scene * pScene, XMLElement * pElement, int pIndex);
 
-
 	glm::vec3 GenerateVec3(XMLElement * element);
 	glm::vec4 GenerateVec4(XMLElement * element);
 
 	//Compare Const char strings.
-	bool checkStrings(const char* s1, const char* s2) {
-		if (std::strcmp(s1, s2) == 0)
-			return true;
-		else
-			return false;
+	bool checkStrings(const char* s1, const char* s2)
+	{
+		return std::strcmp(s1, s2) == 0;
 	}
 };
-
-
-
 
 #endif

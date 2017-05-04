@@ -1,5 +1,7 @@
 -- Test class for defining a standard script within lua
 
+require("InputTable")
+
 Test = 
 {
 	Start = function()
@@ -7,13 +9,23 @@ Test =
 		print(t[1].position)
 		r = gameObject:getComponent("TransformComponent")
 		print(r.position)
-	end,
-	
-	Update = function()
 		
+		y = Timer()
+		y:start()
 	end,
 	
-	LateUpdate = function()
+	Update = function(dt)
+		--f = gameObject:getComponentsByTag("TransformComponent", "Dodo")
+		--print(f[1])
+		
+		if Input.wasKeyPressed(Key.SPACE) then
+			y:pause()
+		end
+		
+		print(y:currentTime())
+	end,
+	
+	LateUpdate = function(dt)
 		
 	end,
 	

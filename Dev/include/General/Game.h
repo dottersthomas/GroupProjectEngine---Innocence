@@ -15,7 +15,7 @@
 #include "General\Proxy.h"
 
 #include <cstdlib>
-#include "Audio/AudioManager.h"
+#include "Audio/AudioEngine.h"
 #include "Audio/Sound.h"
 
 class Proxy;
@@ -34,8 +34,6 @@ public:
 	//Set the games score.
 	
 private:
-	//The window manager
-	WindowManager m_WindowManager_;
 
 	//Both renderer's are stored here, as only 1 of each needs to exist  at any one point.
 	Renderer * m_Renderer_;

@@ -195,13 +195,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Audio\Sound.h" />
+    <ClCompile Include="src\Audio\AudioEngine.cpp" />
+    <ClCompile Include="src\General\Timer.cpp" />
     <ClCompile Include="src\Rendering\AssimpLoader.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
     <ClCompile Include="src\Rendering\LightManager.cpp" />
     <ClCompile Include="src\Rendering\Material.cpp" />
     <ClCompile Include="src\Rendering\Model.cpp" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
-    <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
     <ClCompile Include="src\Scripting\Script.cpp" />
@@ -235,7 +236,8 @@
     <ClCompile Include="src\General\XML\XMLParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Audio\AudioManager.h" />
+    <ClInclude Include="include\Audio\AudioEngine.h" />
+    <ClInclude Include="include\General\Timer.h" />
     <ClInclude Include="include\Rendering\AssimpLoader.h" />
     <ClInclude Include="include\Rendering\Colour.h" />
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />

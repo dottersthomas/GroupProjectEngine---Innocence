@@ -24,12 +24,11 @@ public:
 	void registerComponent(Component * pComponent);
 	void removeComponent(Component * pComponent);
 
-
 	//Update all the components.
 	void UpdateComponents(double dt);
 
 	//Late update all components.
-	void LateUpdateComponents();
+	void LateUpdateComponents(double dt);
 
 	ComponentVectorWrapper::t_Components_Vector_& getComponents()
 	{
@@ -92,6 +91,7 @@ public:
 	// Finds a components and assigns it to a global variable which is returned to lua
 	luabridge::LuaRef luaGetComponent(std::string type);
 	luabridge::LuaRef luaGetComponents(std::string type);
+	luabridge::LuaRef luaGetComponentsByTag(std::string type, std::string tag);
 
 	//find a Component by its type. As each component should be unique, only one of its type should exist, so filtering by type is effective to find a specific component.
 	template<typename T>
@@ -118,6 +118,7 @@ public:
 			.addFunction("addComponent", &GameObject::registerComponent)
 			.addFunction("getComponent", &GameObject::luaGetComponent)
 			.addFunction("getComponents", &GameObject::luaGetComponents)
+			.addFunction("getComponentsByTag", &GameObject::luaGetComponentsByTag)
 			.addFunction("removeComponent", &GameObject::removeComponent)
 			.endClass();
 	}
@@ -125,8 +126,10 @@ private:
 	ComponentVectorWrapper::t_Components_Vector_ m_Components_;
 	TransformComponent* m_Transform;
 
+	const char* m_CompName = "Scripting_currentComponent";
+
 	// Simplifies GetComponent and GetComponents
-	luabridge::LuaRef luaGetComponentHelper(std::string type, bool findAll);
+	luabridge::LuaRef luaGetComponentHelper(std::string type, bool findAll, const char* tag);
 };
 
 #endif

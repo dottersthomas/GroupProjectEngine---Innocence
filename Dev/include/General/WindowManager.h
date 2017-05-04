@@ -14,10 +14,15 @@ private:
 
 	bool m_UIFocus_ = false;
 
-public:
 	WindowManager();
 	WindowManager(int pXPos, int pYPos, int pWidth, int pHeight);
 	WindowManager(std::string pTitle, int pXPos, int pYPos, int pWidth, int pHeight);
+public:
+	static WindowManager& getInstance()
+	{
+		static WindowManager instance;
+		return instance;
+	}
 	~WindowManager();
 
 	GLFWwindow * createWindow(std::string pTitle, int pXPos, int pYPos, int pWidth, int pHeight);
@@ -47,6 +52,20 @@ public:
 		m_UIFocus_ = ptoggle;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<WindowManager>("WindowManager")
+			.addStaticProperty("instance", &WindowManager::getInstance)
+			.addData("sceneManager", &WindowManager::m_SceneManager_, false)
+			.addData("uiFocus", &WindowManager::m_UIFocus_)
+			.addFunction("toggleVSync", &WindowManager::toggleVSYNC)
+			.addFunction("toggleFullScreen", &WindowManager::toggleFullScreen)
+			.addFunction("toggleCursorDraw", &WindowManager::toggleCursorDraw)
+			.endClass();
+	}
 };
 
 #endif

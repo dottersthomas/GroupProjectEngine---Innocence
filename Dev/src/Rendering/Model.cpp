@@ -15,7 +15,6 @@ Model::Model(std::vector<Mesh> mesh) {
 		if (m_MinPos_.z > m_Meshes_[i].getRawMesh().m_MinPos_.z) m_MinPos_.z = m_Meshes_[i].getRawMesh().m_MinPos_.z;
 	}
 
-
 	for (int i = 1; i < m_Meshes_.size(); i++) {
 		if (m_MaxPos_.x < m_Meshes_[i].getRawMesh().m_MaxPos_.x) m_MaxPos_.x = m_Meshes_[i].getRawMesh().m_MaxPos_.x;
 		if (m_MaxPos_.y < m_Meshes_[i].getRawMesh().m_MaxPos_.y) m_MaxPos_.y = m_Meshes_[i].getRawMesh().m_MaxPos_.y;
@@ -66,7 +65,6 @@ void Model::Render(std::string pShader, TransformComponent * transform) {
 	for (std::vector<Mesh>::iterator iter = m_Meshes_.begin(); iter != m_Meshes_.end(); ++iter){
 
 		
-
 		(*iter).getMaterial().UpdateUniforms(pShader);
 		(*iter).getMaterial().BindTextures(pShader);
 

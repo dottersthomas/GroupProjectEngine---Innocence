@@ -1,14 +1,14 @@
 #include "Audio/Sound.h"
-#include "Audio/AudioManager.h"
+#include "Audio/AudioEngine.h"
 #include "Physics/Components/TransformComponent.h"
 
 // --- Constructor(s)
 
-Sound::Sound(std::string path, const bool make3D)
+Sound::Sound(std::string path, bool make3D)
 {
 	// Initilaise variables
-	m_AudioManager = AudioManager::getInstance();
-	m_System = m_AudioManager->getSystem();
+	m_AudioEngine = AudioEngine::getInstance();
+	m_System = m_AudioEngine->getSystem();
 
 	// Set path
 	m_path = path;

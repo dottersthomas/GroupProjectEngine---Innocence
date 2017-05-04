@@ -47,7 +47,7 @@ void Scene::Update(double dt){
 
 		//Late update.
 		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_SceneGameObjects_.begin(); iter != m_SceneGameObjects_.end(); ++iter) {
-			(*iter).LateUpdateComponents();
+			(*iter).LateUpdateComponents(dt);
 
 		}
 	}
@@ -79,4 +79,10 @@ void Scene::Destroy() {
 
 	//Clear the GameObjects vector.
 	m_SceneGameObjects_.clear();
+}
+
+luabridge::LuaRef Scene::luaGetGameObjects()
+{
+	// Get gameObjects and convert to lua table
+	return LuaHelper::ToTable(static_cast<std::vector<GameObject>>(*(getGameObjects())));
 }
