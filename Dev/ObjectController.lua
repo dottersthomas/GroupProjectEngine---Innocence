@@ -5,7 +5,7 @@ require("Input")
 -- set speed
 local speed = 10
 
-Test = 
+ObjectController = 
 {
 	Start = function()
 

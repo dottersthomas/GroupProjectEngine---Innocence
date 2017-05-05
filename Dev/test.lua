@@ -18,11 +18,14 @@ Test =
 		--f = gameObject:getComponentsByTag("TransformComponent", "Dodo")
 		--print(f[1])
 		
-		if Input.wasKeyPressed(Key.SPACE) then
+		print(WindowManager.instance.sceneManager.currentScene:getGameObjects())
+
+		
+		if Input.wasKeyReleased(Key.SPACE) then
 			y:pause()
 		end
 		
-		print(y:currentTime())
+		--print(y:currentTime())
 	end,
 	
 	LateUpdate = function(dt)

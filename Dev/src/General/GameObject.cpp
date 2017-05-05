@@ -22,7 +22,6 @@ GameObject::~GameObject()
 
 bool GameObject::checkComponentExists(std::string pName) const
 {
-
 	for (int i = m_Components_.size(); i--;)
 		if (m_Components_[i]->m_ComponentName == pName)
 			return true;

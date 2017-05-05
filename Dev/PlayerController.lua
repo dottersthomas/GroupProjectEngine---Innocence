@@ -7,7 +7,7 @@ local moving = false -- Used to stop rotating on the spot
 local speed = 5
 local rot = 0
 
-Test = 
+PlayerController = 
 {
 	Start = function()
 

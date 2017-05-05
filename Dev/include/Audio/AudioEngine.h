@@ -3,8 +3,10 @@
 // Website used: https://katyscode.wordpress.com/2012/10/05/cutting-your-teeth-on-fmod-part-1-build-environment-initialization-and-playing-sounds/
 // Website used: http://www.fmod.org/documentation/#content/generated/overview/getting_started.html
 
-#include "fmod.hpp"
-#include "fmod_errors.h"
+#include <lua.hpp>
+#include <LuaBridge.h>
+#include <fmod.hpp>
+#include <fmod_errors.h>
 #include <memory>
 
 /// <summary>
@@ -49,5 +51,18 @@ public:
 	/// Returns an instance of the AudioEngine.
 	/// </summary>
 	/// <returns>std::shared_ptr&lt;AudioEngine&gt;</returns>
-	static std::shared_ptr<AudioEngine> getInstance();
+	static AudioEngine& getInstance()
+	{
+		static AudioEngine instance;
+		return instance;
+	}
+
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+	
+		getGlobalNamespace(L)
+			.beginClass<AudioEngine>("AudioEngine")
+			.endClass();
+	}
 };

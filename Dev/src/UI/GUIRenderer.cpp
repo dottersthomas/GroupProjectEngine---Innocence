@@ -22,8 +22,8 @@ void GUIRenderer::Render() {
 
 			m_sceneGameObjects_.clear(); //Currently clearing the list, but should become more dynamic in the future.
 
-			GameObjectVectorWrapper::t_GameObject_Vector_ temp = *m_CurrentScene_->getGameObjects();
-			for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = temp.begin(); iter != temp.end(); ++iter) {
+			std::vector<GameObject> temp = *m_CurrentScene_->getGameObjects();
+			for (std::vector<GameObject>::iterator iter = temp.begin(); iter != temp.end(); ++iter) {
 				if ((*iter).CheckComponentTypeExists<CanvasComponent>()) {
 					m_sceneGameObjects_.push_back(*iter); //Add GameObject to the list.
 				}
@@ -33,7 +33,7 @@ void GUIRenderer::Render() {
 		}
 
 		//Render the UI
-		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjects_.begin(); iter != m_sceneGameObjects_.end(); ++iter) {
+		for (std::vector<GameObject>::iterator iter = m_sceneGameObjects_.begin(); iter != m_sceneGameObjects_.end(); ++iter) {
 
 			CanvasComponent * canvas = (*iter).GetComponentByType<CanvasComponent>();
 			canvas->Render(Projection, View);

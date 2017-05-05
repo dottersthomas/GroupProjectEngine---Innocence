@@ -68,7 +68,8 @@ void Game::beginLoop() {
 	TransformComponent::registerLua(L);
 	InputHandler::registerLua(L);
 	GameObject::registerLua(L);
-	//Sound::registerLua(L);
+	AudioEngine::registerLua(L);
+	Sound::registerLua(L);
 	Light::registerLua(L);
 	PointLight::registerLua(L);
 	DirectionalLight::registerLua(L);
@@ -259,7 +260,7 @@ Scene * Game::LoadTestScene() {
 	glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 
-	Script* s1 = new Script("PlayerController.lua", "Test");
+	Script* s1 = new Script("RandomSound.lua", "RandomSound");
 
 	render->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render);

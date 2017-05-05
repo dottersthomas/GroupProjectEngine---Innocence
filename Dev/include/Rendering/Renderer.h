@@ -10,7 +10,6 @@
 #include "glm\gtc\type_ptr.hpp"
 
 #include "General\Scene.h"
-#include "General\GameObjectVectorWrapper.h"
 
 #include "Rendering\LightManager.h"
 
@@ -24,7 +23,7 @@ private:
 	Scene * m_CurrentScene_ = nullptr;
 
 	//Vector of all game objects with a render component.
-	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjects_;
+	std::vector<GameObject> m_sceneGameObjects_;
 	GLFWwindow * m_Window_;
 	LightManager m_LightManager_;
 

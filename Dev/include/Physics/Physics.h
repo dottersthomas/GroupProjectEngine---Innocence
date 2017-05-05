@@ -10,7 +10,6 @@
 #include "glm\gtc\type_ptr.hpp"
 
 #include "General\Scene.h"
-#include "General\GameObjectVectorWrapper.h"
 
 #include "Physics\Components\BoxCollider.h"
 #include "Physics\Components\RigidBodyh.h"
@@ -27,8 +26,8 @@ private:
 	Scene * m_CurrentScene_ = nullptr;
 
 	//Vector of all game objects with a render component.
-	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjectsCollide_;
-	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjectsMove_;
+	std::vector<GameObject> m_sceneGameObjectsCollide_;
+	std::vector<GameObject> m_sceneGameObjectsMove_;
 	GLFWwindow * m_Window_;
 	
 	float gravity = 9.8f;

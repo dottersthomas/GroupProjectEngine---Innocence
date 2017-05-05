@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="include\Audio\Sound.h" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
-    <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
     <ClCompile Include="src\Scripting\Script.cpp" />
     <ClCompile Include="src\Rendering\ShaderUniform.cpp" />
@@ -48,6 +46,7 @@
     <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\Components\RigidBodycpp.cpp" />
     <ClCompile Include="src\Physics\Physics.cpp" />
+    <ClCompile Include="src\Audio\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
@@ -73,7 +72,6 @@
     <ClInclude Include="include\General\Game.h" />
     <ClInclude Include="include\General\InputHandler.h" />
     <ClInclude Include="include\Rendering\Components\RenderComponent.h" />
-    <ClInclude Include="include\General\GameObjectVectorWrapper.h" />
     <ClInclude Include="include\General\OBJLoader.h" />
     <ClInclude Include="include\General\Proxy.h" />
     <ClInclude Include="include\UI\Text2D.h" />
@@ -109,6 +107,7 @@
     <ClInclude Include="include\Physics\Components\Collider.h" />
     <ClInclude Include="include\Physics\Components\RigidBodyh.h" />
     <ClInclude Include="include\Physics\Physics.h" />
+    <ClInclude Include="include\Audio\Sound.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

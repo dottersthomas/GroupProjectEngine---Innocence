@@ -7,7 +7,7 @@
 Sound::Sound(std::string path, bool make3D)
 {
 	// Initilaise variables
-	m_AudioEngine = AudioEngine::getInstance();
+	m_AudioEngine = &AudioEngine::getInstance();
 	m_System = m_AudioEngine->getSystem();
 
 	// Set path
@@ -59,7 +59,7 @@ float Sound::getVolume() const
 
 // --- Methods
 
-void Sound::loop(const bool loop)
+void Sound::loop(bool loop)
 {
 	// Required: Has to be set after the sound has begun playing
 
@@ -69,7 +69,7 @@ void Sound::loop(const bool loop)
 	m_Channel->setMode(m_Looping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
 }
 
-void Sound::setVolume(const float volume)
+void Sound::setVolume(float volume)
 {
 	m_Channel->setVolume(volume);
 }

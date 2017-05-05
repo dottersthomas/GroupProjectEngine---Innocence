@@ -11,7 +11,6 @@
 #include "glm\gtc\type_ptr.hpp"
 
 #include "General\Scene.h"
-#include "General\GameObjectVectorWrapper.h"
 #include "UI\Components\CanvasComponent.h"
 
 //Unique renderer designed to render the ui only.
@@ -27,7 +26,7 @@ private:
 	//The current scene to be rendering.
 	Scene * m_CurrentScene_;
 	//Game Objects with a canvas component.
-	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjects_;
+	std::vector<GameObject> m_sceneGameObjects_;
 	//current window.
 	GLFWwindow * m_Window_;
 

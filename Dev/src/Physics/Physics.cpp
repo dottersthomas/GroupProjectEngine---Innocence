@@ -11,8 +11,8 @@ void Physics::setScene(Scene * pScene) {}
 
 void Physics::update(float dt) {
 
-	GameObjectVectorWrapper::t_GameObject_Vector_ temp = *m_CurrentScene_->getGameObjects();
-	for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = temp.begin(); iter != temp.end(); ++iter) {
+	std::vector<GameObject> temp = *m_CurrentScene_->getGameObjects();
+	for (std::vector<GameObject>::iterator iter = temp.begin(); iter != temp.end(); ++iter) {
 		if ((*iter).CheckComponentTypeExists<BoxCollider>()) {
 			m_sceneGameObjectsCollide_.push_back(*iter); //Add GameObject to the list.
 		}
@@ -30,10 +30,10 @@ void Physics::update(float dt) {
 void Physics::CollisionDetection()
 {
 	bool collided; 
-	for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjectsCollide_.begin(); iter != m_sceneGameObjectsCollide_.end(); ++iter) {
+	for (std::vector<GameObject>::iterator iter = m_sceneGameObjectsCollide_.begin(); iter != m_sceneGameObjectsCollide_.end(); ++iter) {
 		
 		BoxCollider * test = iter->GetComponentByType<BoxCollider>();
-		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter2 = m_sceneGameObjectsCollide_.begin(); iter2 != m_sceneGameObjectsCollide_.end(); ++iter2)
+		for (std::vector<GameObject>::iterator iter2 = m_sceneGameObjectsCollide_.begin(); iter2 != m_sceneGameObjectsCollide_.end(); ++iter2)
 		{
 			BoxCollider * test2 = iter->GetComponentByType<BoxCollider>();
 			if (test != test2)
@@ -49,7 +49,7 @@ void Physics::CollisionDetection()
 
 void Physics::EulerMove(float dt)
 {
-	for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjectsMove_.begin(); iter != m_sceneGameObjectsMove_.end(); ++iter)
+	for (std::vector<GameObject>::iterator iter = m_sceneGameObjectsMove_.begin(); iter != m_sceneGameObjectsMove_.end(); ++iter)
 	{
 		RigidBody * body = iter->GetComponentByType<RigidBody>();
 		TransformComponent * transform = iter->GetComponentByType<TransformComponent>();

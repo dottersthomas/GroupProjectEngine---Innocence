@@ -61,7 +61,7 @@ public:
 	/// Loops the audio.
 	/// </summary>
 	/// <param name="loop"><c>true</c> to loop the audio; otherwise, <c>false</c>.</param>
-	void loop(const bool loop);
+	void loop(bool loop);
 
 	/// <summary>
 	/// Pauses the audio.
@@ -82,7 +82,7 @@ public:
 	/// Sets the volume.
 	/// </summary>
 	/// <param name="volume">The volume level.</param>
-	void setVolume(const float volume);
+	void setVolume(float volume);
 
 	/// <summary>
 	/// Returns the volume level.
@@ -105,7 +105,7 @@ public:
 
 		getGlobalNamespace(L)
 			.deriveClass<Sound, Component>("Sound")
-			.addConstructor<void(*)(std::string path, bool make3D)>()
+			.addConstructor<void(*)(std::string, bool)>()
 			.addProperty("threeD", &Sound::is3D)
 			.addProperty("path", &Sound::getPath)
 			.addProperty("loop", &Sound::isLooped, &Sound::loop)
@@ -134,7 +134,7 @@ private:
 	/// <summary>
 	/// Holds an instance of the AudioEngine.
 	/// </summary>
-	std::shared_ptr<AudioEngine> m_AudioEngine;
+	AudioEngine *m_AudioEngine;
 
 	/// <summary>
 	/// Marks whether the sound is looping.

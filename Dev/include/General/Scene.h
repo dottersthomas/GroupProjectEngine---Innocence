@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "GameObject.h"
-#include "GameObjectVectorWrapper.h"
 #include "ComponentVectorWrapper.h"
 #include "Rendering\Components\CameraComponent.h"
 #include "Scripting\LuaHelper.h"
@@ -41,7 +40,7 @@ public:
 
 	luabridge::LuaRef luaGetGameObjects();
 
-	GameObjectVectorWrapper::t_GameObject_Vector_ * getGameObjects() {
+	std::vector<GameObject> * getGameObjects() {
 		return &m_SceneGameObjects_;
 	}
 	bool M_bIsDirty = true;
@@ -83,7 +82,7 @@ private:
 
 	GameObject m_RootNode_ = GameObject("Root");
 	
-	GameObjectVectorWrapper::t_GameObject_Vector_ m_SceneGameObjects_;
+	std::vector<GameObject> m_SceneGameObjects_;
 	
 
 	CameraComponent * m_CurrentCamera_ = nullptr;

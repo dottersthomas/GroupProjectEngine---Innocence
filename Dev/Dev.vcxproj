@@ -194,8 +194,8 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\Audio\Sound.h" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
+    <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\General\Timer.cpp" />
     <ClCompile Include="src\Physics\Components\Box.cpp" />
     <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
@@ -210,7 +210,6 @@
     <ClCompile Include="src\Rendering\Model.cpp" />
     <ClCompile Include="src\Rendering\SkyBox.cpp" />
     <ClCompile Include="src\Scripting\LuaEngine.cpp" />
-    <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Rendering\Components\FirstPersonCameraComponent.cpp" />
     <ClCompile Include="src\Scripting\Script.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\DirectionalLight.cpp" />
@@ -244,6 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioEngine.h" />
+    <ClInclude Include="include\Audio\Sound.h" />
     <ClInclude Include="include\General\Timer.h" />
     <ClInclude Include="include\Physics\Components\Box.h" />
     <ClInclude Include="include\Physics\Components\BoxCollider.h" />
@@ -285,7 +285,6 @@
     <ClInclude Include="include\General\Game.h" />
     <ClInclude Include="include\General\InputHandler.h" />
     <ClInclude Include="include\Rendering\Components\RenderComponent.h" />
-    <ClInclude Include="include\General\GameObjectVectorWrapper.h" />
     <ClInclude Include="include\General\OBJLoader.h" />
     <ClInclude Include="include\General\Proxy.h" />
     <ClInclude Include="include\UI\Text2D.h" />

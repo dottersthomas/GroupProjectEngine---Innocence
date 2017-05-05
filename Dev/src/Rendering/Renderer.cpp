@@ -57,8 +57,8 @@ void Renderer::Render() {
 
 			m_sceneGameObjects_.clear(); //Currently clearing the list, but should become more dynamic in the future.
 
-			GameObjectVectorWrapper::t_GameObject_Vector_ temp = *m_CurrentScene_->getGameObjects();
-			for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = temp.begin(); iter != temp.end(); ++iter) {
+			std::vector<GameObject> temp = *m_CurrentScene_->getGameObjects();
+			for (std::vector<GameObject>::iterator iter = temp.begin(); iter != temp.end(); ++iter) {
 				if ((*iter).CheckComponentTypeExists<RenderComponent>()) {
 					m_sceneGameObjects_.push_back(*iter); //Add GameObject to the list.
 				}
@@ -72,7 +72,7 @@ void Renderer::Render() {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//Render the scenes GameObjects. Possibly provide filtering to improve performance speed. Or maybe even have it within its own thread.
-		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjects_.begin(); iter != m_sceneGameObjects_.end(); ++iter) {
+		for (std::vector<GameObject>::iterator iter = m_sceneGameObjects_.begin(); iter != m_sceneGameObjects_.end(); ++iter) {
 			//Get the render component from the GameObject list and let it render itself.
 			RenderComponent * render = (*iter).GetComponentByType<RenderComponent>();
 			render->Render(Projection, View);

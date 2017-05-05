@@ -44,10 +44,3 @@ FMOD::System* AudioEngine::getSystem() const
 {
 	return m_System;
 }
-
-std::shared_ptr<AudioEngine> AudioEngine::getInstance()
-{
-	if (!instance)
-		instance = std::shared_ptr<AudioEngine>(new AudioEngine());
-	return instance;
-}

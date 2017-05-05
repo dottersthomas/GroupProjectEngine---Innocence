@@ -3,6 +3,7 @@
 #include <lua.hpp>
 #include <LuaBridge.h>
 #include <glm/glm.hpp>
+#include <vector>
 
 /// <summary>
 /// Used to register classes from external libraries with Lua.
@@ -18,10 +19,12 @@ public:
 	{
 		using namespace luabridge;
 
+		luabridge::Namespace globalNamespace = getGlobalNamespace(L);
+
 		// --- GLM
 
 		// Register vectors
-		getGlobalNamespace(L)
+		globalNamespace
 			.beginClass<glm::vec2>("Vec2")
 			.addConstructor<void(*)(float, float)>()
 			.addData<float>("x", &glm::vec2::x)
