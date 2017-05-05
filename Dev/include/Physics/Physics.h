@@ -45,13 +45,13 @@ public:
 
 	void Stop(GameObject go);
 
-	void CollisionDetection();
+	void CollisionDetection(float dt);
 
 	void EulerMove(float dt);
 
 	bool AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2);
 	
-	void ResolveCollision(GameObject& go,CollisionData cd);
+	void ResolveCollision(GameObject& go,CollisionData * cd);
 
 	void setScene(Scene * pScene);
 

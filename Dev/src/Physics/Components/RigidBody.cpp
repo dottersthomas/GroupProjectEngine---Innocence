@@ -7,10 +7,12 @@ RigidBody::RigidBody()
 	velocity = glm::vec3(0, 0, 0);
 	acceleration = glm::vec3(0, 0, 0);
 	gravityScale = 1.f;
+	grounded = false;
 }
 
 void RigidBody::Update(double dt)
 {
+
 	
 }
 

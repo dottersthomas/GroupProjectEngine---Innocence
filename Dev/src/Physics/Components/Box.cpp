@@ -26,6 +26,10 @@ Box::Box(glm::vec3 minPoints, glm::vec3 maxPoints)
 	omaxX = maxX;
 	omaxY = maxY;
 	omaxZ = maxZ;
+	width = maxX - minX;
+	height = maxY - minY;
+	depth = maxZ - minZ;
+	midPoint = glm::vec3(width / 2, height / 2, depth / 2);
 	
 }
 Box::~Box()
@@ -55,10 +59,20 @@ void Box::SetMax(float x, float y, float z)
 	maxX = x;
 	maxY = y;
 	maxZ = z;
+
+	width = maxX - minX;
+	height = maxY - minY;
+	depth = maxZ - minZ;
+	midPoint = glm::vec3(width / 2, height / 2, depth / 2);
 }
 void Box::SetMin(float x, float y, float z)
 {
 	minX = x;
 	minY = y;
 	minZ = z;
+
+	width = maxX - minX;
+	height = maxY - minY;
+	depth = maxZ - minZ;
+	midPoint = glm::vec3(width / 2, height / 2, depth / 2);
 }

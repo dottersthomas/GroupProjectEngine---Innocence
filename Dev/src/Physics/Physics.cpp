@@ -14,11 +14,11 @@ void Physics::setScene(Scene * pScene) {
 void Physics::update(float dt) {
 	
 	EulerMove(dt);
-	CollisionDetection();
+	CollisionDetection(dt);
 
 }
 
-void Physics::CollisionDetection()
+void Physics::CollisionDetection(float dt)
 {
 	bool collided; 
 	for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjectsCollide_.begin(); iter != m_sceneGameObjectsCollide_.end(); ++iter) {
@@ -29,10 +29,17 @@ void Physics::CollisionDetection()
 			BoxCollider * test2 = iter2->GetComponentByType<BoxCollider>();
 			if (test != test2)
 			{
+				test->Update(dt);
+				test2->Update(dt);
 				collided = AABBAABBCollision(test, test2);
 				if (collided)
 				{
-					CollisionData cd = CollisionData(*iter2);
+					cout << "Collided" << endl;
+					glm::vec3 diff = test2->GetBounds().GetMax() - test->GetBounds().GetMin();
+					glm::vec3 diff2 = test2->GetBounds().GetMin() - test->GetBounds().GetMax();
+
+			
+					CollisionData *  cd = new CollisionData(*iter2, diff, diff2);
 					ResolveCollision(*iter,cd);
 				}
 				else
@@ -66,14 +73,18 @@ void Physics::EulerMove(float dt)
 	{
 		RigidBody * body = iter->GetComponentByType<RigidBody>();
 		TransformComponent * transform = iter->GetComponentByType<TransformComponent>();
-		glm::vec3 g = gravity * glm::vec3(0, -1, 0) * body->GetGravityScale();
+		glm::vec3 g = glm::vec3(0, 0, 0);
+		if (body->GetGround() == false)
+		{
+			g = gravity * glm::vec3(0, -1, 0) * body->GetGravityScale()*dt;
+		}
 		glm::vec3 f = friction * 0.5f * glm::vec3(1, 0, 1)*dt;
 
 		
 
-		body->SetVel(body->GetVel() + (body->GetAcc() + g)*dt);
+		body->SetVel(body->GetVel() + (body->GetAcc())*dt);
 
-		body->SetVel(body->GetVel() - body->GetVel()*f);
+		body->SetVel(body->GetVel() - body->GetVel()*f + g);
 
 		if (body->GetVel().x < 0.001f && body->GetVel().x > -0.001f)
 		{
@@ -85,6 +96,7 @@ void Physics::EulerMove(float dt)
 		}
 		//body->SetVel(body->GetVel()+(-body->GetVel() + friction) * dt);
 		glm::vec3 newPos = transform->getPosition() + body->GetVel() *dt;
+		
 		transform->setPosition(newPos);
 		body->SetAcc(glm::vec3(0, 0, 0));
 	}
@@ -103,7 +115,7 @@ bool Physics::AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2)
 		box1.GetMin().z <= box2.GetMax().z);
 }
 
-void Physics::ResolveCollision(GameObject& go, CollisionData cd) {
+void Physics::ResolveCollision(GameObject& go, CollisionData * cd) {
 
 	BoxCollider * bc = go.GetComponentByType<BoxCollider>();
 	if (bc->getTrigger())

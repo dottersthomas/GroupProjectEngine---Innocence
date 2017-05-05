@@ -10,6 +10,7 @@ private:
 	glm::vec3 acceleration;
 	float mass;
 	float gravityScale;
+	bool grounded;
 
 
 public:
@@ -27,23 +28,34 @@ public:
 	//Called when the component starts.
 	void Start();
 
-	glm::vec3 GetVel()
+	glm::vec3 GetVel() const
 	{
 		return velocity;
 	}
 
-	glm::vec3 GetAcc()
+	glm::vec3 GetAcc() const
 	{
 		return acceleration;
 	}
-	float GetGravityScale()
+
+	float GetGravityScale() const
 	{
 		return gravityScale;
 	}
 
+	bool GetGround() const
+	{
+		return grounded;
+	}
+
+	void setGrounded(bool b)
+	{
+		grounded = b;
+	}
+
 	void SetGravScale(float f)
 	{
-
+		gravityScale = f;
 	}
 
 	void SetVel(glm::vec3 vel)
@@ -56,4 +68,17 @@ public:
 		acceleration = acc;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<RigidBody, Component>("RigidBody")
+			.addConstructor<void(*)()>()
+			.addProperty<glm::vec3>("velocity", &RigidBody::GetVel, &RigidBody::SetVel)
+			.addProperty<glm::vec3>("acceleration", &RigidBody::GetAcc, &RigidBody::SetAcc)
+			.addProperty<float>("gravityScale", &RigidBody::GetGravityScale, &RigidBody::SetGravScale)
+			.addProperty<bool>("grounded", &RigidBody::GetGround, &RigidBody::setGrounded)
+			.endClass();
+	}
 };

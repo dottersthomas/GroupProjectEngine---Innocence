@@ -49,6 +49,8 @@ void TransformComponent::Update(double dt) {
 		m_bDirty_ = false;
 	
 
+		
+
 }
 void TransformComponent::LateUpdate(double dt) {
 
@@ -61,6 +63,7 @@ void TransformComponent::Destroy() {
 
 void TransformComponent::Start() {
 	m_bDirty_ = true;
+	m_PrevPosition = m_Position_;
 }
 
 

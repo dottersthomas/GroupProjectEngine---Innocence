@@ -80,6 +80,7 @@ void Game::beginLoop() {
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);
 	Scene::registerLua(L);
+	RigidBody::registerLua(L);
 
 	// Execute scripts
 	//GameObject go = GameObject("TestObject");
@@ -144,17 +145,18 @@ void Game::beginLoop() {
 			rotation += 3.142 / 1000.0f;
 			TransformComponent* temp = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
 			//temp->setRotation(glm::vec3(temp->getRotation().x, temp->getRotation().y,  rotation));
-			RigidBody * rb = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
 			
 			update(tick * 1/ fDelay);
-
+			RigidBody * rb = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
+			//rb->SetAcc(glm::vec3(-2, 0, 0));
 			tick -= TICKS_PER_SECOND;
 
 		}
 
 		m_Physics_->updateObjects();
+		
 		m_Renderer_->Render();
-
+		
 
 		m_GUIRenderer_->Render();
 
@@ -289,11 +291,12 @@ Scene * Game::LoadTestScene() {
 	bc->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("OBJ"));
-	tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc->setParent(&_Scene->getGameObjects()->at(index));
-	tc->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+	TransformComponent * tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc2->setParent(&_Scene->getGameObjects()->at(index));
+	tc2->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	tc2->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 	RenderComponent * render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
@@ -303,18 +306,38 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
 	render2->setParent(&_Scene->getGameObjects()->at(index));
 
-	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index),true);
+	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc2);
 	bc2->setParent(&_Scene->getGameObjects()->at(index));
 
 	RigidBody * rb = new RigidBody();
 	_Scene->getGameObjects()->at(index).registerComponent(rb);
 	rb->setParent(&_Scene->getGameObjects()->at(index));
-	rb->SetAcc(glm::vec3(-100, 0, 0));
+	rb->SetAcc(glm::vec3(0, 0, 0));
 
-	Script* s1 = new Script("PlayerController.lua", "Test");
+	Script* s1 = new Script("PlayerController3.lua", "Test");
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("sdad"));
+	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, -3.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	
+	
+	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Grass pack/Grass_02.obj");
+	
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+	
+	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
 
 	////////////////////////////////////////////
