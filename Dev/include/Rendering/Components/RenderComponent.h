@@ -39,6 +39,7 @@ private:
 
 	//If the render component should actually render.
 	bool shouldDraw = true;
+	bool cullBackFace = true;
 
 	Material m_Material_;
 
@@ -60,10 +61,14 @@ public:
 	}
 
 	//Render function.
-	void Render(glm::mat4 pProj, glm::mat4 pView);
+	void Render(glm::mat4 pProj, glm::mat4 pView, std::string pShader = "");
 
 	void toggleDrawing(bool pToggle) {
 		shouldDraw = pToggle;
+	}
+
+	void toggleBackCulling(bool pToggle) {
+		cullBackFace = pToggle;
 	}
 
 	void attachMaterial(Material pMat) {

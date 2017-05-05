@@ -50,3 +50,7 @@ void SceneManager::UpdateRenderers(Renderer * pRenderer, GUIRenderer * pGUIRende
 	pRenderer->setScene(m_CurrentScene_);
 	pGUIRenderer->setScene(m_CurrentScene_);
 }
+void SceneManager::UpdatePhysics(Physics * pPhysics)
+{
+	pPhysics->setScene(m_CurrentScene_);
+}

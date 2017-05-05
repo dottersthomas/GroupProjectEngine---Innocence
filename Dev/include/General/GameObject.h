@@ -14,6 +14,10 @@
 class GameObject
 {
 public:
+	GameObject()
+	{
+
+	}
 	GameObject(const char* pName);
 	~GameObject();
 
@@ -41,7 +45,7 @@ public:
 	void updateParents()
 	{
 		/*for (int i = m_Components_.size(); i--;) {
-			m_Components_[i]->setParent(this);
+		m_Components_[i]->setParent(this);
 		}*/
 	}
 

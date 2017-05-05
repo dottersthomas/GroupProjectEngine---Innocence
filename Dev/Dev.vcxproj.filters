@@ -48,6 +48,7 @@
     <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\Components\RigidBodycpp.cpp" />
     <ClCompile Include="src\Physics\Physics.cpp" />
+    <ClCompile Include="src\Launcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
@@ -107,8 +108,9 @@
     <ClInclude Include="include\Physics\Components\Box.h" />
     <ClInclude Include="include\Physics\Components\BoxCollider.h" />
     <ClInclude Include="include\Physics\Components\Collider.h" />
-    <ClInclude Include="include\Physics\Components\RigidBodyh.h" />
     <ClInclude Include="include\Physics\Physics.h" />
+    <ClInclude Include="include\Physics\Components\CollisionData.h" />
+    <ClInclude Include="include\Physics\Components\RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />

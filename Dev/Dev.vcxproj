@@ -197,6 +197,7 @@
     <ClCompile Include="include\Audio\Sound.h" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
     <ClCompile Include="src\General\Timer.cpp" />
+    <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="src\Physics\Components\Box.cpp" />
     <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\Components\RigidBodycpp.cpp" />
@@ -248,7 +249,8 @@
     <ClInclude Include="include\Physics\Components\Box.h" />
     <ClInclude Include="include\Physics\Components\BoxCollider.h" />
     <ClInclude Include="include\Physics\Components\Collider.h" />
-    <ClInclude Include="include\Physics\Components\RigidBodyh.h" />
+    <ClInclude Include="include\Physics\Components\CollisionData.h" />
+    <ClInclude Include="include\Physics\Components\RigidBody.h" />
     <ClInclude Include="include\Physics\Physics.h" />
     <ClInclude Include="include\Rendering\AssimpLoader.h" />
     <ClInclude Include="include\Rendering\Colour.h" />

@@ -24,6 +24,8 @@ private:
 	//Model Matrix.
 	glm::mat4 m_Model_;
 
+
+
 	//If the transform is dirty and requires and update.
 	bool m_bDirty_;
 
@@ -99,7 +101,7 @@ public:
 	static void registerLua(lua_State* L)
 	{
 		using namespace luabridge;
-		
+
 		getGlobalNamespace(L)
 			.deriveClass<TransformComponent, Component>("TransformComponent")
 			.addProperty("position", &TransformComponent::getPosition, &TransformComponent::setPosition)

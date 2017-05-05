@@ -11,7 +11,7 @@
 #include "SceneManager.h"
 
 #include "UI\GUIRenderer.h"
-
+#include "Physics\Physics.h"
 #include "General\Proxy.h"
 
 #include <cstdlib>
@@ -32,9 +32,11 @@ public:
 	//Main update function.
 	void update(double dTime);
 	//Set the games score.
-	
+
 private:
 
+
+	Physics * m_Physics_;
 	//Both renderer's are stored here, as only 1 of each needs to exist  at any one point.
 	Renderer * m_Renderer_;
 	GUIRenderer * m_GUIRenderer_;

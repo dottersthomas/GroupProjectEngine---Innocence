@@ -40,26 +40,40 @@ void RenderComponent::AttachMesh(Mesh * pMesh) {
 }
 
 
-void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView) {
+void RenderComponent::Render(glm::mat4 pProj, glm::mat4 pView, std::string pShader) {
 	//No point processing rendering if no mesh is found, altho this is unlikely as no render component would be included.
 	if (shouldDraw) {
 
-		if (ResourceManager::getInstance()->getCurrentShaderID() != m_Shader_) {
-			ResourceManager::getInstance()->useShader(m_Shader_); //Error check for false shader switch.
+		if (!cullBackFace) {
+			glDisable(GL_CULL_FACE);     // Cull back facing polygons
+			glCullFace(GL_BACK);
 		}
-		ResourceManager::getInstance()->GetShader(m_Shader_)->UpdateShaderUniforms();
+
+		if (pShader == "") {
+
+			if (ResourceManager::getInstance()->getCurrentShaderID() != m_Shader_) {
+				ResourceManager::getInstance()->useShader(m_Shader_); //Error check for false shader switch.
+			}
+			ResourceManager::getInstance()->GetShader(m_Shader_)->UpdateShaderUniforms();
 
 
-		ResourceManager::getInstance()->GetShader(m_Shader_)->SetMatrix4("mProjection", pProj);
-		ResourceManager::getInstance()->GetShader(m_Shader_)->SetMatrix4("mView", pView);
+			ResourceManager::getInstance()->GetShader(m_Shader_)->SetMatrix4("mProjection", pProj);
+			ResourceManager::getInstance()->GetShader(m_Shader_)->SetMatrix4("mView", pView);
 
-		if (m_Models_.size() > 0) {
-			for (int i = 0; i < m_Models_.size(); i++) {
-				m_Models_[i].Render(m_Shader_, nullptr);
+			if (m_Models_.size() > 0) {
+				for (int i = 0; i < m_Models_.size(); i++) {
+					m_Models_[i].Render(m_Shader_, nullptr);
+				}
 			}
 		}
+		else {
 
+		}
 
+		if (!cullBackFace) {
+			glEnable(GL_CULL_FACE);     // Cull back facing polygons
+			glCullFace(GL_BACK);
+		}
 	}
 }
 

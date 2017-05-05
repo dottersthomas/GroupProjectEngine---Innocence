@@ -1,6 +1,7 @@
 #include "General\Game.h"
 #include "Rendering\ResourceManager.h"
 #include "Physics\Components\TransformComponent.h"
+
 #include "Rendering\Components\RenderComponent.h"
 #include "Rendering\MeshFactory.h"
 #include "Scripting/LuaEngine.h"
@@ -23,11 +24,11 @@ static void error_callback(int error, const char* description)
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	//Close the window and thus kill the Engine.
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, GL_TRUE);
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
 
 
-		InputHandler::invokeKey(key, scancode, action, mods);
+	InputHandler::invokeKey(key, scancode, action, mods);
 }
 
 
@@ -41,6 +42,7 @@ void Game::update(double dTime) {
 	}
 
 
+	m_Physics_->update(dTime);
 	m_Renderer_->update(dTime);
 
 
@@ -90,9 +92,10 @@ void Game::beginLoop() {
 	//WindowManager::getInstance().getSceneManager()->getCurrentScene()->AddGameObject(go);
 
 	//Start the Scenes Components.
-	if(WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr)
+	if (WindowManager::getInstance().getSceneManager()->getCurrentScene() != nullptr)
 		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 	//TransformComponent * comp = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
+	float rotation = 0;
 
 	while (!glfwWindowShouldClose(WindowManager::getInstance().getWindow()))
 
@@ -101,7 +104,7 @@ void Game::beginLoop() {
 		double currentTime = glfwGetTime();
 		nbFrames++;
 
-		if (currentTime - lastTime >= 1.0) { 
+		if (currentTime - lastTime >= 1.0) {
 
 			std::cout << nbFrames << std::endl;
 			nbFrames = 0;
@@ -138,16 +141,19 @@ void Game::beginLoop() {
 				WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
 				WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 			}
-			timer += 3.142f / 1000;
 
-			update(tick * 1/fDelay);
-			//comp->setRotation(glm::vec3(comp->getRotation().x, timer, comp->getRotation().z));
+			rotation += 3.142 / 1000.0f;
+			TransformComponent* temp = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
+			//temp->setRotation(glm::vec3(temp->getRotation().x, temp->getRotation().y,  rotation));
+			//RigidBody * rb = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
+
+			update(tick * 1 / fDelay);
 
 			tick -= TICKS_PER_SECOND;
 
 		}
 
-
+		m_Physics_->updateObjects();
 		m_Renderer_->Render();
 
 
@@ -182,12 +188,12 @@ Game::Game() {
 
 	WindowManager::getInstance().createWindow("Game", 0, 0, 1280, 720);
 	WindowManager::getInstance().toggleVSYNC(false);
-	
-	glfwMakeContextCurrent(WindowManager::getInstance().getWindow()); 
+
+	glfwMakeContextCurrent(WindowManager::getInstance().getWindow());
 
 	if (!WindowManager::getInstance().getWindow())
 	{
-		glfwTerminate();	
+		glfwTerminate();
 		std::exit(EXIT_FAILURE);
 	}
 
@@ -199,14 +205,18 @@ Game::Game() {
 
 	ResourceManager::getInstance()->LoadShader("Shaders/skybox_shader.vert", "Shaders/skybox_shader.frag", "skybox");
 	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "default");
+	ResourceManager::getInstance()->LoadShader("Shaders/shadow_depth.vert", "Shaders/shadow_depth.frag", "shadow_depth");
 
 	/*ResourceManager::getInstance()->loadTextureSOIL("Textures/container2.png", false, "CrateDiffuse", "texture_diffuse");
+
 	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2_specular.png", false, "CrateSpecular", "texture_specular");*/
 
 	Proxy::getInstance()->AssignWindowManager(&WindowManager::getInstance());
 	Proxy::getInstance()->AssignGame(this);
 
 	WindowManager::getInstance().toggleCursorDraw(false);
+
+	m_Physics_ = new Physics(WindowManager::getInstance().getWindow());
 
 	m_Renderer_ = new Renderer(WindowManager::getInstance().getWindow());
 	m_GUIRenderer_ = new GUIRenderer(WindowManager::getInstance().getWindow());
@@ -218,12 +228,15 @@ Game::Game() {
 	WindowManager::getInstance().getSceneManager()->switchScene();
 	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
 
+	WindowManager::getInstance().getSceneManager()->UpdatePhysics(m_Physics_);
+
+
 }
 
 //Create the Scene here. Should be data driven.
 void Game::CreateScene() {
 
-	
+
 
 }
 
@@ -242,17 +255,30 @@ Scene * Game::LoadTestScene() {
 	_Scene->getEnvironment()->setSkyBox(new SkyBox("skybox", faces));
 
 	AssimpLoader loader;
+
 	Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
-	//Model model = loader.LoadModel("Models/Talia/Talia.dae");
-	//Model model = loader.LoadModel("Models/raw/newScene.fbx");
+	//Model model = loader.LoadModel("Models/plane.obj");
+	//Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
 	//Model model;
+
+
+
 	GameObject object("Model");
 	int index = _Scene->AddGameObject(object);
+
+
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
-	tc->setPosition(glm::vec3(-2.0f, -2.0f, 0.0f));
+	tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(2.0f, 2.0f, 2.0f));
+	tc->setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+
+	ThirdPersonCameraComponent * cameraComponent = new ThirdPersonCameraComponent(&_Scene->getGameObjects()->at(index), "camera", -40.0f, glm::vec3(0.0f, 40.0f, 0.0f));
+
+	_Scene->getGameObjects()->at(index).registerComponent(cameraComponent);
+	cameraComponent->setParent(&_Scene->getGameObjects()->at(index));
+
+	_Scene->attachMainCameraComponent(_Scene->getGameObjects()->at(index).GetComponentByType<ThirdPersonCameraComponent>());
 
 	RenderComponent * render = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 
@@ -260,27 +286,43 @@ Scene * Game::LoadTestScene() {
 	glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 
 	Script* s1 = new Script("PlayerController.lua", "Test");
+	_Scene->getGameObjects()->at(index).registerComponent(s1);
+	s1->setParent(&_Scene->getGameObjects()->at(index));
 
 	render->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render);
-	_Scene->getGameObjects()->at(index).registerComponent(s1);
+
 	render->setParent(&_Scene->getGameObjects()->at(index));
-	s1->setParent(&_Scene->getGameObjects()->at(index));
+
+
+	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	bc->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 0, 1));
+	_Scene->getGameObjects()->at(index).registerComponent(bc);
+	bc->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("OBJ"));
 	tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
 	tc->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
-	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 	RenderComponent * render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Grass pack/Grass_02.obj");
-
+	model = loader.LoadModel("Models/scene.3DS");
+	render2->toggleBackCulling(false);
 	render2->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
 	render2->setParent(&_Scene->getGameObjects()->at(index));
+
+	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
+	_Scene->getGameObjects()->at(index).registerComponent(bc2);
+	bc2->setParent(&_Scene->getGameObjects()->at(index));
+
+	/*RigidBody * rb = new RigidBody();
+	_Scene->getGameObjects()->at(index).registerComponent(rb);
+	rb->setParent(&_Scene->getGameObjects()->at(index));
+	rb->SetAcc(glm::vec3(-100, 0, 0));*/
 
 
 
@@ -291,10 +333,10 @@ Scene * Game::LoadTestScene() {
 	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.1f), glm::vec3(0.2f, 0.2f, 0.7f), glm::vec3(0.7f, 0.7f, 0.7f));
 
 	m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
-	
+
 	ShaderUniform camera;
 	camera.M_Address = "viewPos";
-	camera.M_Type = VEC3;
+	camera.M_Type = ShaderType::VEC3;
 	camera.M_Vec3 = glm::vec3(40.0f, 40.0f, 40.0f);
 
 	ResourceManager::getInstance()->useShader("default");
@@ -316,50 +358,50 @@ Scene * Game::LoadTestScene() {
 		glm::vec3(0.7f, 0.7f, 0.7f)
 	};
 
-	
+
 
 	/*glm::vec3 pointLightColors[] = {
-		glm::vec3(1.0f, 0.6f, 0.0f),
-		glm::vec3(1.0f, 0.0f, 0.0f),
-		glm::vec3(1.0f, 1.0, 0.0),
-		glm::vec3(0.2f, 0.2f, 1.0f)
+	glm::vec3(1.0f, 0.6f, 0.0f),
+	glm::vec3(1.0f, 0.0f, 0.0f),
+	glm::vec3(1.0f, 1.0, 0.0),
+	glm::vec3(0.2f, 0.2f, 1.0f)
 	};*/
 
 
 	for (int i = 0; i < 4; i++) {
 		ShaderUniform position;
 		position.M_Address = "pointLights[" + to_string(i) + "].position";
-		position.M_Type = VEC3;
+		position.M_Type = ShaderType::VEC3;
 		position.M_Vec3 = glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z);
 
 		ShaderUniform ambient;
 		ambient.M_Address = "pointLights[" + to_string(i) + "].ambient";
-		ambient.M_Type = VEC3;
+		ambient.M_Type = ShaderType::VEC3;
 		ambient.M_Vec3 = glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1);
 
 		ShaderUniform diffuse;
 		diffuse.M_Address = "pointLights[" + to_string(i) + "].diffuse";
-		diffuse.M_Type = VEC3;
+		diffuse.M_Type = ShaderType::VEC3;
 		diffuse.M_Vec3 = glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z);
 
 		ShaderUniform specular;
 		specular.M_Address = "pointLights[" + to_string(i) + "].specular";
-		specular.M_Type = VEC3;
+		specular.M_Type = ShaderType::VEC3;
 		specular.M_Vec3 = glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z);
 
 		ShaderUniform constant;
 		constant.M_Address = "pointLights[" + to_string(i) + "].constant";
-		constant.M_Type = FLOAT;
+		constant.M_Type = ShaderType::FLOAT;
 		constant.M_Float = 1.0f;
 
 		ShaderUniform linear;
 		linear.M_Address = "pointLights[" + to_string(i) + "].linear";
-		linear.M_Type = FLOAT;
+		linear.M_Type = ShaderType::FLOAT;
 		linear.M_Float = 0.09f;
 
 		ShaderUniform quadratic;
 		quadratic.M_Address = "pointLights[" + to_string(i) + "].quadratic";
-		quadratic.M_Type = FLOAT;
+		quadratic.M_Type = ShaderType::FLOAT;
 		quadratic.M_Float = 0.032f;
 
 		PointLight * pointLight = new PointLight("default", glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z), glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), 1.0f, 0.09f, 0.032f);
@@ -386,13 +428,13 @@ void Game::mouse_button_callback(GLFWwindow* window, int button, int action, int
 
 
 
-//Move somewhere else at some point. Preferably a Launcher file all on its own, isolated from other function calls.
-int main(int argc, char* argv[]) {
-	Game game = Game();
-
-	game.beginLoop();
-
-	//Should never reach here, if we do, something has gone terribly wrong. Upon termination, the beginLoop function will close GLFW and exit the program itself.
-	return EXIT_FAILURE;
-
-}
+////Move somewhere else at some point. Preferably a Launcher file all on its own, isolated from other function calls.
+//int main(int argc, char* argv[]) {
+//	Game game = Game();
+//
+//	game.beginLoop();
+//
+//	//Should never reach here, if we do, something has gone terribly wrong. Upon termination, the beginLoop function will close GLFW and exit the program itself.
+//	return EXIT_FAILURE;
+//
+//}
