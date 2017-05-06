@@ -12,7 +12,7 @@
 #include "General\Scene.h"
 
 #include "Physics\Components\BoxCollider.h"
-#include "Physics\Components\RigidBodyh.h"
+#include "Physics\Components\RigidBody.h"
 #include "Physics\Components\TransformComponent.h"
 
 
@@ -29,7 +29,7 @@ private:
 	std::vector<GameObject> m_sceneGameObjectsCollide_;
 	std::vector<GameObject> m_sceneGameObjectsMove_;
 	GLFWwindow * m_Window_;
-	
+
 	float gravity = 9.8f;
 	float friction = 0.8f;
 
@@ -41,17 +41,23 @@ public:
 
 	void Render();
 
-	void CollisionDetection();
+
+	void Stop(GameObject go);
+
+	void CollisionDetection(float dt);
+
 
 	void EulerMove(float dt);
 
 	bool AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2);
 	
-	void ResolveCollision();
+	void ResolveCollision(GameObject& go,CollisionData * cd);
 
 	void setScene(Scene * pScene);
 
 	void update(float dt);
+
+	void updateObjects();
 
 
 

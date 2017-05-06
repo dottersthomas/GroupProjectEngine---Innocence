@@ -16,6 +16,7 @@ private:
 	glm::vec3 m_Rotation_ = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 m_Scale_ = glm::vec3(1.0f, 1.0f, 1.0f);
 
+	glm::vec3 m_PrevPosition;
 
 	//Right and Direction vectors of the transformations.
 	glm::vec3 m_Right_;
@@ -41,7 +42,10 @@ public:
 	{
 		return m_Position_;
 	}
-
+	glm::vec3 getPrevPosition()
+	{
+		return m_PrevPosition;
+	}
 	glm::vec3 getRotation() const
 	{
 		return m_Rotation_;
@@ -65,6 +69,7 @@ public:
 	void setPosition(glm::vec3 pPosition)
 	{
 		m_Position_ = pPosition;
+
 		m_bDirty_ = true;
 	}
 
@@ -99,7 +104,7 @@ public:
 	static void registerLua(lua_State* L)
 	{
 		using namespace luabridge;
-		
+
 		getGlobalNamespace(L)
 			.deriveClass<TransformComponent, Component>("TransformComponent")
 			.addProperty("position", &TransformComponent::getPosition, &TransformComponent::setPosition)

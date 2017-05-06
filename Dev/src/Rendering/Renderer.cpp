@@ -1,13 +1,15 @@
 #include "Rendering\Renderer.h"
 #include "Rendering\Components\RenderComponent.h"
 
+#include "Physics\Components\BoxCollider.h"
+
 
 
 Renderer::Renderer(GLFWwindow * pWindow) {
 	m_Window_ = pWindow;
 
 
-	glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
+	glClearColor(0.9f, 0.6f, 0.4f, 1.0f);
 
 	glEnable(GL_BLEND); 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -77,10 +79,44 @@ void Renderer::Render() {
 			RenderComponent * render = (*iter).GetComponentByType<RenderComponent>();
 			render->Render(Projection, View);
 
+
+			//test
+			if (iter->CheckComponentTypeExists<BoxCollider>())
+			{
+				BoxCollider * bc = (*iter).GetComponentByType<BoxCollider>();
+				glLineWidth(2.5);
+				glColor3f(1.0, 0.0, 0.0);
+				glBegin(GL_LINES);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
+				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
+				glEnd();
+			}
+
 		}
 
 
 	}
+
 
 
 
