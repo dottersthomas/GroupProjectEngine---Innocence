@@ -8,6 +8,7 @@ public:
 	GameObject target;
 	glm::vec3 diff;
 	glm::vec3 diff2;
+
 	CollisionData()
 	{
 

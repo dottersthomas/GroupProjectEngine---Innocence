@@ -7,6 +7,7 @@ private:
 	float maxX, minX, maxY, minY, maxZ, minZ;
 	float omaxX, ominX, omaxY, ominY, omaxZ, ominZ;
 	float width, height, depth;
+
 	glm::vec3 midPoint;
 public:
 	Box();
@@ -19,6 +20,7 @@ public:
 	{
 		return midPoint;
 	}
+
 	void SetMax(float x, float y, float z);
 	void SetMin(float x, float y, float z);
 	~Box();

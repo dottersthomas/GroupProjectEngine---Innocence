@@ -30,7 +30,7 @@ private:
 	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjectsCollide_;
 	GameObjectVectorWrapper::t_GameObject_Vector_ m_sceneGameObjectsMove_;
 	GLFWwindow * m_Window_;
-	
+
 	float gravity = 9.8f;
 	float friction = 0.8f;
 
@@ -46,6 +46,7 @@ public:
 	void Stop(GameObject go);
 
 	void CollisionDetection(float dt);
+
 
 	void EulerMove(float dt);
 

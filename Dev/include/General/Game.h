@@ -32,7 +32,7 @@ public:
 	//Main update function.
 	void update(double dTime);
 	//Set the games score.
-	
+
 private:
 
 

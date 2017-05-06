@@ -197,6 +197,7 @@
     <ClCompile Include="include\Audio\Sound.h" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
     <ClCompile Include="src\General\Timer.cpp" />
+    <ClCompile Include="src\Launcher.cpp" />
     <ClCompile Include="src\Physics\Components\Box.cpp" />
     <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\Components\RigidBody.cpp" />

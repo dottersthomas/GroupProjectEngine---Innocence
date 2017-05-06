@@ -12,7 +12,7 @@ void Physics::setScene(Scene * pScene) {
 }
 
 void Physics::update(float dt) {
-	
+
 	EulerMove(dt);
 	CollisionDetection(dt);
 
@@ -20,9 +20,9 @@ void Physics::update(float dt) {
 
 void Physics::CollisionDetection(float dt)
 {
-	bool collided; 
+	bool collided;
 	for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter = m_sceneGameObjectsCollide_.begin(); iter != m_sceneGameObjectsCollide_.end(); ++iter) {
-		
+
 		BoxCollider * test = iter->GetComponentByType<BoxCollider>();
 		for (GameObjectVectorWrapper::t_GameObject_Vector_Iterator_ iter2 = m_sceneGameObjectsCollide_.begin(); iter2 != m_sceneGameObjectsCollide_.end(); ++iter2)
 		{
@@ -41,6 +41,7 @@ void Physics::CollisionDetection(float dt)
 			
 					CollisionData *  cd = new CollisionData(*iter2, diff, diff2);
 					ResolveCollision(*iter,cd);
+
 				}
 				else
 				{
@@ -51,12 +52,11 @@ void Physics::CollisionDetection(float dt)
 				}
 		
 				//	std::cout << collided << endl;
-				
 			}
 		}
-		
 
-		
+
+
 	}
 }
 
@@ -94,13 +94,12 @@ void Physics::EulerMove(float dt)
 		{
 			body->SetVel(glm::vec3(body->GetVel().x, body->GetVel().y, 0));
 		}
-		//body->SetVel(body->GetVel()+(-body->GetVel() + friction) * dt);
 		glm::vec3 newPos = transform->getPosition() + body->GetVel() *dt;
 		
 		transform->setPosition(newPos);
 		body->SetAcc(glm::vec3(0, 0, 0));
 	}
-	
+
 }
 
 bool Physics::AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2)

@@ -48,6 +48,7 @@
     <ClCompile Include="src\Physics\Components\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\Physics.cpp" />
     <ClCompile Include="src\Physics\Components\RigidBody.cpp" />
+    <ClCompile Include="src\Launcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />

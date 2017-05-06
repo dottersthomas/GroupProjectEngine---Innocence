@@ -6,6 +6,7 @@
 
 
 
+
 class Collider : public Component
 {
 protected:
@@ -38,6 +39,7 @@ public:
 		collided = true;
 	};
 	void OnTriggerStay(CollisionData * cd) {
+
 		std::cout << "Stay" << endl;
 	};
 	void OnTriggerExit() {
@@ -118,6 +120,7 @@ public:
 		//	}
 			m_GameObjectParent_->GetComponentByType<TransformComponent>()->setPosition(newPos);
 		}
+
 	};
 
 };

@@ -56,9 +56,9 @@ void BoxCollider::Destroy()
 }
 void BoxCollider::Start()
 {
-	
-	
+
 }
+
 
 void BoxCollider::CustomBounds(glm::vec3 min, glm::vec3 max)
 {
@@ -66,7 +66,7 @@ void BoxCollider::CustomBounds(glm::vec3 min, glm::vec3 max)
 }
 
 void BoxCollider::Update(double dt)
-{	
+{
 	glm::vec3 newMax = boundingBox.GetOMax();
 	newMax = newMax * m_GameObjectParent_->GetComponentByType<TransformComponent>()->getScale();
 	newMax += m_GameObjectParent_->GetComponentByType<TransformComponent>()->getPosition();
@@ -77,8 +77,6 @@ void BoxCollider::Update(double dt)
 
 	 boundingBox.SetMax(newMax.x, newMax.y, newMax.z);
 	 boundingBox.SetMin(newMin.x, newMin.y, newMin.z);
-
-	
 
 
 }
