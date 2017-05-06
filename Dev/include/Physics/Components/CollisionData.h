@@ -13,6 +13,7 @@ public:
 	{
 
 	}
+
 	CollisionData(GameObject bc, glm::vec3 depth, glm::vec3 depth2)
 	{
 		target = bc;
@@ -20,4 +21,13 @@ public:
 		diff2 = depth2;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<CollisionData>("CollisionData")
+			.addData("target", &CollisionData::target)
+			.endClass();
+	}
 };

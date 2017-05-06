@@ -1,0 +1,317 @@
+newmtl Grass_02:grass_02
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 96.08
+newmtl Grass_04:grass_02
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd grass_diff.png
+bump grass_norm.png -bm 1
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks grass_spec.png
+Ns 96.08
+newmtl Item01:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 6209935741_07b16d59bb_b.jpg
+Ni 1.00
+newmtl Item01:lambert2SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd dark-wood-2.jpg
+Ni 1.00
+newmtl Item01:lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd MetalBare0115_5_S.png
+Ni 1.00
+newmtl Item01:lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd stone_texture205.jpg
+Ni 1.00
+newmtl Item01:phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd iron_texture_by_pabloalvin.jpg
+Ni 1.00
+Ks 0.21 0.21 0.21
+Ns 18.00
+newmtl Item01:phong1SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd blue_concrete_texture_02_by_arkaydo-d56fo9v.jpg
+Ni 1.00
+Ks 0.13 0.13 0.13
+Ns 18.00
+newmtl Paper:pPlane1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl Tree4:Material_001
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl Tree4:Material_002
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl Truck:truckSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Truck_mat2_D.png
+bump Truck_mat2_N.png -bm 1
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Truck_mat2_S.png
+Ns 96.08
+newmtl Truck:truckSG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 0.00 0.00 0.00
+map_Kd Truck_glass_D.png
+bump Truck_glass_N.png -bm 1
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 96.08
+newmtl Truck:truckSG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Truck_mat1_D.png
+bump Truck_mat1_N.png -bm 1
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Truck_mat1_S.png
+Ns 96.08
+newmtl Wood:Floor
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl Wood:Wood
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd WoodTexture.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 96.08
+newmtl Wood:WoodCut
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd WoodTexture.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 96.08
+newmtl farmhouse_obj:lambert13SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Farmhouse Texture.jpg
+bump Farmhouse Texture Bump Map .jpg -bm 0.012
+Ni 1.00
+newmtl gate_obj:lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.12 0.12 0.12
+Ns 0.06
+newmtl gate_obj:phongE1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd gate_diffuse.jpg
+bump gate_normal.jpg -bm 1
+Ni 1.00
+Ks 0.08 0.08 0.08
+Ns 0.06
+newmtl gate_obj:phongE5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.05 0.05 0.05
+Ns 0.06
+newmtl gate_obj:phongE6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.10 0.10 0.10
+Ns 0.06
+newmtl initialShadingGroup
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd FBX_OBJ.jpg
+Ni 1.00
+newmtl lambert5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd For_blender (1).jpg
+Ni 1.00
+newmtl lambert6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd fence_composite01.png
+Ni 1.00
+newmtl oldWall1:Material
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl oldWall1:None
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture.jpg
+Ni 1.00
+Ks 0.80 0.80 0.80
+Ns 0.00
+newmtl oldWall2:Material
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl oldWall2:None
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture.jpg
+Ni 1.00
+Ks 0.80 0.80 0.80
+Ns 0.00
+newmtl oldWall7:Material
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl oldWall7:None
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture.jpg
+Ni 1.00
+Ks 0.80 0.80 0.80
+Ns 0.00
+newmtl well:Mat_0
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd mapsmw1.jpg
+map_Ka mapsmw1.jpg
+Ni 1.50
+Ks -0.87 -0.87 -0.87
+Ns 1131.00
+newmtl well:Mat_1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd mapscs.jpg
+map_Ka mapscs.jpg
+Ni 1.50
+Ks -0.87 -0.87 -0.87
+Ns 1131.00
+newmtl well:Mat_4
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd mapsarmr.jpg
+map_Ka mapsarmr.jpg
+Ni 1.50
+Ks -0.87 -0.87 -0.87
+Ns 1131.00
+newmtl well:Mat_6
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd mapsth.bmp
+Ni 1.50
+Ks -0.87 -0.87 -0.87
+Ns 1131.00
+newmtl wooden_rocking_chair:___Default2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00
+newmtl wooden_rocking_chair:___Default4
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00

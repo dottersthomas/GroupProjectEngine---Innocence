@@ -75,8 +75,8 @@ void BoxCollider::Update(double dt)
 	newMin = newMin * m_GameObjectParent_->GetComponentByType<TransformComponent>()->getScale();
 	newMin += m_GameObjectParent_->GetComponentByType<TransformComponent>()->getPosition();
 
-	 boundingBox.SetMax(newMax.x, newMax.y, newMax.z);
-	 boundingBox.SetMin(newMin.x, newMin.y, newMin.z);
+	 boundingBox.SetMax(glm::vec3(newMax.x, newMax.y, newMax.z));
+	 boundingBox.SetMin(glm::vec3(newMin.x, newMin.y, newMin.z));
 
 
 }

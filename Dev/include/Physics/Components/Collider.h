@@ -4,15 +4,17 @@
 #include "CollisionData.h"
 #include "RigidBody.h"
 
-
-
+#define TRIGGER_ENTER 0
+#define TRIGGER_STAY 1
+#define TRIGGER_EXIT 2
 
 class Collider : public Component
 {
 protected:
 	bool isTrigger = false;
 	bool collided = false;
-	CollisionData cd;
+	CollisionData m_CD;
+	int triggerStatus = TRIGGER_EXIT;
 public:
 	Collider() {};
 	Collider(GameObject * pParent) {
@@ -20,14 +22,16 @@ public:
 	}
 	~Collider() {};
 
-	bool getTrigger()
+	bool getTrigger() const
 	{
 		return isTrigger;
 	}
-	bool getCollided()
+
+	bool getCollided() const
 	{
 		return collided;
 	}
+
 	virtual void Update(double dt) = 0;
 	virtual void LateUpdate(double dt) = 0;
 
@@ -35,100 +39,120 @@ public:
 	virtual void Start() = 0;
 
 	void OnTriggerEnter(CollisionData * cd) {
-		std::cout << "Enter" << endl;
+		std::cout << "ENTER";
 		collided = true;
+		triggerStatus = TRIGGER_ENTER;
+		m_CD = *cd;
 	};
-	void OnTriggerStay(CollisionData * cd) {
 
-		std::cout << "Stay" << endl;
+	void OnTriggerStay(CollisionData * cd) {
+		triggerStatus = TRIGGER_STAY;
+		m_CD = *cd;
 	};
+
 	void OnTriggerExit() {
-		std::cout << "Exit" << endl;
 		collided = false;
+		triggerStatus = TRIGGER_EXIT;
+		m_CD = CollisionData();
 	};
+
 	void OnCollided(CollisionData * cd) {
 		
 		if (m_GameObjectParent_->CheckComponentTypeExists<RigidBody>())
 		{
-			RigidBody * rb = m_GameObjectParent_->GetComponentByType<RigidBody>();
-			glm::vec3 newPos = m_GameObjectParent_->GetComponentByType<TransformComponent>()->getPosition();
-			
-			if (rb->GetVel().x > 0)
+			if (!cd->target.GetComponentByType<Collider>()->getTrigger())
 			{
-				if (rb->GetVel().x > std::fabs(rb->GetVel().z))
+				RigidBody * rb = m_GameObjectParent_->GetComponentByType<RigidBody>();
+				glm::vec3 newPos = m_GameObjectParent_->GetComponentByType<TransformComponent>()->getPosition();
+
+				if (rb->GetVel().x > 0)
 				{
-					if (cd->diff2.x < 0 && cd->diff2.x > -1)
+					if (rb->GetVel().x > std::fabs(rb->GetVel().z))
 					{
-						newPos.x += cd->diff2.x + 0.01;
-						rb->SetVel(glm::vec3(0, rb->GetVel().y, rb->GetVel().z));
+						if (cd->diff2.x < 0 && cd->diff2.x > -1)
+						{
+							newPos.x += cd->diff2.x + 0.01;
+							rb->SetVel(glm::vec3(0, rb->GetVel().y, rb->GetVel().z));
+						}
+					}
+
+				}
+				else if (rb->GetVel().x < 0)
+				{
+					if (rb->GetVel().x < std::fabs(rb->GetVel().z))
+					{
+						if (cd->diff.x > 0 && cd->diff.x < 1)
+						{
+							newPos.x += cd->diff.x - 0.01;
+							rb->SetVel(glm::vec3(0, rb->GetVel().y, rb->GetVel().z));
+
+						}
 					}
 				}
 
-			}
-			else if(rb->GetVel().x < 0)
-			{
- 				if (rb->GetVel().x < std::fabs(rb->GetVel().z))
+				if (rb->GetVel().z > 0)
 				{
-					if (cd->diff.x > 0 && cd->diff.x < 1)
+					if (rb->GetVel().z > std::fabs(rb->GetVel().x))
 					{
-						newPos.x += cd->diff.x - 0.01;
-						rb->SetVel(glm::vec3(0, rb->GetVel().y, rb->GetVel().z));
+						if (cd->diff2.z < 0 && cd->diff2.z > -1)
+						{
+							newPos.z += cd->diff2.z - 0.10;
+							rb->SetVel(glm::vec3(rb->GetVel().x, rb->GetVel().y, 0));
+						}
+					}
 
-					}
 				}
-			}
-			
-			if (rb->GetVel().z > 0)
-			{
-				if (rb->GetVel().z > std::fabs(rb->GetVel().x))
+				else if (rb->GetVel().z < 0)
 				{
-					if (cd->diff2.z < 0 && cd->diff2.z > -1)
+					if (rb->GetVel().z < std::fabs(rb->GetVel().x))
 					{
-						newPos.z += cd->diff2.z - 0.10;
-						rb->SetVel(glm::vec3(rb->GetVel().x, rb->GetVel().y, 0));
+						if (cd->diff.z > 0 && cd->diff.z < 1)
+						{
+							newPos.z += cd->diff.z + 0.01;
+							rb->SetVel(glm::vec3(rb->GetVel().x, rb->GetVel().y, 0));
+						}
 					}
 				}
-
-			}
-			else if (rb->GetVel().z < 0 )
-			{     
-				if (rb->GetVel().z < std::fabs(rb->GetVel().x))
-				{
-					if (cd->diff.z > 0 && cd->diff.z < 1)
-					{
-						newPos.z += cd->diff.z + 0.01;
-						rb->SetVel(glm::vec3(rb->GetVel().x, rb->GetVel().y, 0));
-					}
-				}
-			}
-		//	if (rb->GetGround() == false)
-		//	{
+				//	if (rb->GetGround() == false)
+				//	{
 				if (rb->GetVel().y > 0)
 				{
 					if (cd->diff.y < 1)
-					newPos.y += cd->diff.y-0.01;
+						newPos.y += cd->diff.y - 0.01;
 					rb->SetVel(glm::vec3(rb->GetVel().x, 0, rb->GetVel().z));
-	
+
 
 				}
 				else if (rb->GetVel().y < 0)
 				{
 					if (cd->diff.y < 1)
-					newPos.y += cd->diff.y + 0.01;
+						newPos.y += cd->diff.y + 0.01;
 					rb->SetVel(glm::vec3(rb->GetVel().x, 0, rb->GetVel().z));
-				
+
 				}
 
-			//	rb->setGrounded(true);
-				
+				//	rb->setGrounded(true);
 
-				
-		//	}
-			m_GameObjectParent_->GetComponentByType<TransformComponent>()->setPosition(newPos);
+
+
+			//	}
+				m_GameObjectParent_->GetComponentByType<TransformComponent>()->setPosition(newPos);
+			}
 		}
 
 	};
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<Collider>("Collider")
+			.addData<int>("triggerStatus", &Collider::triggerStatus, false)
+			.addProperty("trigger", &Collider::getTrigger)
+			.addFunction("getOtherCollider", &Collider::getCollided)
+			.endClass();
+	}
 };
 
 #endif

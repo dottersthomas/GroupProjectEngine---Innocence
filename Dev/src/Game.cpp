@@ -82,6 +82,10 @@ void Game::beginLoop() {
 	SceneManager::registerLua(L);
 	Scene::registerLua(L);
 	RigidBody::registerLua(L);
+	Collider::registerLua(L);
+	BoxCollider::registerLua(L);
+	Box::registerLua(L);
+	CollisionData::registerLua(L);
 
 	// Execute scripts
 	//GameObject go = GameObject("TestObject");

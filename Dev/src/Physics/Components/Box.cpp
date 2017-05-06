@@ -37,39 +37,39 @@ Box::~Box()
 
 }
 
-glm::vec3 Box::GetMax()
+glm::vec3 Box::GetMax() const
 {
 	return glm::vec3(maxX, maxY, maxZ);
 }
-glm::vec3 Box::GetMin()
+glm::vec3 Box::GetMin() const
 {
 	return glm::vec3(minX, minY, minZ);
 }
-glm::vec3 Box::GetOMax()
+glm::vec3 Box::GetOMax() const
 {
 	return glm::vec3(omaxX, omaxY, omaxZ);
 }
-glm::vec3 Box::GetOMin()
+glm::vec3 Box::GetOMin() const
 {
 	return glm::vec3(ominX, ominY, ominZ);
 }
 
-void Box::SetMax(float x, float y, float z)
+void Box::SetMax(glm::vec3 newMax)
 {
-	maxX = x;
-	maxY = y;
-	maxZ = z;
+	maxX = newMax.x;
+	maxY = newMax.y;
+	maxZ = newMax.z;
 
 	width = maxX - minX;
 	height = maxY - minY;
 	depth = maxZ - minZ;
 	midPoint = glm::vec3(width / 2, height / 2, depth / 2);
 }
-void Box::SetMin(float x, float y, float z)
+void Box::SetMin(glm::vec3 newMin)
 {
-	minX = x;
-	minY = y;
-	minZ = z;
+	minX = newMin.x;
+	minY = newMin.y;
+	minZ = newMin.z;
 
 	width = maxX - minX;
 	height = maxY - minY;

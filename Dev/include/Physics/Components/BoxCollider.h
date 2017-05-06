@@ -26,11 +26,22 @@ public:
 
 	void CustomBounds(glm::vec3 min, glm::vec3 max);
 
-	Box GetBounds()
+	Box GetBounds() const
 	{
 		return boundingBox;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<BoxCollider, Collider>("BoxCollider")
+			.addConstructor<void(*)()>()
+			.addFunction("setCustomBounds", &BoxCollider::CustomBounds)
+			.addProperty("bounds", &BoxCollider::GetBounds)
+			.endClass();
+	}
 };
 
 #endif
