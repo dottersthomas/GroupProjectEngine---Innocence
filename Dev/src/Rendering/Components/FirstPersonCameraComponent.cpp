@@ -23,10 +23,21 @@ FirstPersonCameraComponent::FirstPersonCameraComponent(GameObject * pParent, std
 	//Update properly.
 	m_dMousePosX_ = width / 2;
 	m_dMousePosY_ = height / 2;
+
+	camera.M_Address = "viewPos";
+	camera.M_Type = ShaderType::VEC3;
 }
 
 void FirstPersonCameraComponent::Update(double dt) {
+
+	
+	
+
 	if (m_Active_) {
+
+		camera.M_Vec3 = m_Position_;
+		ResourceManager::getInstance()->GetShader("default")->UpdateSingleUniform(camera);
+
 		Proxy::getInstance()->requestCursorPos(m_dMousePosX_, m_dMousePosY_);
 		m_fHorizontalAngle_ += m_fMouseSpeed_ * dt * float(m_iWindowX_ / 2 - m_dMousePosX_);
 		m_fVerticalAngle_ += m_fMouseSpeed_ * dt * float(m_iWindowY_ / 2 - m_dMousePosY_);

@@ -190,7 +190,7 @@ Game::Game() {
 		std::exit(EXIT_FAILURE);
 
 	WindowManager::getInstance().createWindow("Game", 0, 0, 1280, 720);
-	WindowManager::getInstance().toggleVSYNC(true);
+	WindowManager::getInstance().toggleVSYNC(false);
 
 	glfwMakeContextCurrent(WindowManager::getInstance().getWindow());
 

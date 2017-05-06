@@ -2,6 +2,8 @@
 #define _FIRST_PERSON_CAMERA_COMPONENT_H_
 
 #include "CameraComponent.h"
+#include "Rendering\ShaderUniform.h"
+
 
 class FirstPersonCameraComponent : public CameraComponent {
 private:
@@ -27,6 +29,7 @@ private:
 	//Up Vector.
 	glm::vec3 m_Up_;
 
+	ShaderUniform camera;
 
 	//View Matrix created by the bind function.
 	glm::mat4 m_View_;
