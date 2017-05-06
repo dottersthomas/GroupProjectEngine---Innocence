@@ -262,7 +262,7 @@ Scene * Game::LoadTestScene() {
 	AssimpLoader loader;
 
 	//Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
-	Model model = loader.LoadModel("Models/plane.obj");
+	Model model = loader.LoadModel("Models/Scene/Ground.fbx");
 	//Model model = loader.LoadModel("Models/plane.obj");
 	//Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
 	//Model model;
@@ -275,9 +275,9 @@ Scene * Game::LoadTestScene() {
 
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
-	tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
+	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(10.0f, 10.0f, 10.0f));
+	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 	RenderComponent * render = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
@@ -294,7 +294,7 @@ Scene * Game::LoadTestScene() {
 
 	
 	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
-	bc->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 0, 1));
+	
 	_Scene->getGameObjects()->at(index).registerComponent(bc);
 	bc->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -305,7 +305,7 @@ Scene * Game::LoadTestScene() {
 	TransformComponent * tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc2->setParent(&_Scene->getGameObjects()->at(index));
-	tc2->setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+	tc2->setPosition(glm::vec3(0.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc2->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -342,9 +342,9 @@ Scene * Game::LoadTestScene() {
 	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, -3.0f, 0.0f));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	tc3->setScale(glm::vec3(1.0f, 10.0f, 1.0f));
 	
 	
 	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
@@ -357,6 +357,10 @@ Scene * Game::LoadTestScene() {
 	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	RigidBody * rb2 = new RigidBody();
+	_Scene->getGameObjects()->at(index).registerComponent(rb2);
+	rb2->setParent(&_Scene->getGameObjects()->at(index));
+	rb2->SetAcc(glm::vec3(0, 0, 0));
 
 
 	////////////////////////////////////////////

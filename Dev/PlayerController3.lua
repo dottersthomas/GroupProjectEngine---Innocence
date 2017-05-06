@@ -4,7 +4,7 @@ require("InputTable")
 
 -- set speed
 local moving = false -- Used to stop rotating on the spot
-local speed = 5
+local speed = 20
 local rot = 0
 
 Test = 
@@ -26,7 +26,9 @@ Test =
 		--	currentPos.z = currentPos.z + calc * math.cos(gameObject.transform.rotation.y) -- Modify position
 		--	currentPos.x = currentPos.x + calc * math.sin(gameObject.transform.rotation.y)
 		--	gameObject.transform.position = currentPos -- Set position	
-			r.z = speed
+		r.z =  speed * math.cos(gameObject.transform.rotation.y) -- Modify position
+		r.x =  speed * math.sin(gameObject.transform.rotation.y)
+		--	r.z = speed
 		end
 		if (Input.isKeyDown(Key.S, 0)) then
 		--	moving = true
@@ -35,7 +37,8 @@ Test =
 		--	currentPos.z = currentPos.z - calc * math.cos(gameObject.transform.rotation.y) -- Modify position
 		--	currentPos.x = currentPos.x - calc * math.sin(gameObject.transform.rotation.y)
 		--	gameObject.transform.position = currentPos -- Set position
-			r.z = -speed
+			r.z = - speed * math.cos(gameObject.transform.rotation.y) -- Modify position
+			r.x =  - speed * math.sin(gameObject.transform.rotation.y)
 
 		end
 		
@@ -44,7 +47,8 @@ Test =
 			--currentRot = gameObject.transform.rotation -- Get current rotation
 			--currentRot.y = currentRot.y + speed * dt -- Modify rotation
 			--gameObject.transform.rotation = currentRot -- Set rotation
-			r.x = -speed
+			r.x =  speed * math.sin(gameObject.transform.rotation.y+1.57)
+			r.z =  speed * math.cos(gameObject.transform.rotation.y+1.57)
 		
 		end
 		if (Input.isKeyDown(Key.D, 0)) then
@@ -52,7 +56,8 @@ Test =
 			--currentRot = gameObject.transform.rotation -- Get current rotation
 			--currentRot.y = currentRot.y - speed * dt -- Modify rotation
 			--gameObject.transform.rotation = currentRot -- Set rotation
-			r.x = speed
+			r.x =  -speed * math.sin(gameObject.transform.rotation.y+1.57)
+			r.z =  -speed * math.cos(gameObject.transform.rotation.y+1.57)
 			
 		end
 	   if (Input.isKeyDown(Key.SPACE,0)) then

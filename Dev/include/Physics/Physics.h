@@ -31,7 +31,7 @@ private:
 	GLFWwindow * m_Window_;
 
 	float gravity = 9.8f;
-	float friction = 0.8f;
+	float friction = 2.3f;
 
 public:
 	Physics() {
