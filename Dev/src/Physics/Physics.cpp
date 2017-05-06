@@ -35,7 +35,7 @@ void Physics::CollisionDetection(float dt)
 				collided = AABBAABBCollision(test, test2);
 				if (collided)
 				{
-					cout << "Collided" << endl;
+					//cout << "Collided" << endl;
 					glm::vec3 diff = test2->GetBounds().GetMax() - test->GetBounds().GetMin();
 					glm::vec3 diff2 = test2->GetBounds().GetMin() - test->GetBounds().GetMax();
 

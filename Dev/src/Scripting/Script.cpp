@@ -38,6 +38,7 @@ void Script::Start()
 
 void Script::Update(double dt)
 {
+
 	// Execute script
 	execute();
 	// Check if function exists, if so, execute
@@ -120,6 +121,7 @@ void Script::load()
 		if (table["Destroy"].isFunction())
 			m_Lua_Destroy = std::make_shared<luabridge::LuaRef>(table["Destroy"]);
 	}
+
 }
 
 void Script::registerGlobals()

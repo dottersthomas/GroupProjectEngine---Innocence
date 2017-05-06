@@ -71,6 +71,8 @@ public:
 			.addFunction("addGameObject", &Scene::AddGameObject)
 			.addFunction("removeGameObject", &Scene::RemoveGameObject)
 			.addFunction("getGameObjects", &Scene::luaGetGameObjects)
+			.addFunction("togglePostProcess", &Scene::togglePostProcess)
+			.addProperty("postProcessEnabled", &Scene::shouldPostProcess)
 			.endClass();
 	}
 
@@ -78,21 +80,27 @@ public:
 		return m_Environment_;
 	}
 
+	void togglePostProcess(int pToggle) {
+		m_ShouldPostProcess_ = pToggle;
+	}
+
+	int shouldPostProcess() const {
+		return m_ShouldPostProcess_;
+	}
+
 private:
 
 	GameObject m_RootNode_ = GameObject("Root");
 	
 	std::vector<GameObject> m_SceneGameObjects_;
-	
 
 	CameraComponent * m_CurrentCamera_ = nullptr;
-
 
 	std::string m_Name_;
 
 	Environment * m_Environment_;
 
-
+	int m_ShouldPostProcess_ = false;
 
 };
 

@@ -4,7 +4,7 @@ require("InputTable")
 
 -- set speed
 local moving = false -- Used to stop rotating on the spot
-local speed = 20
+local speed = 60
 local rot = 0
 
 Test = 
@@ -64,11 +64,20 @@ Test =
 			r.y = 50
 			
 			gameObject:getComponent("RigidBody").grounded = false
-			print(r.y)
+			--print(r.y)
 		end
-		print(r.x)
-		print(r.y)
-		print(r.z)
+
+		-- if(Input.isKeyDown(Key.F, 100))then
+		-- 	if( WindowManager.instance.sceneManager.currentScene.postProcessEnabled == 1) then
+		-- 		WindowManager.instance.sceneManager.currentScene:togglePostProcess(0);
+		-- 	elseif(WindowManager.instance.sceneManager.currentScene.postProcessEnabled == 0) then
+		-- 
+		-- 		WindowManager.instance.sceneManager.currentScene:togglePostProcess(1);
+		-- 	end
+		-- end
+		--print(r.x)
+		--print(r.y)
+		--print(r.z)
 		gameObject:getComponent("RigidBody").acceleration = r
 	end,
 	

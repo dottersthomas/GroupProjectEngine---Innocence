@@ -2,7 +2,16 @@
 #include "Rendering\Components\RenderComponent.h"
 
 #include "Physics\Components\BoxCollider.h"
+#include "General\WindowManager.h"
 
+bool Renderer::hasResized = false;
+
+
+void Renderer::window_size_callback(GLFWwindow* window, int width, int height)
+{
+	hasResized = true;
+
+}
 
 
 Renderer::Renderer(GLFWwindow * pWindow) {
@@ -14,7 +23,74 @@ Renderer::Renderer(GLFWwindow * pWindow) {
 	glEnable(GL_BLEND); 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	m_CurrentScene_ = nullptr;
+
 	
+
+	glfwGetFramebufferSize(WindowManager::getInstance().getWindow(), &screen_width, &screen_height);
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glGenTextures(1, &m_fbo_texture_);
+	glBindTexture(GL_TEXTURE_2D, m_fbo_texture_);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, screen_width, screen_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	/* Depth buffer */
+	glGenRenderbuffers(1, &m_rbo_depth_);
+	glBindRenderbuffer(GL_RENDERBUFFER, m_rbo_depth_);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, screen_width, screen_height);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	/* Framebuffer to link everything together */
+	glGenFramebuffers(1, &m_FBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FBO_);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_fbo_texture_, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo_depth_);
+
+
+	GLenum status;
+	if ((status = glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE) {
+		fprintf(stderr, "glCheckFramebufferStatus: error %p", status);
+	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	GLfloat quadVertices[] = {   // Vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
+								 // Positions   // TexCoords
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		1.0f, -1.0f,  1.0f, 0.0f,
+
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		1.0f, -1.0f,  1.0f, 0.0f,
+		1.0f,  1.0f,  1.0f, 1.0f
+	};
+
+	GLuint quadVBO;
+	glGenVertexArrays(1, &quadVAO);
+	glGenBuffers(1, &quadVBO);
+	glBindVertexArray(quadVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+	glBindVertexArray(0);
+
+
+	/*glDeleteRenderbuffers(1, &m_rbo_depth_);
+	glDeleteTextures(1, &m_fbo_texture_);
+	glDeleteFramebuffers(1, &m_FBO_);
+	glDeleteBuffers(1, &vbo_fbo_vertices);*/
+
+
+
+	::glfwSetWindowSizeCallback(WindowManager::getInstance().getWindow(), Renderer::window_size_callback);
+
 }
 
 
@@ -25,7 +101,30 @@ void Renderer::Render() {
 	glEnable(GL_CULL_FACE);     // Cull back facing polygons
 	glCullFace(GL_BACK);
 
-	glm::mat4 Projection = glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 1000.f);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FBO_);
+
+
+
+	float ratio = screen_width / (float)screen_height;
+
+	if (hasResized) {
+		glfwGetFramebufferSize(WindowManager::getInstance().getWindow(), &screen_width, &screen_height);
+
+	
+		glBindTexture(GL_TEXTURE_2D, m_fbo_texture_);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, screen_width, screen_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		glBindRenderbuffer(GL_RENDERBUFFER, m_rbo_depth_);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, screen_width, screen_height);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+		hasResized = false;
+	}
+
+
+	glm::mat4 Projection = glm::perspective(45.0f, ratio, 0.1f, 20000.f);
 
 	glm::mat4 View;
 
@@ -79,43 +178,44 @@ void Renderer::Render() {
 			RenderComponent * render = (*iter).GetComponentByType<RenderComponent>();
 			render->Render(Projection, View);
 
+		}
 
-			//test
-			if (iter->CheckComponentTypeExists<BoxCollider>())
-			{
-				BoxCollider * bc = (*iter).GetComponentByType<BoxCollider>();
-				glLineWidth(2.5);
-				glColor3f(1.0, 0.0, 0.0);
-				glBegin(GL_LINES);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMin().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMin().y, bc->GetBounds().GetMin().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMax().z);
-				glVertex3f(bc->GetBounds().GetMax().x, bc->GetBounds().GetMax().y, bc->GetBounds().GetMin().z);
-				glEnd();
-			}
+
+
+
+		//Draw Scene to Texture.
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		glClear(GL_COLOR_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
+
+								  // Draw Screen
+		ResourceManager::getInstance()->GetShader("post_process_fbo")->Use();
+
+		if (m_CurrentScene_->shouldPostProcess()) {
+			ResourceManager::getInstance()->GetShader("post_process_fbo")->SetInteger("ppToggle", 1);
+
+		}
+		else {
+			ResourceManager::getInstance()->GetShader("post_process_fbo")->SetInteger("ppToggle", 0);
 
 		}
 
 
+
+		glBindVertexArray(quadVAO);
+		glBindTexture(GL_TEXTURE_2D, m_fbo_texture_);	// Use the color attachment texture as the texture of the quad plane
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+
+
+
 	}
+	
+
+
+
 
 
 

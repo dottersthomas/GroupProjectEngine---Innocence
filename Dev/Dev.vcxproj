@@ -204,6 +204,7 @@
     <ClCompile Include="src\Physics\Physics.cpp" />
     <ClCompile Include="src\Rendering\AssimpLoader.cpp" />
     <ClCompile Include="src\Rendering\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\SpotLight.cpp" />
     <ClCompile Include="src\Rendering\CubeMapTexture.cpp" />
     <ClCompile Include="src\Rendering\Environment.cpp" />
     <ClCompile Include="src\Rendering\LightManager.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Rendering\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\SpotLight.h" />
     <ClInclude Include="include\Rendering\CubeMapTexture.h" />
     <ClInclude Include="include\Rendering\Environment.h" />
     <ClInclude Include="include\Rendering\Model.h" />
@@ -311,6 +313,8 @@
     <None Include="Shaders\default_shader.vert" />
     <None Include="Shaders\gui_plain_shader.frag" />
     <None Include="Shaders\gui_plain_shader.vert" />
+    <None Include="Shaders\post_process_fbo.frag" />
+    <None Include="Shaders\post_process_fbo.vert" />
     <None Include="Shaders\skybox_shader.frag" />
     <None Include="Shaders\skybox_shader.vert" />
     <None Include="Shaders\texture_shader.frag" />

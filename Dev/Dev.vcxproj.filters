@@ -48,6 +48,7 @@
     <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Physics\Components\RigidBody.cpp" />
     <ClCompile Include="src\Launcher.cpp" />
+    <ClCompile Include="src\Rendering\Components\Lights\SpotLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Rendering\Components\CameraComponent.h" />
@@ -110,6 +111,7 @@
     <ClInclude Include="include\Audio\Sound.h" />
     <ClInclude Include="include\Physics\Components\RigidBody.h" />
     <ClInclude Include="include\Physics\Components\CollisionData.h" />
+    <ClInclude Include="include\Rendering\Components\Lights\SpotLight.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="XML\GameOver.xml" />
@@ -129,5 +131,7 @@
     <None Include="Shaders\text_shader.vert" />
     <None Include="Shaders\skybox_shader.vert" />
     <None Include="Shaders\skybox_shader.frag" />
+    <None Include="Shaders\post_process_fbo.vert" />
+    <None Include="Shaders\post_process_fbo.frag" />
   </ItemGroup>
 </Project>

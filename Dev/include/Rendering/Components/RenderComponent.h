@@ -56,8 +56,13 @@ public:
 	//Attach a mesh to the render component to be rendered. Rendering occurs in the order they are attached.
 	void AttachMesh(Mesh* pMesh);
 
-	void AttachModel(Model pModel) {
+	int AttachModel(Model pModel) {
 		m_Models_.push_back(pModel);
+		return m_Models_.size() - 1;
+	}
+
+	void RemoveModel(int position) {
+		m_Models_.erase(m_Models_.begin() + position);
 	}
 
 	//Render function.

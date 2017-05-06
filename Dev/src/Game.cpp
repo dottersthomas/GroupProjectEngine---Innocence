@@ -190,7 +190,7 @@ Game::Game() {
 		std::exit(EXIT_FAILURE);
 
 	WindowManager::getInstance().createWindow("Game", 0, 0, 1280, 720);
-	WindowManager::getInstance().toggleVSYNC(false);
+	WindowManager::getInstance().toggleVSYNC(true);
 
 	glfwMakeContextCurrent(WindowManager::getInstance().getWindow());
 
@@ -209,10 +209,7 @@ Game::Game() {
 	ResourceManager::getInstance()->LoadShader("Shaders/skybox_shader.vert", "Shaders/skybox_shader.frag", "skybox");
 	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "default");
 	ResourceManager::getInstance()->LoadShader("Shaders/shadow_depth.vert", "Shaders/shadow_depth.frag", "shadow_depth");
-
-	/*ResourceManager::getInstance()->loadTextureSOIL("Textures/container2.png", false, "CrateDiffuse", "texture_diffuse");
-
-	ResourceManager::getInstance()->loadTextureSOIL("Textures/container2_specular.png", false, "CrateSpecular", "texture_specular");*/
+	ResourceManager::getInstance()->LoadShader("Shaders/post_process_fbo.vert", "Shaders/post_process_fbo.frag", "post_process_fbo");
 
 	Proxy::getInstance()->AssignWindowManager(&WindowManager::getInstance());
 	Proxy::getInstance()->AssignGame(this);
@@ -316,6 +313,7 @@ Scene * Game::LoadTestScene() {
 	render2->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
 	render2->setParent(&_Scene->getGameObjects()->at(index));
+	render2->toggleDrawing(false);
 
 	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc2);
@@ -326,12 +324,12 @@ Scene * Game::LoadTestScene() {
 	rb->setParent(&_Scene->getGameObjects()->at(index));
 	rb->SetAcc(glm::vec3(0, 0, 0));
 
-	ThirdPersonCameraComponent * cameraComponent = new ThirdPersonCameraComponent(&_Scene->getGameObjects()->at(index), "camera", -40.0f, glm::vec3(0.0f, 40.0f, 0.0f));
+	FirstPersonCameraComponent * cameraComponent = new FirstPersonCameraComponent(&_Scene->getGameObjects()->at(index), "camera",  glm::vec3(0.0f, 10.0f, 0.0f));
 
 	_Scene->getGameObjects()->at(index).registerComponent(cameraComponent);
 	cameraComponent->setParent(&_Scene->getGameObjects()->at(index));
 
-	_Scene->attachMainCameraComponent(_Scene->getGameObjects()->at(index).GetComponentByType<ThirdPersonCameraComponent>());
+	_Scene->attachMainCameraComponent(_Scene->getGameObjects()->at(index).GetComponentByType<FirstPersonCameraComponent>());
 
 	Script* s1 = new Script("PlayerController3.lua", "Test");
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
@@ -422,7 +420,7 @@ Scene * Game::LoadTestScene() {
 	////////////////////////////////////////////
 	//Uniforms
 
-	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.1f), glm::vec3(0.2f, 0.2f, 0.7f), glm::vec3(0.7f, 0.7f, 0.7f));
+	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.3f, 0.3f, 0.3f), glm::vec3(0.7f, 0.7f, 0.7f));
 
 	m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
 

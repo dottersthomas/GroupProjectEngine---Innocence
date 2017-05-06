@@ -27,6 +27,17 @@ private:
 	GLFWwindow * m_Window_;
 	LightManager m_LightManager_;
 
+	GLuint m_FBO_, m_fbo_texture_, m_rbo_depth_;
+
+	static void window_size_callback(GLFWwindow* window, int width, int height);
+	static bool hasResized;
+
+	GLuint quadVAO;
+
+	int screen_width, screen_height;
+
+
+
 public:
 	Renderer() {
 

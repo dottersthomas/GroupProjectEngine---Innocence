@@ -21,8 +21,8 @@ private:
 	// Initial Field of View
 	float m_fInitialFoV_ = 45.0f;
 
-	float m_fSpeed_ = 0.003f; // 3 units / second
-	float m_fMouseSpeed_ = 0.001f;
+	float m_fSpeed_ = 0.03f; // 3 units / second
+	float m_fMouseSpeed_ = 0.05f;
 
 	//Up Vector.
 	glm::vec3 m_Up_;
