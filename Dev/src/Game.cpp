@@ -16,6 +16,8 @@
 #define TIXML_USE_STL
 
 
+
+
 static void error_callback(int error, const char* description)
 {
 	fputs(description, stderr);
@@ -262,8 +264,8 @@ Scene * Game::LoadTestScene() {
 
 	AssimpLoader loader;
 
-	//Model model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
-	Model model = loader.LoadModel("Models/Scene/Ground.fbx");
+	Model model = loader.LoadModel("Models/Ogre/newOgre.obj");
+	//Model model = loader.LoadModel("Models/Scene/Ground.fbx");
 	//Model model = loader.LoadModel("Models/plane.obj");
 	//Model model = loader.LoadModel("Models/TaylorWhiskers.fbx");
 	//Model model;
@@ -276,7 +278,7 @@ Scene * Game::LoadTestScene() {
 
 	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc->setParent(&_Scene->getGameObjects()->at(index));
-	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
+	tc->setPosition(glm::vec3(0.0f, 10.5f, -2.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -289,6 +291,7 @@ Scene * Game::LoadTestScene() {
 	//Script* s1 = new Script("RandomSound.lua", "RandomSound");
 	
 	render->AttachModel(model);
+	render->toggleBackCulling(false);
 	_Scene->getGameObjects()->at(index).registerComponent(render);
 	
 	render->setParent(&_Scene->getGameObjects()->at(index));
@@ -340,93 +343,95 @@ Scene * Game::LoadTestScene() {
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
 
-	index = _Scene->AddGameObject(GameObject("sdad"));
-	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
-	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-	
-	
-	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/House.fbx");
-	
-	render3->AttachModel(model);
-	_Scene->getGameObjects()->at(index).registerComponent(render3);
-	render3->setParent(&_Scene->getGameObjects()->at(index));
-	
-	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//index = _Scene->AddGameObject(GameObject("sdad"));
+	//TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	////tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	//tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	//
+	//
+	//RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	//model = loader.LoadModel("Models/Scene/House.fbx");
+	//
+	//render3->AttachModel(model);
+	//_Scene->getGameObjects()->at(index).registerComponent(render3);
+	//render3->setParent(&_Scene->getGameObjects()->at(index));
+	//
+	//BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
-	index = _Scene->AddGameObject(GameObject("sdad"));
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
-	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-	
-	
-	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/items.fbx");
-	
-	render3->AttachModel(model);
-	_Scene->getGameObjects()->at(index).registerComponent(render3);
-	render3->setParent(&_Scene->getGameObjects()->at(index));
-	
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//index = _Scene->AddGameObject(GameObject("sdad"));
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	////tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	//tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	//
+	//
+	//render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	//model = loader.LoadModel("Models/Scene/items.fbx");
+	//
+	//render3->AttachModel(model);
+	//_Scene->getGameObjects()->at(index).registerComponent(render3);
+	//render3->setParent(&_Scene->getGameObjects()->at(index));
+	//
+	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
-	index = _Scene->AddGameObject(GameObject("sdad"));
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
-	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-
-
-	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/Logs.fbx");
-
-	render3->AttachModel(model);
-	_Scene->getGameObjects()->at(index).registerComponent(render3);
-	render3->setParent(&_Scene->getGameObjects()->at(index));
-
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
-	
-	index = _Scene->AddGameObject(GameObject("sdad"));
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
-	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	//index = _Scene->AddGameObject(GameObject("sdad"));
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	////tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	//tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 
-	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/Rocks.fbx");
+	//render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	//model = loader.LoadModel("Models/Scene/Logs.fbx");
 
-	render3->AttachModel(model);
-	_Scene->getGameObjects()->at(index).registerComponent(render3);
-	render3->setParent(&_Scene->getGameObjects()->at(index));
+	//render3->AttachModel(model);
+	//_Scene->getGameObjects()->at(index).registerComponent(render3);
+	//render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//
+	//index = _Scene->AddGameObject(GameObject("sdad"));
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	////tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	//tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	//render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	//model = loader.LoadModel("Models/Scene/Rocks.fbx");
+
+	//render3->AttachModel(model);
+	//_Scene->getGameObjects()->at(index).registerComponent(render3);
+	//render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
 
 	////////////////////////////////////////////
 	//Uniforms
 
-	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.3f, 0.3f, 0.3f), glm::vec3(0.7f, 0.7f, 0.7f));
+	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.0f, -1.0f, -0.5f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.7f, 0.7f, 0.7f));
 
 	m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
+
+	//SpotLight * spotLight = new SpotLight()
 
 	ShaderUniform camera;
 	camera.M_Address = "viewPos";

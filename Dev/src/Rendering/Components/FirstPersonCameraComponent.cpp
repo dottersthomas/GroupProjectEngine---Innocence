@@ -35,6 +35,9 @@ void FirstPersonCameraComponent::Update(double dt) {
 
 	if (m_Active_) {
 
+		Proxy::getInstance()->requestWindowSize(m_iWindowX_, m_iWindowY_);
+
+
 		camera.M_Vec3 = m_Position_;
 		ResourceManager::getInstance()->GetShader("default")->UpdateSingleUniform(camera);
 

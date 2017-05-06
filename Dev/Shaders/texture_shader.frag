@@ -75,16 +75,15 @@ uniform highp mat4 mView;
 // Function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
-
 	vec3 norm;
 	vec3 viewDir;
 
-	vec3 normal = texture(material.texture_normal1, fs_in.TexCoords).rgb;
-
    if(fs_in.hasNMap == 1){
+		vec3 normal = texture(material.texture_normal1, fs_in.TexCoords).rgb;
    
 		norm = normalize(normal * 2.0 - 1.0);
 
@@ -107,8 +106,11 @@ void main()
 
     for(int i = 0; i < POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir); 
-		   
-    // result += CalcSpotLight(spotLight, norm, fs_in.FragPos, viewDir);    
+	
+   // for(int i = 0; i < SPOT_LIGHTS; i++)	   
+     //  result += CalcSpotLight(spotLights[i], norm, fs_in.FragPos, viewDir);  
+	   
+	     
     vec3 diff = vec3(texture(material.texture_diffuse1, fs_in.TexCoords));
 	
 	FragColour = vec4(result, 1.0);

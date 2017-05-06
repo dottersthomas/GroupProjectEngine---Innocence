@@ -17,6 +17,7 @@ Test =
 		r.y = 0
 		r.x = 0
 		r.z = 0
+		gameObject:getComponent("RigidBody").grounded = true
 		moving = false -- Reset variable
 		-- Check if any of the input keys have been pressed
 		if (Input.isKeyDown(Key.W, 0)) then

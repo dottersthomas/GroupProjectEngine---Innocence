@@ -202,6 +202,7 @@ void Renderer::Render() {
 
 		}
 
+		glActiveTexture(GL_TEXTURE0);
 
 
 		glBindVertexArray(quadVAO);

@@ -10,7 +10,7 @@
 GameObject::GameObject(const char* pName)
 {
 	m_Name_ = pName;
-	m_Components_.reserve(10);
+	m_Components_.reserve(20);
 	m_Transform = new TransformComponent(this);
 	registerComponent(m_Transform); //Every GameObject has a transform component, can be removed later as its easier to assume it exists.
 }
