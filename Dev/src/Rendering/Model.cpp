@@ -83,7 +83,7 @@ void Model::Render(std::string pShader, TransformComponent * transform) {
 		if ((*iter).getIndices() > 0)
 			glDrawElements(GL_TRIANGLES, (*iter).getIndices(), GL_UNSIGNED_INT, 0);
 
-
+		(*iter).getMaterial().CleanUp();
 	}
 
 	rotation = 1;

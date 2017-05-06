@@ -29,6 +29,7 @@ public:
 	Texture(GLuint width, GLuint height, unsigned char* data);
 
 	void Bind() const;
+	void UnBind() const;
 
 };
 

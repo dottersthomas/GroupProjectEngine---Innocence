@@ -21,3 +21,7 @@ Texture::Texture(GLuint width, GLuint height, unsigned char* data) : Width(0), H
 void Texture::Bind() const {
 	glBindTexture(GL_TEXTURE_2D, this->ID);
 }
+
+void Texture::UnBind() const {
+	glBindTexture(GL_TEXTURE_2D, 0);
+}

@@ -97,6 +97,17 @@ void Material::CreateUniforms() {
 
 }
 
+
+void Material::CleanUp() {
+	if (m_Textures_.size() > 0) {
+		for (GLuint i = 0; i < m_Textures_.size(); i++) {
+
+			m_Textures_[i]->UnBind();
+
+		}
+	}
+}
+
 void Material::UpdateUniforms(std::string pShader) {
 
 	ResourceManager::getInstance()->GetShader(pShader)->UpdatePackagedUniforms(uniforms);

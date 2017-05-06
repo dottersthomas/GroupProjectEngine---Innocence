@@ -26,6 +26,7 @@ public:
 	Material(std::vector<Colour> pColours, float pShine);
 
 	void UpdateUniforms(std::string pShader);
+	void CleanUp();
 
 	void BindTextures(std::string pShader);
 	
