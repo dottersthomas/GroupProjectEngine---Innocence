@@ -356,7 +356,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 	
-	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 

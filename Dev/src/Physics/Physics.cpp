@@ -48,7 +48,16 @@ void Physics::CollisionDetection(float dt)
 				{
 					if (test->getTrigger() == true && test->getCollided() == true)
 					{
-						test->OnTriggerExit();
+						GameObject  go = *iter2;
+						CollisionData go2;
+						if (iter->GetComponentByType<BoxCollider>()->getCD() != nullptr)
+						{
+							go2 = *iter->GetComponentByType<BoxCollider>()->getCD();
+							if (go2.target.m_Name_ == go.m_Name_)
+							{
+								test->OnTriggerExit();
+							}
+						}
 					}
 				}
 		

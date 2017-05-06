@@ -13,7 +13,7 @@ class Collider : public Component
 protected:
 	bool isTrigger = false;
 	bool collided = false;
-	CollisionData m_CD;
+	CollisionData * m_CD;
 	int triggerStatus = TRIGGER_EXIT;
 public:
 	Collider() {};
@@ -31,6 +31,10 @@ public:
 	{
 		return collided;
 	}
+	CollisionData * getCD()
+	{
+		return m_CD;
+	}
 
 	virtual void Update(double dt) = 0;
 	virtual void LateUpdate(double dt) = 0;
@@ -42,18 +46,20 @@ public:
 		std::cout << "ENTER";
 		collided = true;
 		triggerStatus = TRIGGER_ENTER;
-		m_CD = *cd;
+		m_CD = cd;
 	};
 
 	void OnTriggerStay(CollisionData * cd) {
+		std::cout << "stay";
 		triggerStatus = TRIGGER_STAY;
-		m_CD = *cd;
+		m_CD = cd;
 	};
 
 	void OnTriggerExit() {
+		std::cout << "Exit";
 		collided = false;
 		triggerStatus = TRIGGER_EXIT;
-		m_CD = CollisionData();
+		m_CD = nullptr;
 	};
 
 	void OnCollided(CollisionData * cd) {
