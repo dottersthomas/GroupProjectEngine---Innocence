@@ -51,6 +51,7 @@ Ghost =
 
 		if(WindowManager.instance.sceneManager.currentScene.postProcessEnabled == 1) then
 		
+			print("Night")
 			gameObject:getComponent("RenderComponent"):toggleDrawing()
 
 
