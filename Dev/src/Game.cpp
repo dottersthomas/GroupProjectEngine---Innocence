@@ -343,27 +343,32 @@ Scene * Game::LoadTestScene() {
 	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 
-	tc->setScale(glm::vec3(1.5f, 1.5f, 1.5f));
+	tc->setScale(glm::vec3(1.5f, 1.0f, 1.5f));
 
 	CanvasComponent * canvas = new CanvasComponent(&_Scene->getGameObjects()->at(index));
 
 
-	CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
-	rect->SetShader("gui_plain");
-	rect->setPosition(glm::vec2(1.0, 1.0));
-	rect->setScale(glm::vec2(100, 100));
+	//CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	//rect->SetShader("gui_plain");
+	//rect->setPosition(glm::vec2(1.0, 1.0));
+	//rect->setScale(glm::vec2(100, 100));
 
 
-	canvas->AddElement(rect);
+	//canvas->AddElement(rect);
 
-	Text2D * text = new Text2D("text_shader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\");
-	text->SetShader("text_shader");
-	text->setPosition(glm::vec2(100,100));
-	//text->setUsesID(usesID);
-	text->setScale(glm::vec2(1,1));
-	text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
+	// Counter script
+	auto textScript = new Script("ScreenText.lua", "ScreenText");
+	_Scene->getGameObjects()->at(index).registerComponent(textScript);
+	textScript->setParent(&_Scene->getGameObjects()->at(index));
 
-	canvas->AddElement(text);
+	//Text2D * text = new Text2D("textshader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - +  = @#~;:?><\");
+	//text->SetShader("text_shader");
+	//text->setPosition(glm::vec2(100,100));
+	////text->setUsesID(usesID);
+	//text->setScale(glm::vec2(1,1));
+	//text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
+
+//	 canvas->AddElement(text); 
 
 
 	_Scene->getGameObjects()->at(index).registerComponent(canvas);
@@ -436,7 +441,7 @@ Scene * Game::LoadTestScene() {
 	tc2->setParent(&_Scene->getGameObjects()->at(index));
 
 	render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+	model = loader.LoadModel("Models/Scene/Demon_Girl2.fbx");
 	render2->toggleBackCulling(false);
 	render2->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render2);
@@ -451,9 +456,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
-
-
-	index = _Scene->AddGameObject(GameObject("House"));
+	index = _Scene->AddGameObject(GameObject("Sound"));
 	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
@@ -461,21 +464,32 @@ Scene * Game::LoadTestScene() {
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
-	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	s1 = new Script("RandomSound.lua", "RandomSound");
+	_Scene->getGameObjects()->at(index).registerComponent(s1);
+	s1->setParent(&_Scene->getGameObjects()->at(index));
 
-	model = loader.LoadModel("Models/Scene/House.fbx");
 
-	render3->AttachModel(model);
-	_Scene->getGameObjects()->at(index).registerComponent(render3);
-	render3->setParent(&_Scene->getGameObjects()->at(index));
+	//index = _Scene->AddGameObject(GameObject("House"));
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//tc3->setParent(&_Scene->getGameObjects()->at(index));
+	////tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	////tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	//tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	//
+	//RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	//
+	//model = loader.LoadModel("Models/Scene/House.fbx");
+	//
+	//render3->AttachModel(model);
+	//_Scene->getGameObjects()->at(index).registerComponent(render3);
+	//render3->setParent(&_Scene->getGameObjects()->at(index));
+	//
+	//BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
-	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
-
-	Script* s2 = new Script("Collectible.lua", "Collectible");
-	_Scene->getGameObjects()->at(index).registerComponent(s2);
-	s2->setParent(&_Scene->getGameObjects()->at(index));
+	
 
 	index = _Scene->AddGameObject(GameObject("Items"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -485,14 +499,14 @@ Scene * Game::LoadTestScene() {
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 
-	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 	model = loader.LoadModel("Models/Scene/items.fbx");
 
 	render3->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -511,7 +525,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 	
@@ -622,7 +636,7 @@ Scene * Game::LoadTestScene() {
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
 	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.f, 1.0f));
 
 
 	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
@@ -637,7 +651,7 @@ Scene * Game::LoadTestScene() {
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 	bc3->CustomBounds(glm::vec3(38.1, 0, -19.6), glm::vec3(71.9, 4, 20));
 
-	index = _Scene->AddGameObject(GameObject("Truck"));
+	index = _Scene->AddGameObject(GameObject("Truck1"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
 	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
@@ -810,6 +824,8 @@ Scene * Game::LoadTestScene() {
 	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
+	
+
 	// Paper objects
 	for (int i = 1; i < 6; i++)
 	{
@@ -829,11 +845,44 @@ Scene * Game::LoadTestScene() {
 		render3->AttachModel(model);
 		_Scene->getGameObjects()->at(index).registerComponent(render3);
 		render3->setParent(&_Scene->getGameObjects()->at(index));
+		render3->toggleBackCulling(false);
 
-		bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+		bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 		_Scene->getGameObjects()->at(index).registerComponent(bc3);
 		bc3->setParent(&_Scene->getGameObjects()->at(index));
+		glm::vec3 newMin = bc3->GetBounds().GetMin() - glm::vec3(20, 20, 20);
+		glm::vec3 newMax = bc3->GetBounds().GetMin() + glm::vec3(20, 20, 20);
+		bc3->CustomBounds(newMin,newMax);
+		
+		Script* s2 = new Script("Collectable.lua", "Collectable");
+		_Scene->getGameObjects()->at(index).registerComponent(s2);
+		s2->setParent(&_Scene->getGameObjects()->at(index));
 	}
+
+	
+	//// Paper objects
+	//for (int i = 1; i < 6; i++)
+	//{
+	//	index = _Scene->AddGameObject(GameObject("Paper" + i));
+	//	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	//	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	//	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	//
+	//
+	//	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	//	std::string path = "Models/Scene/Paper" + std::to_string(i) + "/Paper" + std::to_string(i) + ".fbx";
+	//	model = loader.LoadModel((GLchar*)path.c_str());
+	//	render3->AttachModel(model);
+	//	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	//	render3->setParent(&_Scene->getGameObjects()->at(index));
+	//
+	//	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//}
 
 	////////////////////////////////////////////
 	//Uniforms

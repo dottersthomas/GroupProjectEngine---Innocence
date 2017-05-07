@@ -1,4 +1,5 @@
 require("InputTable")
+require("TriggerStatus")
 
 Ghost = 
 {

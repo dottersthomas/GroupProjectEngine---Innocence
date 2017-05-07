@@ -14,7 +14,7 @@
 class Text2D : public CanvasElement {
 private:
 	//Text to be drawn.
-	std::string m_Text_;
+	std::string mText;
 
 	//The VAO for the text.
 	GLuint quadVAO;
@@ -46,6 +46,7 @@ public:
 			.deriveClass<Text2D, CanvasElement>("Text2D")
 			.addConstructor<void(*)(std::string, std::string)>()
 			.addData("usesID", &Text2D::usesID)
+			.addData("text", &Text2D::mText)
 			.endClass();
 	}
 };

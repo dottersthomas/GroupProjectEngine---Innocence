@@ -1,7 +1,7 @@
 local counterMax = 5
 local counter = 0
 
-CollectibleManager = 
+CollectableManager = 
 {
 	addCounter = function()
 		counter = counter + 1

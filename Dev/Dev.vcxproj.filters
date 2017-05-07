@@ -134,5 +134,10 @@
     <None Include="Shaders\skybox_shader.frag" />
     <None Include="Shaders\post_process_fbo.vert" />
     <None Include="Shaders\post_process_fbo.frag" />
+    <None Include="Collectible.lua" />
+    <None Include="CollectibleManager.lua" />
+    <None Include="Collectable.lua" />
+    <None Include="CollectableManager.lua" />
+    <None Include="ScreenText.lua" />
   </ItemGroup>
 </Project>

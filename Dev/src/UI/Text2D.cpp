@@ -4,7 +4,7 @@
 
 Text2D::Text2D(std::string pShader, std::string pText) {
 	m_Shader_ = pShader;
-	m_Text_ = pText;
+	mText = pText;
 
 	glGenVertexArrays(1, &this->quadVAO);
 	glGenBuffers(1, &VBO);
@@ -42,10 +42,10 @@ void Text2D::Render() {
 	std::string text;
 
 	if (usesID) {
-		text = ResourceManager::getInstance()->getText(m_Text_);
+		text = ResourceManager::getInstance()->getText(mText);
 	}
 	else {
-		text = m_Text_;
+		text = mText;
 	}
 	
 	

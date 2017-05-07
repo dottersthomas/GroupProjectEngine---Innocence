@@ -1,7 +1,7 @@
 require("TriggerStatus")
-require("CollectibleManager")
+require("CollectableManager")
 
-Collectible = 
+Collectable = 
 {
 	Start = function()
 		
@@ -9,12 +9,10 @@ Collectible =
 	
 	Update = function(dt)
 		collider = gameObject:getComponent("BoxCollider")
-		print(collider.triggerStatus)
 
 		if (collider.triggerStatus == Trigger.ENTER) then
-			print "HELLO"
 			-- Add to collectible global
-			CollectibleManager.addCounter()
+			CollectableManager.addCounter()
 			-- Collision, Pick up object (Stop drawing)
 			gameObject:getComponent("RenderComponent"):toggleDrawing(false)
 			gameObject.transform.position = Vec3(0, -100, 0)

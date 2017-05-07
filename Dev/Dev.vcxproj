@@ -316,7 +316,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Collectable.lua" />
+    <None Include="CollectableManager.lua" />
+    <None Include="Collectible.lua" />
+    <None Include="CollectibleManager.lua" />
     <None Include="glew32.dll" />
+    <None Include="ScreenText.lua" />
     <None Include="Shaders\default_shader.frag" />
     <None Include="Shaders\default_shader.vert" />
     <None Include="Shaders\gui_plain_shader.frag" />
