@@ -6,13 +6,14 @@ Ghost =
 		-- Create timer
 		timer = Timer()
 		timer:start()
-		
+		math.randomseed(os.time())
 		-- Keep track of delay
 		lastTime = 0
 
 		radius = 100
 		delay =  0
 
+		night = false
 
 	end,
 	
@@ -27,7 +28,8 @@ Ghost =
 			-- Get pos
 			playerPos = WindowManager.instance.sceneManager.currentScene:getGameObject("Player").transform.position
 			-- Create new pos
-			angle = math.random(1,6)
+			angle = math.random() * (6.27-0.1) + 0.1
+			print(angle)
 			xoff = playerPos.x + radius * math.cos(angle)
 			yoff = playerPos.z + radius * math.sin(angle)
 			print(xoff)
@@ -52,8 +54,26 @@ Ghost =
 		if(WindowManager.instance.sceneManager.currentScene.postProcessEnabled == 1) then
 		
 			print("Night")
-			gameObject:getComponent("RenderComponent"):toggleDrawing()
+			night = true
 
+
+		end
+
+		if(night) then
+		gameObject:getComponent("RenderComponent"):toggleDrawing(true)
+		end
+
+		if(night == false) then
+		gameObject:getComponent("RenderComponent"):toggleDrawing(false)
+		end
+
+		night = false
+
+		collider = gameObject:getComponent("BoxCollider")
+		
+		if (collider.triggerStatus == Trigger.ENTER) then
+			
+			print("Dead")
 
 		end
 		
