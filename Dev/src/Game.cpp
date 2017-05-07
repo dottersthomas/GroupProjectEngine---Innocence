@@ -819,17 +819,17 @@ Scene * Game::LoadTestScene() {
 
 		ShaderUniform constant;
 		constant.M_Address = "pointLights[" + to_string(i) + "].constant";
-		constant.M_Type = ShaderType::FLOAT;
+		constant.M_Type = ShaderType::UNIFORM_FLOAT;
 		constant.M_Float = 1.0f;
 
 		ShaderUniform linear;
 		linear.M_Address = "pointLights[" + to_string(i) + "].linear";
-		linear.M_Type = ShaderType::FLOAT;
+		linear.M_Type = ShaderType::UNIFORM_FLOAT;
 		linear.M_Float = 0.09f;
 
 		ShaderUniform quadratic;
 		quadratic.M_Address = "pointLights[" + to_string(i) + "].quadratic";
-		quadratic.M_Type = ShaderType::FLOAT;
+		quadratic.M_Type = ShaderType::UNIFORM_FLOAT;
 		quadratic.M_Float = 0.032f;
 
 		PointLight * pointLight = new PointLight("default", glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z), glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), 1.0f, 0.09f, 0.032f);

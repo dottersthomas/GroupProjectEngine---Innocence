@@ -48,7 +48,7 @@ void DirectionalLight::UpdateLightUniforms(int pos){
 
 	ShaderUniform lightDirection;
 	lightDirection.M_Address = getUniformName() + "[" + std::to_string(pos) + "].direction";
-	lightDirection.M_Type = VEC3;
+	lightDirection.M_Type = ShaderType::VEC3;
 	lightDirection.M_Vec3 = m_Direction_;
 
 	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightDirection);

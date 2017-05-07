@@ -79,28 +79,28 @@ void Shader::UpdateShaderUniforms() {
 	for (UniformIterator = Uniforms.begin(); UniformIterator != Uniforms.end(); UniformIterator++) {
 		switch (UniformIterator->second.M_Type)
 		{
-		case INT:
+		case ShaderType::UNIFORM_INT:
 			//SetInteger(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Int);
 			glUniform1i(glGetUniformLocation(this->ID, UniformIterator->second.M_Address.c_str()), UniformIterator->second.M_Int);
 			break;
-		case FLOAT:
+		case ShaderType::UNIFORM_FLOAT:
 			//SetFloat(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Float);
 			glUniform1f(glGetUniformLocation(this->ID, UniformIterator->second.M_Address.c_str()), UniformIterator->second.M_Float);
 			break;
-		case VEC2:
+		case ShaderType::VEC2:
 			SetVector2f(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Vec2);
 			break;
-		case VEC3:
+		case ShaderType::VEC3:
 			//SetVector3f(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Vec3);
 			glUniform3f(glGetUniformLocation(this->ID, UniformIterator->second.M_Address.c_str()), UniformIterator->second.M_Vec3.x, UniformIterator->second.M_Vec3.y, UniformIterator->second.M_Vec3.z);
 			break;
-		case VEC4:
+		case ShaderType::VEC4:
 			SetVector4f(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Vec4);
 			break;
-		case MAT3:
+		case ShaderType::MAT3:
 			SetMatrix3(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Mat3);
 			break;
-		case MAT4:
+		case ShaderType::MAT4:
 			break;
 			SetMatrix4(UniformIterator->second.M_Address.c_str(), UniformIterator->second.M_Mat4);
 		default:
@@ -115,31 +115,31 @@ void Shader::UpdatePackagedUniforms(std::vector<ShaderUniform>& uniforms) {
 	for (uniTerator = uniforms.begin(); uniTerator != uniforms.end(); uniTerator++) {
 		switch (uniTerator->M_Type)
 		{
-		case INT:
+		case ShaderType::UNIFORM_INT:
 			//SetInteger(uniTerator->M_Address.c_str(), uniTerator->M_Int);
 			glUniform1i(glGetUniformLocation(this->ID, uniTerator->M_Address.c_str()), uniTerator->M_Int);
 
 			break;
-		case FLOAT:
+		case ShaderType::UNIFORM_FLOAT:
 			//SetFloat(uniTerator->M_Address.c_str(), uniTerator->M_Float);
 			glUniform1f(glGetUniformLocation(this->ID, uniTerator->M_Address.c_str()), uniTerator->M_Float);
 
 			break;
-		case VEC2:
+		case ShaderType::VEC2:
 			SetVector2f(uniTerator->M_Address.c_str(), uniTerator->M_Vec2);
 			break;
-		case VEC3:
+		case ShaderType::VEC3:
 			//SetVector3f(uniTerator->M_Address.c_str(), uniTerator->M_Vec3);
 			glUniform3f(glGetUniformLocation(this->ID, uniTerator->M_Address.c_str()), uniTerator->M_Vec3.x, uniTerator->M_Vec3.y, uniTerator->M_Vec3.z);
 
 			break;
-		case VEC4:
+		case ShaderType::VEC4:
 			SetVector4f(uniTerator->M_Address.c_str(), uniTerator->M_Vec4);
 			break;
-		case MAT3:
+		case ShaderType::MAT3:
 			SetMatrix3(uniTerator->M_Address.c_str(), uniTerator->M_Mat3);
 			break;
-		case MAT4:
+		case ShaderType::MAT4:
 			break;
 			SetMatrix4(uniTerator->M_Address.c_str(), uniTerator->M_Mat4);
 		default:
@@ -152,25 +152,25 @@ void Shader::UpdatePackagedUniforms(std::vector<ShaderUniform>& uniforms) {
 void Shader::UpdateSingleUniform(ShaderUniform& uniform) {
 	switch (uniform.M_Type)
 	{
-	case INT:
+	case ShaderType::UNIFORM_INT:
 		SetInteger(uniform.M_Address.c_str(), uniform.M_Int);
 		break;
-	case FLOAT:
+	case ShaderType::UNIFORM_FLOAT:
 		SetFloat(uniform.M_Address.c_str(), uniform.M_Float);
 		break;
-	case VEC2:
+	case ShaderType::VEC2:
 		SetVector2f(uniform.M_Address.c_str(), uniform.M_Vec2);
 		break;
-	case VEC3:
+	case ShaderType::VEC3:
 		SetVector3f(uniform.M_Address.c_str(), uniform.M_Vec3);
 		break;
-	case VEC4:
+	case ShaderType::VEC4:
 		SetVector4f(uniform.M_Address.c_str(), uniform.M_Vec4);
 		break;
-	case MAT3:
+	case ShaderType::MAT3:
 		SetMatrix3(uniform.M_Address.c_str(), uniform.M_Mat3);
 		break;
-	case MAT4:
+	case ShaderType::MAT4:
 		break;
 		SetMatrix4(uniform.M_Address.c_str(), uniform.M_Mat4);
 	default:
