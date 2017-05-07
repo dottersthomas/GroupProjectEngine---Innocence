@@ -145,10 +145,14 @@ public:
 					if (cd->diff.y < 1)
 						newPos.y += cd->diff.y + 0.01;
 					rb->SetVel(glm::vec3(rb->GetVel().x, 0, rb->GetVel().z));
-					rb->setGrounded(true);
+					
 
 				}
 
+				if (cd->target.m_Name_ == "Ground")
+				{
+					rb->setGrounded(true);
+				}
 				
 
 
