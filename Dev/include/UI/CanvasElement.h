@@ -101,9 +101,9 @@ public:
 		getGlobalNamespace(L)
 			.beginClass<CanvasElement>("CanvasElement")
 			.addProperty("shader", &CanvasElement::RequestShader, &CanvasElement::SetShader)
-			.addProperty("position", &CanvasElement::getPosition, &CanvasElement::setColour)
+			.addProperty("position", &CanvasElement::getPosition, &CanvasElement::setPosition)
 			.addProperty("scale", &CanvasElement::getScale, &CanvasElement::setScale)
-			.addProperty("colour", &CanvasElement::getColour)
+			.addProperty("colour", &CanvasElement::getColour, &CanvasElement::setColour)
 			.endClass();
 	}
 };

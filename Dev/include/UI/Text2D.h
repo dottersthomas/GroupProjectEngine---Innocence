@@ -46,6 +46,7 @@ public:
 			.deriveClass<Text2D, CanvasElement>("Text2D")
 			.addConstructor<void(*)(std::string, std::string)>()
 			.addData("usesID", &Text2D::usesID)
+			.addData("text", &Text2D::m_Text_)
 			.endClass();
 	}
 };

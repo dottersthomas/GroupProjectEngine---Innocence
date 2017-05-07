@@ -1,7 +1,7 @@
 -- Test class for defining a standard script within lua
 
 require("InputTable")
-require("CollectibleManager")
+require("CollectableManager")
 
 -- set speed
 local moving = false -- Used to stop rotating on the spot
@@ -17,7 +17,7 @@ Test =
 		sprinting = false
 		nightvision = false
 		energy = 100
-		power = 1000
+		power = 100000000000000
 		lastkey = 0
 	end,
 	
@@ -139,7 +139,7 @@ Test =
 		gameObject:getComponent("RigidBody").acceleration = r
 		
 		-- Check for game completed
-		if (CollectibleManager.getCounter() == 1) then
+		if (CollectableManager.getCounter() == 1) then
 			-- Game Completed
 		end
 	end,

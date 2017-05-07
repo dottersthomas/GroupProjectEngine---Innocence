@@ -86,6 +86,9 @@ public:
 			.addData<glm::vec3>("direction", &SpotLight::m_Direction_)
 			.addData<glm::vec3>("position", &SpotLight::m_Position_)
 			.addData<float>("cutoff", &SpotLight::m_CutOff_)
+			.addData<float>("constant", &SpotLight::m_Constant_)
+			.addData<float>("linear", &SpotLight::m_Linear_)
+			.addData<float>("quadratic", &SpotLight::m_Quadratic_)
 			.endClass();
 	}
 };

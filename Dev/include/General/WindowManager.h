@@ -64,6 +64,7 @@ public:
 			.addFunction("toggleVSync", &WindowManager::toggleVSYNC)
 			.addFunction("toggleFullScreen", &WindowManager::toggleFullScreen)
 			.addFunction("toggleCursorDraw", &WindowManager::toggleCursorDraw)
+			.addFunction("destroy", &WindowManager::destroyWindow)
 			.endClass();
 	}
 };

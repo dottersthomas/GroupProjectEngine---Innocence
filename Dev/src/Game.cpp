@@ -85,8 +85,8 @@ void Game::beginLoop() {
 	RenderComponent::registerLua(L);
 
 	CanvasComponent::registerLua(L);
-	CanvasButton::registerLua(L);
 	CanvasElement::registerLua(L);
+	CanvasButton::registerLua(L);
 	CanvasRect::registerLua(L);
 	Text2D::registerLua(L);
 
@@ -253,7 +253,7 @@ Game::Game() {
 
 
 	//WindowManager::getInstance().getSceneManager()->LoadScene("XML/Scene.xml");
-	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTitleScreen());
+	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTestScene());
 
 	WindowManager::getInstance().getSceneManager()->switchScene();
 	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
@@ -268,48 +268,6 @@ void Game::CreateScene() {
 
 	
 
-}
-
-Scene* Game::LoadTitleScreen()
-{
-	Scene * _Scene = new Scene("");
-
-	GameObject object("Model");
-	int index = _Scene->AddGameObject(object);
-
-
-	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc->setParent(&_Scene->getGameObjects()->at(index));
-	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
-	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-
-	tc->setScale(glm::vec3(1.5f, 1.5f, 1.5f));
-
-	CanvasComponent * canvas = new CanvasComponent(&_Scene->getGameObjects()->at(index));
-
-
-	CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
-	rect->SetShader("gui_plain");
-	rect->setPosition(glm::vec2(1.0, 1.0));
-	rect->setScale(glm::vec2(100, 100));
-
-
-	canvas->AddElement(rect);
-
-	Text2D * text = new Text2D("text_shader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\");
-	text->SetShader("text_shader");
-	text->setPosition(glm::vec2(100, 100));
-	//text->setUsesID(usesID);
-	text->setScale(glm::vec2(1, 1));
-	text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
-
-	canvas->AddElement(text);
-
-
-	_Scene->getGameObjects()->at(index).registerComponent(canvas);
-	canvas->setParent(&_Scene->getGameObjects()->at(index));
-
-	return _Scene;
 }
 
 Scene * Game::LoadTestScene() {
@@ -350,22 +308,27 @@ Scene * Game::LoadTestScene() {
 	CanvasComponent * canvas = new CanvasComponent(&_Scene->getGameObjects()->at(index));
 
 
-	CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
-	rect->SetShader("gui_plain");
-	rect->setPosition(glm::vec2(1.0, 1.0));
-	rect->setScale(glm::vec2(100, 100));
+	//CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	//rect->SetShader("gui_plain");
+	//rect->setPosition(glm::vec2(1.0, 1.0));
+	//rect->setScale(glm::vec2(100, 100));
 
 
-	canvas->AddElement(rect);
+	//canvas->AddElement(rect);
 
-	Text2D * text = new Text2D("text_shader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\");
-	text->SetShader("text_shader");
-	text->setPosition(glm::vec2(100,100));
-	//text->setUsesID(usesID);
-	text->setScale(glm::vec2(1,1));
-	text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
+	// Counter script
+	auto textScript = new Script("ScreenText.lua", "ScreenText");
+	_Scene->getGameObjects()->at(index).registerComponent(textScript);
+	textScript->setParent(&_Scene->getGameObjects()->at(index));
 
-	canvas->AddElement(text);
+	//Text2D * text = new Text2D("text_shader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\");
+	//text->SetShader("text_shader");
+	//text->setPosition(glm::vec2(100,100));
+	////text->setUsesID(usesID);
+	//text->setScale(glm::vec2(1,1));
+	//text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
+
+	/*canvas->AddElement(text);*/
 
 
 	_Scene->getGameObjects()->at(index).registerComponent(canvas);
@@ -449,9 +412,9 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(bc2);
 	bc2->setParent(&_Scene->getGameObjects()->at(index));
 	bc2->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 1, 1));
-	s1 = new Script("Ghost.lua", "Ghost");
-	_Scene->getGameObjects()->at(index).registerComponent(s1);
-	s1->setParent(&_Scene->getGameObjects()->at(index));
+	auto s3 = new Script("Ghost.lua", "Ghost");
+	_Scene->getGameObjects()->at(index).registerComponent(s3);
+	s3->setParent(&_Scene->getGameObjects()->at(index));
 
 
 
@@ -475,7 +438,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
-	Script* s2 = new Script("Collectible.lua", "Collectible");
+	Script* s2 = new Script("Collectable.lua", "Collectable");
 	_Scene->getGameObjects()->at(index).registerComponent(s2);
 	s2->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -765,9 +728,13 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	//bc3->setParent(&_Scene->getGameObjects()->at(index));
+	index = _Scene->AddGameObject(GameObject("Paper1"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	// Paper objects
 	for (int i = 1; i < 6; i++)
@@ -780,9 +747,9 @@ Scene * Game::LoadTestScene() {
 		//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 		tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
-
 		render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-		std::string path = "Models/Scene/Paper" + std::to_string(i) + ".fbx";
+		std::string ind = std::to_string(i);
+		std::string path = "Models/Scene/Paper" + ind + ".fbx";
 		model = loader.LoadModel((GLchar*)path.c_str());
 
 		render3->AttachModel(model);
@@ -808,7 +775,6 @@ Scene * Game::LoadTestScene() {
 	spotLight->setQuadratic(0.000007f);
 
 	m_Renderer_->getLightManager().RegisterSpotLight(spotLight);
-
 
 	ShaderUniform camera;
 	camera.M_Address = "viewPos";
