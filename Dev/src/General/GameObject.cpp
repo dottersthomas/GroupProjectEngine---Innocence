@@ -93,6 +93,8 @@ luabridge::LuaRef GameObject::luaGetComponentHelper(std::string type, bool findA
 		LuaHelper::GetGlobalComponent<CanvasComponent>(*this, findAll, m_CompName, tag);
 	else if (type == "RigidBody")
 		LuaHelper::GetGlobalComponent<RigidBody>(*this, findAll, m_CompName, tag);
+	else if (type == "BoxCollider")
+		LuaHelper::GetGlobalComponent<BoxCollider>(*this, findAll, m_CompName, tag);
 	else
 	{
 		luabridge::setGlobal(L, nullptr, m_CompName); // Prevents errors

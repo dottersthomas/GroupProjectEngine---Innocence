@@ -1,11 +1,14 @@
-ObjectCollector = 
+require("InputTable")
+
+Ghost = 
 {
 	Start = function()
-
+		timer = Timer()
+		timer:start()
 	end,
 	
 	Update = function(dt)
-		print(gameObject:getComponent("BoxCollider").triggerStatus)
+		
 	end,
 	
 	LateUpdate = function(dt)

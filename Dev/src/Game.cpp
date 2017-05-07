@@ -251,12 +251,12 @@ Scene * Game::LoadTestScene() {
 
 	std::vector<const GLchar*> faces;
 
-	faces.push_back("Textures/hw_hourglass/hourglass_rt.png");
-	faces.push_back("Textures/hw_hourglass/hourglass_lf.png");
-	faces.push_back("Textures/hw_hourglass/hourglass_up.png");
-	faces.push_back("Textures/hw_hourglass/hourglass_dn.png");
-	faces.push_back("Textures/hw_hourglass/hourglass_bk.png");
-	faces.push_back("Textures/hw_hourglass/hourglass_ft.png");
+	faces.push_back("Textures/World/fire-storm_rt.png");
+	faces.push_back("Textures/World/fire-storm_lf.png");
+	faces.push_back("Textures/World/fire-storm_up.png");
+	faces.push_back("Textures/World/fire-storm_dn.png");
+	faces.push_back("Textures/World/fire-storm_bk.png");
+	faces.push_back("Textures/World/fire-storm_ft.png");
 
 	_Scene->getEnvironment()->setSkyBox(new SkyBox("skybox", faces));
 
@@ -302,7 +302,7 @@ Scene * Game::LoadTestScene() {
 	
 	
 	
-	index = _Scene->AddGameObject(GameObject("OBJ"));
+	index = _Scene->AddGameObject(GameObject("Player"));
 	TransformComponent * tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc2->setParent(&_Scene->getGameObjects()->at(index));
@@ -335,12 +335,12 @@ Scene * Game::LoadTestScene() {
 
 	_Scene->attachMainCameraComponent(_Scene->getGameObjects()->at(index).GetComponentByType<FirstPersonCameraComponent>());
 
-	Script* s1 = new Script("PlayerController3.lua", "Test");
+	Script* s1 = new Script("RandomSound.lua", "RandomSound");
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
 
-	index = _Scene->AddGameObject(GameObject("sdad"));
+	index = _Scene->AddGameObject(GameObject("House"));
 	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
@@ -356,11 +356,11 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 	
-	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
-	index = _Scene->AddGameObject(GameObject("sdad"));
+	index = _Scene->AddGameObject(GameObject("Items"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
@@ -380,7 +380,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
-	index = _Scene->AddGameObject(GameObject("sdad"));
+	index = _Scene->AddGameObject(GameObject("Logs"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
@@ -400,7 +400,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 	
-	index = _Scene->AddGameObject(GameObject("sdad"));
+	index = _Scene->AddGameObject(GameObject("Rocks"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
@@ -410,7 +410,7 @@ Scene * Game::LoadTestScene() {
 
 
 	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/Rocks.fbx");
+	model = loader.LoadModel("Models/Scene/Rocks.obj");
 
 	render3->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
@@ -420,6 +420,191 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
+	
+	index = _Scene->AddGameObject(GameObject("RocksFront"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/RocksFront.obj");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("RocksBack"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/RocksBack.obj");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("GateUp"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/GateUp.fbx");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("GateDown"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/GateDown.fbx");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("Truck"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/Truck.fbx");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("Wall"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/Wall.fbx");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("Well"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/Well.fbx");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	index = _Scene->AddGameObject(GameObject("Fence"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/Scene/Fence.fbx");
+
+	render3->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render3);
+	render3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	// Paper objects
+	for (int i = 1; i < 6; i++)
+	{
+		index = _Scene->AddGameObject(GameObject("Paper" + i));
+		tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+		tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+		tc3->setParent(&_Scene->getGameObjects()->at(index));
+		tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+		//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+		tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+		render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+		std::string path = "Models/Scene/Paper" + std::to_string(i) + ".fbx";
+		model = loader.LoadModel((GLchar*)path.c_str());
+
+		render3->AttachModel(model);
+		_Scene->getGameObjects()->at(index).registerComponent(render3);
+		render3->setParent(&_Scene->getGameObjects()->at(index));
+
+		bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+		_Scene->getGameObjects()->at(index).registerComponent(bc3);
+		bc3->setParent(&_Scene->getGameObjects()->at(index));
+	}
 
 	////////////////////////////////////////////
 	//Uniforms

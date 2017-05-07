@@ -42,6 +42,14 @@ public:
 	///   <c>true</c> if this instance is looped; otherwise, <c>false</c>.
 	/// </returns>
 	bool isLooped() const;
+	
+	/// <summary>
+	/// Determines whether this instance is playing.
+	/// </summary>
+	/// <returns>
+	///   <c>true</c> if this instance is playing; otherwise, <c>false</c>.
+	/// </returns>
+	bool isPlaying() const;
 
 	/// <summary>
 	/// Determines whether this instance is paused.
@@ -110,6 +118,7 @@ public:
 			.addProperty("path", &Sound::getPath)
 			.addProperty("loop", &Sound::isLooped, &Sound::loop)
 			.addProperty("volume", &Sound::getVolume, &Sound::setVolume)
+			.addProperty("playing", &Sound::isPlaying)
 			.addFunction("pause", &Sound::pause)
 			.addFunction("play", &Sound::play)
 			.addFunction("playLoop", &Sound::playLoop)

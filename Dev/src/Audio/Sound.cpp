@@ -45,6 +45,13 @@ bool Sound::isLooped() const
 	return m_Looping;
 }
 
+bool Sound::isPlaying() const
+{
+	bool result;
+	m_Channel->isPlaying(&result);
+	return result;
+}
+
 bool Sound::isPaused() const
 {
 	return m_Paused;
