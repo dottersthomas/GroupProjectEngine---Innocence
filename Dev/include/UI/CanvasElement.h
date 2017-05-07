@@ -11,6 +11,8 @@
 
 #include <GL\glew.h>
 
+#include <lua.hpp>
+#include <LuaBridge.h>
 
 struct CanvasElementVectorWrapper;
 

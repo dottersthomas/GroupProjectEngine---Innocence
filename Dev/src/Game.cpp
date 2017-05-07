@@ -253,7 +253,7 @@ Game::Game() {
 
 
 	//WindowManager::getInstance().getSceneManager()->LoadScene("XML/Scene.xml");
-	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTestScene());
+	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTitleScreen());
 
 	WindowManager::getInstance().getSceneManager()->switchScene();
 	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
@@ -268,6 +268,48 @@ void Game::CreateScene() {
 
 	
 
+}
+
+Scene* Game::LoadTitleScreen()
+{
+	Scene * _Scene = new Scene("");
+
+	GameObject object("Model");
+	int index = _Scene->AddGameObject(object);
+
+
+	TransformComponent * tc = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc->setParent(&_Scene->getGameObjects()->at(index));
+	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+
+	tc->setScale(glm::vec3(1.5f, 1.5f, 1.5f));
+
+	CanvasComponent * canvas = new CanvasComponent(&_Scene->getGameObjects()->at(index));
+
+
+	CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	rect->SetShader("gui_plain");
+	rect->setPosition(glm::vec2(1.0, 1.0));
+	rect->setScale(glm::vec2(100, 100));
+
+
+	canvas->AddElement(rect);
+
+	Text2D * text = new Text2D("text_shader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\");
+	text->SetShader("text_shader");
+	text->setPosition(glm::vec2(100, 100));
+	//text->setUsesID(usesID);
+	text->setScale(glm::vec2(1, 1));
+	text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
+
+	canvas->AddElement(text);
+
+
+	_Scene->getGameObjects()->at(index).registerComponent(canvas);
+	canvas->setParent(&_Scene->getGameObjects()->at(index));
+
+	return _Scene;
 }
 
 Scene * Game::LoadTestScene() {
