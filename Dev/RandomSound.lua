@@ -68,6 +68,7 @@ RandomSound =
 			if (timer.time >= lastTime + delay) then
 				lastTime = 0
 				delay = math.random(5, 20)
+				timer:reset()
 				RandomSound.playRandomSound()
 			end
 			

@@ -85,7 +85,7 @@ luabridge::LuaRef GameObject::luaGetComponentHelper(std::string type, bool findA
 		LuaHelper::GetGlobalComponent<CameraComponent>(*this, findAll, m_CompName, tag);
 	else if (type == "FirstPersonCameraComponent")
 		LuaHelper::GetGlobalComponent<FirstPersonCameraComponent>(*this, findAll, m_CompName, tag);
-	else if (type == "RenderComponentComponent")
+	else if (type == "RenderComponent")
 		LuaHelper::GetGlobalComponent<RenderComponent>(*this, findAll, m_CompName, tag);
 	else if (type == "ThirdPersonCameraComponent")
 		LuaHelper::GetGlobalComponent<ThirdPersonCameraComponent>(*this, findAll, m_CompName, tag);

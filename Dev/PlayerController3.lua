@@ -21,10 +21,10 @@ Test =
 	end,
 	
 	Update = function(dt)
-		print("x")
-		print(gameObject.transform.position.x)
-		print("z")
-		print(gameObject.transform.position.z)
+		--print("x")
+		--print(gameObject.transform.position.x)
+		--print("z")
+		--print(gameObject.transform.position.z)
 		r.y = 0
 		r.x = 0
 		r.z = 0

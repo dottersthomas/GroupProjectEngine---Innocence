@@ -78,6 +78,7 @@ void Game::beginLoop() {
 	CameraComponent::registerLua(L);
 	FirstPersonCameraComponent::registerLua(L);
 	ThirdPersonCameraComponent::registerLua(L);
+	RenderComponent::registerLua(L);
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);
 	Scene::registerLua(L);
@@ -111,7 +112,7 @@ void Game::beginLoop() {
 
 		if (currentTime - lastTime >= 1.0) {
 
-	//		std::cout << nbFrames << std::endl;
+			std::cout << nbFrames << std::endl;
 			nbFrames = 0;
 			lastTime += 1.0;
 
@@ -278,7 +279,7 @@ Scene * Game::LoadTestScene() {
 	tc->setParent(&_Scene->getGameObjects()->at(index));
 	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+	tc->setScale(glm::vec3(1.5f, 1.5f, 1.5f));
 
 
 	RenderComponent * render = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
@@ -338,6 +339,27 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
+	index = _Scene->AddGameObject(GameObject("Ghost"));
+	tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc2->setParent(&_Scene->getGameObjects()->at(index));
+
+	render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+	render2->toggleBackCulling(false);
+	render2->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render2);
+	render2->setParent(&_Scene->getGameObjects()->at(index));
+	render2->toggleDrawing(false);
+
+	bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
+	_Scene->getGameObjects()->at(index).registerComponent(bc2);
+	bc2->setParent(&_Scene->getGameObjects()->at(index));
+	bc2->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 1, 1));
+	s1 = new Script("Ghost.lua", "Ghost");
+	_Scene->getGameObjects()->at(index).registerComponent(s1);
+	s1->setParent(&_Scene->getGameObjects()->at(index));
+
+
 
 	index = _Scene->AddGameObject(GameObject("House"));
 	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -395,7 +417,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 	

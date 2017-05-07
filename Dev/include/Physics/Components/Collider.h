@@ -48,6 +48,7 @@ public:
 	virtual void Start() = 0;
 
 	void OnTriggerEnter(CollisionData * cd) {
+		std::cout << "enter";
 		collided = true;
 		triggerStatus = TRIGGER_ENTER;
 		m_CD = cd;

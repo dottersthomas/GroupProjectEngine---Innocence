@@ -90,11 +90,18 @@ void Sound::pause()
 void Sound::play()
 {
 	// Check if the sound has been loaded
-	bool soundPlaying;
-	m_Channel->isPlaying(&soundPlaying);
-
-	if (!soundPlaying)
-		m_System->playSound(m_AudioStream, nullptr, false, &m_Channel);
+	try
+		 {
+		bool soundPlaying;
+		m_Channel->isPlaying(&soundPlaying);
+		
+			if (!soundPlaying)
+			 m_System->playSound(m_AudioStream, nullptr, false, &m_Channel);
+		}
+	catch (const std::exception& e)
+		 {
+				// Stops random FMOD errors from crashing engine	
+			}
 
 	m_Paused = false;
 	m_Channel->setPaused(m_Paused);
