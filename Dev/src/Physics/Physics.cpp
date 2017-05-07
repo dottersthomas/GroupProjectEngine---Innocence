@@ -60,7 +60,7 @@ void Physics::CollisionDetection(float dt)
 							if (go2.target.m_Name_ == go.m_Name_)
 							{
 								test->OnTriggerExit();
-								
+								test->resetTriggerStatus();
 							}
 						}
 					}

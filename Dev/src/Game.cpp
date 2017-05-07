@@ -351,19 +351,19 @@ Scene * Game::LoadTestScene() {
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 	
 	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/House.fbx");
+	model = loader.LoadModel("Models/Scene/Demon Girl.fbx");
 	
 	render3->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
-	
-	Script* s2 = new Script("Collectible.lua", "Collectible");
-	_Scene->getGameObjects()->at(index).registerComponent(s2);
-	s2->setParent(&_Scene->getGameObjects()->at(index));
 
 	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	Script* s2 = new Script("Collectible.lua", "Collectible");
+	_Scene->getGameObjects()->at(index).registerComponent(s2);
+	s2->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("Items"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
