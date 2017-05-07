@@ -37,6 +37,17 @@ public:
 
 	void Render();
 	void Destroy();
+
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<Text2D, CanvasElement>("Text2D")
+			.addConstructor<void(*)(std::string, std::string)>()
+			.addData("usesID", &Text2D::usesID)
+			.endClass();
+	}
 };
 
 #endif

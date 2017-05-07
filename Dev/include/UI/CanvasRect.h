@@ -36,12 +36,15 @@ public:
 
 	void Destroy();
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
 
-
-
-
-
-
+		getGlobalNamespace(L)
+			.deriveClass<CanvasRect, CanvasElement>("CanvasRect")
+			.addConstructor<void(*)(CanvasElement*, glm::vec4)>()
+			.endClass();
+	}
 };
 
 #endif

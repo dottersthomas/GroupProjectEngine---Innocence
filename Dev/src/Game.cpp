@@ -13,7 +13,8 @@
 #include "Rendering\AssimpLoader.h"
 #include "Rendering\Components\ThirdPersonCameraComponent.h"
 #include "UI\Text2D.h"
-
+#include "UI\CanvasRect.h"
+#include "UI\CanvasButton.h"
 
 #define TIXML_USE_STL
 
@@ -84,6 +85,10 @@ void Game::beginLoop() {
 	RenderComponent::registerLua(L);
 
 	CanvasComponent::registerLua(L);
+	CanvasButton::registerLua(L);
+	CanvasElement::registerLua(L);
+	CanvasRect::registerLua(L);
+	Text2D::registerLua(L);
 
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);

@@ -48,6 +48,11 @@ public:
 
 	void onclick();
 
+	glm::vec4 getHoverColour() const
+	{
+		return m_HoverColour_;
+	}
+
 	void setHoverColour(glm::vec4 pColour) {
 		m_HoverColour_ = pColour;
 	}
@@ -56,6 +61,16 @@ public:
 		m_ClickHandle = handler;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<CanvasButton, CanvasElement>("CanvasButton")
+			.addConstructor<void(*)(CanvasElement*, glm::vec4)>()
+			.addProperty("hoverColour", &CanvasButton::getHoverColour, &CanvasButton::setHoverColour)
+			.endClass();
+	}
 };
 
 
