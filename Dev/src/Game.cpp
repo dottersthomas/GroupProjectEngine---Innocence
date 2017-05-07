@@ -78,6 +78,8 @@ void Game::beginLoop() {
 	CameraComponent::registerLua(L);
 	FirstPersonCameraComponent::registerLua(L);
 	ThirdPersonCameraComponent::registerLua(L);
+	RenderComponent::registerLua(L);
+	CanvasComponent::registerLua(L);
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);
 	Scene::registerLua(L);
@@ -335,7 +337,7 @@ Scene * Game::LoadTestScene() {
 
 	_Scene->attachMainCameraComponent(_Scene->getGameObjects()->at(index).GetComponentByType<FirstPersonCameraComponent>());
 
-	Script* s1 = new Script("Ghost.lua", "Ghost");
+	Script* s1 = new Script("PlayerController3.lua", "Test");
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -348,7 +350,6 @@ Scene * Game::LoadTestScene() {
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 	
-	
 	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 	model = loader.LoadModel("Models/Scene/House.fbx");
 	
@@ -356,6 +357,10 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 	
+	Script* s2 = new Script("Collectible.lua", "Collectible");
+	_Scene->getGameObjects()->at(index).registerComponent(s2);
+	s2->setParent(&_Scene->getGameObjects()->at(index));
+
 	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));

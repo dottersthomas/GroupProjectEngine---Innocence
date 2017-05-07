@@ -87,10 +87,17 @@ public:
 	std::vector<Model>& getModels() {
 		return m_Models_;
 	}
+
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<RenderComponent, Component>("RenderComponent")
+			.addConstructor<void(*)(GameObject*, std::string, int)>()
+			.addFunction("toggleDrawing", &RenderComponent::toggleDrawing)
+			.endClass();
+	}
 };
-
-
-
-
 
 #endif 
