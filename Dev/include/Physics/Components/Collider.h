@@ -14,8 +14,11 @@ class Collider : public Component
 protected:
 	bool isTrigger = false;
 	bool collided = false;
+
+
 	CollisionData* m_CD;
 	int triggerStatus = TRIGGER_NONE;
+
 public:
 	Collider() {};
 	Collider(GameObject * pParent) {
@@ -51,11 +54,14 @@ public:
 	};
 
 	void OnTriggerStay(CollisionData * cd) {
+		std::cout << "stay";
+		std::cout << cd->target.m_Name_;
 		triggerStatus = TRIGGER_STAY;
 		m_CD = cd;
 	};
 
 	void OnTriggerExit() {
+		std::cout << "Exit";
 		collided = false;
 		triggerStatus = TRIGGER_EXIT;
 		m_CD = nullptr;
@@ -138,10 +144,11 @@ public:
 					if (cd->diff.y < 1)
 						newPos.y += cd->diff.y + 0.01;
 					rb->SetVel(glm::vec3(rb->GetVel().x, 0, rb->GetVel().z));
+					rb->setGrounded(true);
 
 				}
 
-				//	rb->setGrounded(true);
+				
 
 
 

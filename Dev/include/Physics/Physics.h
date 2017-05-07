@@ -30,8 +30,8 @@ private:
 	std::vector<GameObject> m_sceneGameObjectsMove_;
 	GLFWwindow * m_Window_;
 
-	float gravity = 9.8f;
-	float friction = 2.3f;
+	float gravity = 100.0f;
+	float friction = 10.3f;
 
 public:
 	Physics() {

@@ -52,7 +52,10 @@ void Physics::CollisionDetection(float dt)
 				{
 					if (test->getTrigger() == true && test->getCollided() == true)
 					{
+
+
 						GameObject go = *iter2;
+
 						CollisionData go2;
 						if (iter->GetComponentByType<BoxCollider>()->getCD() != nullptr)
 						{
@@ -60,7 +63,7 @@ void Physics::CollisionDetection(float dt)
 							if (go2.target.m_Name_ == go.m_Name_)
 							{
 								test->OnTriggerExit();
-								
+
 							}
 						}
 					}
@@ -89,10 +92,9 @@ void Physics::EulerMove(float dt)
 		RigidBody * body = iter->GetComponentByType<RigidBody>();
 		TransformComponent * transform = iter->GetComponentByType<TransformComponent>();
 		glm::vec3 g = glm::vec3(0, 0, 0);
-		if (body->GetGround() == false)
-		{
+	
 			g = gravity * glm::vec3(0, -1, 0) * body->GetGravityScale()*dt;
-		}
+		
 		glm::vec3 f = friction * 0.5f * glm::vec3(1, 0, 1)*dt;
 
 
