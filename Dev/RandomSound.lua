@@ -20,7 +20,29 @@ RandomSound =
 		return index
 	end,
 	
-	Start = function()
+	playRandomSound = function()
+		local i = RandomSound.getRandom()
+		
+		while (i == lastIndex) do
+			i = RandomSound.getRandom()
+		end
+		
+		lastIndex = i
+		currentSound = nil
+		currentSound = Sound(files[i], false)
+		currentSound:play()
+	end,
+	
+	Start = function()	
+		-- Timer
+		timer = Timer()
+		
+		-- Seed random
+		math.randomseed(os.time())
+		
+		-- Keep track of last file played
+		lastIndex = 0
+		
 		files = {}
 		RandomSound.addFile("Assets/Audio/Creepy - Little (Find Doll).mp3")
 		RandomSound.addFile("Assets/Audio/Creepy - Little (Find You).mp3")
@@ -28,16 +50,29 @@ RandomSound =
 		RandomSound.addFile("Assets/Audio/Creepy - Ring.mp3")
 		RandomSound.addFile("Assets/Audio/Crying Ghost Sound.mp3")
 		RandomSound.addFile("Assets/Audio/Snapping - Branches.mp3")
-		local i = RandomSound.getRandom()
-		currentSound = Sound(files[i], false)
-		currentSound:playLoop()
 		
-		local fil=io.open(files[1],"r")
-		if fil~=nil then io.close(fil) print "found" else print "not found" end
+		RandomSound:playRandomSound()
+		
+		-- Keep track of delay
+		lastTime = 0
+		delay =  math.random(5, 20)
 	end,
 	
 	Update = function(dt)
+		if (currentSound.playing == false) then
 		
+			if (lastTime == 0) then
+				lastTime = timer.time
+			end
+			
+			if (timer.time >= lastTime + delay) then
+				lastTime = 0
+				delay = math.random(5, 20)
+				timer:reset()
+				RandomSound.playRandomSound()
+			end
+			
+		end
 	end,
 	
 	LateUpdate = function(dt)

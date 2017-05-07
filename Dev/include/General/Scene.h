@@ -38,6 +38,8 @@ public:
 		return m_Name_;
 	}
 
+	luabridge::LuaRef luaGetGameObject(std::string name);
+
 	luabridge::LuaRef luaGetGameObjects();
 
 	std::vector<GameObject> * getGameObjects() {
@@ -70,6 +72,7 @@ public:
 			.addFunction("attachMainCamera", &Scene::attachMainCameraComponent)
 			.addFunction("addGameObject", &Scene::AddGameObject)
 			.addFunction("removeGameObject", &Scene::RemoveGameObject)
+			.addFunction("getGameObject", &Scene::luaGetGameObject)
 			.addFunction("getGameObjects", &Scene::luaGetGameObjects)
 			.addFunction("togglePostProcess", &Scene::togglePostProcess)
 			.addProperty("postProcessEnabled", &Scene::shouldPostProcess)

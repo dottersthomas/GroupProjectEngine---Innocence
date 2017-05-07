@@ -27,7 +27,7 @@ public:
 
 		getGlobalNamespace(L)
 			.beginClass<CollisionData>("CollisionData")
-			.addData("target", &CollisionData::target)
+			.addData<GameObject>("gameObject", &CollisionData::target)
 			.endClass();
 	}
 };

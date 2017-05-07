@@ -204,7 +204,7 @@ void Renderer::Render() {
 
 		glActiveTexture(GL_TEXTURE0);
 
-
+		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(quadVAO);
 		glBindTexture(GL_TEXTURE_2D, m_fbo_texture_);	// Use the color attachment texture as the texture of the quad plane
 		glDrawArrays(GL_TRIANGLES, 0, 6);
