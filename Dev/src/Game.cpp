@@ -335,7 +335,7 @@ Scene * Game::LoadTestScene() {
 
 	_Scene->attachMainCameraComponent(_Scene->getGameObjects()->at(index).GetComponentByType<FirstPersonCameraComponent>());
 
-	Script* s1 = new Script("RandomSound.lua", "RandomSound");
+	Script* s1 = new Script("Ghost.lua", "Ghost");
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
