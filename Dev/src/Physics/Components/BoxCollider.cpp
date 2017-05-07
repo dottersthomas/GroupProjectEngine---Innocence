@@ -45,6 +45,10 @@ BoxCollider::BoxCollider(GameObject * pParent, bool isTrigger)
 
 		boundingBox = Box(tempMin, tempMax);
 	}
+
+	m_ComponentName = "BOX_COLLIDER";
+
+
 }
 BoxCollider::~BoxCollider()
 {

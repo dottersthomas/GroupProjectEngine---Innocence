@@ -28,6 +28,7 @@ Test =
 		r.y = 0
 		r.x = 0
 		r.z = 0
+		--gameObject:getComponent("RigidBody").grounded = true
 		moving = false -- Reset variable
 		if (sprinting == true) then
 		if( energy > 0) then

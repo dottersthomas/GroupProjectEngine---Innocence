@@ -3,6 +3,9 @@
 PointLight::PointLight(std::string pShader) {
 	setShader(pShader);
 	setUniformName("pointLights");
+
+	m_ComponentName = "POINT_LIGHT";
+
 }
 
 
@@ -22,6 +25,7 @@ PointLight::PointLight(std::string pShader, glm::vec3 pos, glm::vec3 amb, glm::v
 	m_Quadratic_ = quadratic;
 
 	setDirty(true);
+	m_ComponentName = "POINT_LIGHT";
 
 }
 

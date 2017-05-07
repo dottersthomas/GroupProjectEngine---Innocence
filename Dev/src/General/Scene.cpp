@@ -35,18 +35,16 @@ int Scene::AddGameObject(GameObject pGameObject) {
 	return m_SceneGameObjects_.size() - 1;
 }
 
-void Scene::RemoveGameObject(GameObject * pGameObject)
-{
+void Scene::RemoveGameObject(std::string pName) {
+	
 	std::vector<GameObject>::iterator iter = m_SceneGameObjects_.begin();
-	while (iter != m_SceneGameObjects_.end())
-	{
-		std::cout << iter->m_Name_ << "\n";
-		if ((*iter).m_Name_ == pGameObject->m_Name_)
-		{
+	while ( iter != m_SceneGameObjects_.end()) {
+		if ((*iter).m_Name_ == pName) {
 			iter = m_SceneGameObjects_.erase(iter);
 		}
+		++iter;
 	}
-
+	
 	M_bIsDirty = true;
 }
 
@@ -95,6 +93,7 @@ void Scene::Destroy() {
 	m_SceneGameObjects_.clear();
 }
 
+<<<<<<< HEAD
 
 luabridge::LuaRef Scene::luaGetGameObject(std::string name)
  {
@@ -121,6 +120,31 @@ luabridge::LuaRef Scene::luaGetGameObject(std::string name)
 	}
 
 
+=======
+luabridge::LuaRef Scene::luaGetGameObject(std::string name)
+{
+	// Get GameObjects
+	auto goVec = getGameObjects();
+
+	lua_State* L = (&LuaEngine::getInstance())->L();
+	auto globalName = "Scripting_currentGameObject";
+
+	// Loop through objects to find one specified
+	for (GameObject& go : *goVec)
+	{
+		if (go.m_Name_ == name)
+		{
+			// Set global
+			luabridge::setGlobal(L, go, globalName);
+			// Return global
+			return luabridge::getGlobal(L, globalName);
+		}
+	}
+
+	std::cout << "[Scripting] Error: " << "GameObject not found!" << "\n";
+	return luabridge::LuaRef(L);
+}
+>>>>>>> 666b570b4b17c6c4998cdddb9c7086bb4fdf2947
 
 luabridge::LuaRef Scene::luaGetGameObjects()
 {

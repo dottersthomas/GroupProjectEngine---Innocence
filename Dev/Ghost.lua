@@ -9,8 +9,11 @@ Ghost =
 		
 		-- Keep track of delay
 		lastTime = 0
+
 		radius = 100
 		delay =  0
+
+
 	end,
 	
 	Update = function(dt)
@@ -52,7 +55,6 @@ Ghost =
 
 
 		end
-		
 		
 	end,
 	

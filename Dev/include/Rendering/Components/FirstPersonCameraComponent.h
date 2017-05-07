@@ -47,6 +47,13 @@ public:
 	//The horizontal angle for the camera.
 	float m_fHorizontalAngle_;
 
+	void setPosition(glm::vec3 pPos) {
+		m_Position_ = pPos;
+	}
+
+	glm::vec3 getPosition() {
+		return m_Position_;
+	}
 
 	virtual glm::mat4 Bind();
 

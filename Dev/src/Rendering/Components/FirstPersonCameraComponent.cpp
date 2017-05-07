@@ -26,6 +26,9 @@ FirstPersonCameraComponent::FirstPersonCameraComponent(GameObject * pParent, std
 
 	camera.M_Address = "viewPos";
 	camera.M_Type = ShaderType::VEC3;
+
+	m_ComponentName = "FIRST_PERSON_CAMERA";
+
 }
 
 void FirstPersonCameraComponent::Update(double dt) {
@@ -34,6 +37,9 @@ void FirstPersonCameraComponent::Update(double dt) {
 	
 
 	if (m_Active_) {
+
+		Proxy::getInstance()->requestWindowSize(m_iWindowX_, m_iWindowY_);
+
 
 		camera.M_Vec3 = m_Position_;
 		ResourceManager::getInstance()->GetShader("default")->UpdateSingleUniform(camera);

@@ -165,7 +165,7 @@ void Renderer::Render() {
 				}
 			}
 			//No need to check again.
-			m_CurrentScene_->M_bIsDirty = false;
+			//m_CurrentScene_->M_bIsDirty = false;
 		}
 
 		m_CurrentScene_->getEnvironment()->Render(Projection, View);
@@ -202,6 +202,7 @@ void Renderer::Render() {
 
 		}
 
+		glActiveTexture(GL_TEXTURE0);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(quadVAO);

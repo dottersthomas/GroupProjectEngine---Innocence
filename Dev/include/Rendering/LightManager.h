@@ -5,6 +5,7 @@
 #include "Rendering\Components\Lights\Light.h"
 #include "Rendering\Components\Lights\DirectionalLight.h"
 #include "Rendering\Components\Lights\PointLight.h"
+#include "Rendering\Components\Lights\SpotLight.h"
 
 
 struct DirectionalLightWrapper {
@@ -23,6 +24,14 @@ struct PointLightWrapper {
 	typedef t_Light_Vector_::const_iterator t_Light_Const_Iter;
 };
 
+struct SpotLightWrapper {
+
+	typedef std::vector<SpotLight*> t_Light_Vector_;
+
+	typedef t_Light_Vector_::iterator t_Light_Iter;
+	typedef t_Light_Vector_::const_iterator t_Light_Const_Iter;
+};
+
 
 
 class LightManager {
@@ -30,6 +39,8 @@ class LightManager {
 private:
 	DirectionalLightWrapper::t_Light_Vector_ m_DirectionalLights_;
 	PointLightWrapper::t_Light_Vector_ m_PointLights_;
+	SpotLightWrapper::t_Light_Vector_ m_SpotLights_;
+
 
 public:
 
@@ -37,6 +48,8 @@ public:
 
 	void RegisterDirectionalLight(DirectionalLight * pDir);
 	void RegisterPointLight(PointLight * pPoint);
+	void RegisterSpotLight(SpotLight * pSpot);
+
 
 
 	void update(float dt);

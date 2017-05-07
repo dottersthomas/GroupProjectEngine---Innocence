@@ -28,10 +28,17 @@ Material::Material(glm::vec3 pDiffuse, glm::vec3 pSpecular, float pShine) {
 
 Material::Material(std::vector<Texture * > pTextures, float pShine) {
 	m_Textures_ = pTextures;
+	m_hasCubeMaps_ = false;
 
 	if (m_Textures_.size() == 0)
 		m_hasTextures_ = false;
-	m_hasCubeMaps_ = false;
+	else {
+		for (int i = 0; i < m_Textures_.size(); i++) {
+			if(m_Textures_[i]->type == "texture_normal")
+				hasNormalMap = true;
+
+		}
+	}
 
 	pTextures.erase(pTextures.begin(), pTextures.end());
 
