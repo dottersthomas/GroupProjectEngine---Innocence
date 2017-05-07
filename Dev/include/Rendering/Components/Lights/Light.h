@@ -67,17 +67,17 @@ public:
 
 		ShaderUniform ambient;
 		ambient.M_Address = m_UniformName_ + "[" + std::to_string(pos) + "].ambient";
-		ambient.M_Type = VEC3;
+		ambient.M_Type = ShaderType::VEC3;
 		ambient.M_Vec3 = m_Ambient_;
 
 		ShaderUniform diffuse;
 		diffuse.M_Address = m_UniformName_ + "[" + std::to_string(pos) + "].diffuse";
-		diffuse.M_Type = VEC3;
+		diffuse.M_Type = ShaderType::VEC3;
 		diffuse.M_Vec3 = m_Diffuse_;
 
 		ShaderUniform specular;
 		specular.M_Address = m_UniformName_ + "[" + std::to_string(pos) + "].specular";
-		specular.M_Type = VEC3;
+		specular.M_Type = ShaderType::VEC3;
 		specular.M_Vec3 = m_Specular_;
 
 
