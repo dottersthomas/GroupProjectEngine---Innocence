@@ -102,17 +102,17 @@ void main()
     vec3 result = vec3(0.0,0.0,0.0);
 
 
-//    for(int i = 0; i < DIRECTIONAL_LIGHTS; i++)
-//		result = CalcDirLight(directionalLights[i], norm, viewDir);
-//
-//    for(int i = 0; i < POINT_LIGHTS; i++)
-//        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir); 
-//	
+    for(int i = 0; i < DIRECTIONAL_LIGHTS; i++)
+		result = CalcDirLight(directionalLights[i], norm, viewDir);
+
+
+    for(int i = 0; i < POINT_LIGHTS; i++)
+        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir); 
+	
     for(int i = 0; i < SPOT_LIGHTS; i++)	   
        result += CalcSpotLight(spotLights[i], norm, fs_in.FragPos, viewDir);  
 	   
 	     
-   // vec3 diff = vec3(texture(material.texture_diffuse1, fs_in.TexCoords));
 	
 	FragColour = vec4(result, 1.0);
 

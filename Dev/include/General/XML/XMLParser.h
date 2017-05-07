@@ -34,7 +34,7 @@ private:
 	XMLDocument m_Doc_;
 	XMLNode * m_Root_;
 
-	std::string AssetPath = "../Assets/";
+	std::string AssetPath = "./";
 
 	AssimpLoader loader;
 public:

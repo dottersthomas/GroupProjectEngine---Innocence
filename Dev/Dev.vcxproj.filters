@@ -117,6 +117,7 @@
     <Xml Include="XML\GameOver.xml" />
     <Xml Include="XML\MainMenu.xml" />
     <Xml Include="XML\Scene.xml" />
+    <Xml Include="Assets\XML\Game.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

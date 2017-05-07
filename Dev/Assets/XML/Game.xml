@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--<scene>
+
+
+  <scenecontent>
+
+    <Environment>
+      <CubeTexture side="right">./Textures/World/fire-storm_rt.png</CubeTexture>
+      <CubeTexture side="left">./Textures/World/fire-storm_lf.png</CubeTexture>
+      <CubeTexture side="up">./Textures/World/fire-storm_up.png</CubeTexture>
+      <CubeTexture side="down">./Textures/World/fire-storm_dn.png</CubeTexture>
+      <CubeTexture side="back">./Textures/World/fire-storm_bk.png</CubeTexture>
+      <CubeTexture side="front">./Textures/World/fire-storm_ft.png</CubeTexture>
+    </Environment>
+    <GameObject name="Model">
+      <TransformComponent tag="transform">
+        <position>
+          <x>0.0</x>
+          <y>0.0</y>
+          <z>0.0</z>
+        </position>
+        <rotation>
+          <x>0.0</x>
+          <y>0.0</y>
+          <z>0.0</z>
+        </rotation>
+        <scale>
+          <x>1.5</x>
+          <y>1.5</y>
+          <z>1.5</z>
+        </scale>
+      </TransformComponent>
+      <RenderComponent tag="render">
+        <Model>Models/Scene/Ground.fbx</Model>
+        <CullBack>true</CullBack>
+      </RenderComponent>
+      <Script tag="script">
+        <path>PlayerController.lua</path>
+        <name>Test</name>
+      </Script>
+      --><!--<FirstPersonCameraComponent tag="Camera">
+        <position>
+          <x>0.0</x>
+          <y>0.0</y>
+          <z>0.0</z>
+        </position>
+        <main>true</main>
+      </FirstPersonCameraComponent>--><!--
+      <BoxCollider>
+        <trigger> false </trigger>
+      </BoxCollider>
+      --><!--<RigidBody>
+        <acceleration>
+          <x>0.0</x>
+          <y>0.0</y>
+          <z>0.0</z>
+        </acceleration>
+        <grounded>false</grounded>
+        <gravity>1.0</gravity>
+      </RigidBody>--><!--
+    </GameObject>
+   
+  </scenecontent>
+  
+  
+</scene>-->
+
+
+<scene>
+  <scenecontent>
+
+
+    <GameObject>
+    <canvas type ="menu">
+
+
+
+      <rect shader="gui_plain">
+        <colour>
+          <x>0.0</x>
+          <y>0.8</y>
+          <z>1.0</z>
+          <w>1.0</w>
+        </colour>
+        <position>
+          <x>0.0</x>
+          <y>0.0</y>
+        </position>
+        <scale>
+          <x>1280.0</x>
+          <y>720.0</y>
+        </scale>
+      </rect>
+
+
+      <text shader="text_shader">
+        <content>Game Over!</content>
+        <colour>
+          <x>1.0</x>
+          <y>1.0</y>
+          <z>1.0</z>
+          <w>1.0</w>
+        </colour>
+        <position>
+          <x>460.0</x>
+          <y>50.0</y>
+        </position>
+        <scale>
+          <x>1.0</x>
+          <y>1.0</y>
+        </scale>
+      </text>
+
+
+      <button shader="gui_plain">
+        <content>Replay</content>
+        <onclick>loadMenu</onclick>
+        <colour>
+          <x>0.3</x>
+          <y>0.3</y>
+          <z>0.3</z>
+          <w>0.3</w>
+        </colour>
+
+        <colourHover>
+          <x>0.5</x>
+          <y>0.5</y>
+          <z>0.5</z>
+          <w>0.3</w>
+        </colourHover>
+        <position>
+          <x>520.0</x>
+          <y>200.0</y>
+        </position>
+        <scale>
+          <x>240.0</x>
+          <y>100.0</y>
+        </scale>
+      </button>
+
+      <button shader="gui_plain">
+        <content>Exit!</content>
+        <onclick>exit</onclick>
+        <colour>
+          <x>0.3</x>
+          <y>0.3</y>
+          <z>0.3</z>
+          <w>0.3</w>
+        </colour>
+
+        <colourHover>
+          <x>0.5</x>
+          <y>0.5</y>
+          <z>0.5</z>
+          <w>0.3</w>
+        </colourHover>
+        <position>
+          <x>540.0</x>
+          <y>400.0</y>
+        </position>
+        <scale>
+          <x>200.0</x>
+          <y>100.0</y>
+        </scale>
+      </button>
+
+
+    </canvas>
+  </GameObject>
+  </scenecontent>
+</scene>

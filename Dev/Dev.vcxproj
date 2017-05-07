@@ -190,7 +190,8 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)\Lib\assimp\include;$(SolutionDir)\Lib\SOIL\include\;$(SolutionDir)\Lib\tinyxml\;$(SolutionDir)\Dev\include;$(SolutionDir)\Lib\glm;$(SolutionDir)\Lib\glew\include;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\Lib\fmod\inc;$(SolutionDir)\Lib\Lua\include;$(SolutionDir)\Lib\LuaBridge\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;_MBCS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;_ITERATOR_DEBUG_LEVEL=0;NDEBUG;_MBCS;</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib\assimp\lib\;$(SolutionDir)\Lib\SOIL\lib\;$(SolutionDir)\Lib\tinyxml\lib\;$(SolutionDir)\Lib\glew\lib;$(SolutionDir)\Lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(SolutionDir)\Lib\fmod\lib;$(SolutionDir)\Lib\Lua\lib</AdditionalLibraryDirectories>
@@ -330,6 +331,7 @@
     <None Include="Shaders\text_shader.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="Assets\XML\Game.xml" />
     <Xml Include="XML\GameOver.xml" />
     <Xml Include="XML\MainMenu.xml" />
     <Xml Include="XML\Scene.xml">
