@@ -23,7 +23,7 @@ public:
 
 	//Add a game object to the scene.
 	int AddGameObject(GameObject pGameObject);
-	void RemoveGameObject(GameObject * pGameObject);
+	void RemoveGameObject(std::string pName);
 
 	//Update the scene's contents.
 	void Update(double dt);

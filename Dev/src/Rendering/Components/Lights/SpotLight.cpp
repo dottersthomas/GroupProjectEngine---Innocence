@@ -5,16 +5,24 @@
 SpotLight::SpotLight(std::string pShader) {
 	setShader(pShader);
 	setUniformName("spotLights");
+	m_ComponentName = "SPOT_LIGHT";
+		
 }
 
 SpotLight::SpotLight(std::string pShader, glm::vec3 pos, glm::vec3 dir, glm::vec3 amb, glm::vec3 diff, glm::vec3 spec, float cutoff) : m_Position_(glm::vec3(0.0f, 0.0f, 0.0f)), m_Direction_(glm::vec3(0.0f, -1.0f, 0.0f)), m_CutOff_(12.5f) {
 	setShader(pShader);
 	setUniformName("spotLights");
 
+	m_ComponentName = "SPOT_LIGHT";
+
 	m_Direction_ = dir;
 	m_Position_ = pos;
-	m_CutOff_ = cutoff;
-	m_SoftCutoff_ = cutoff + 5.0f;
+	m_CutOff_ = glm::cos(glm::radians(cutoff));
+	m_SoftCutoff_ = glm::cos(glm::radians(17.5f));
+
+	m_Constant_ = 1.0f;
+	m_Linear_ = 0.9f;
+	m_Quadratic_ = 0.2f;
 
 
 	setAmbient(amb);
@@ -69,10 +77,29 @@ void SpotLight::UpdateLightUniforms(int pos) {
 	lightPosition.M_Type = ShaderType::VEC3;
 	lightPosition.M_Vec3 = m_Position_;
 
+	ShaderUniform lightConstant;
+	lightConstant.M_Address = getUniformName() + "[" + std::to_string(pos) + "].constant";
+	lightConstant.M_Type = ShaderType::FLOAT;
+	lightConstant.M_Float = m_Constant_;
+
+	ShaderUniform lightLinear;
+	lightLinear.M_Address = getUniformName() + "[" + std::to_string(pos) + "].linear";
+	lightLinear.M_Type = ShaderType::FLOAT;
+	lightLinear.M_Float = m_Linear_;
+
+	ShaderUniform lightQuadratic;
+	lightQuadratic.M_Address = getUniformName() + "[" + std::to_string(pos) + "].quadratic";
+	lightQuadratic.M_Type = ShaderType::FLOAT;
+	lightQuadratic.M_Float = m_Quadratic_;
+
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightPosition);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightConstant);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightLinear);
+	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightQuadratic);
+
 	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightDirection);
 	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightCutOff);
 	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightSoftCutOff);
-	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightPosition);
 
 	setDirty(false);
 

@@ -26,6 +26,9 @@ FirstPersonCameraComponent::FirstPersonCameraComponent(GameObject * pParent, std
 
 	camera.M_Address = "viewPos";
 	camera.M_Type = ShaderType::VEC3;
+
+	m_ComponentName = "FIRST_PERSON_CAMERA";
+
 }
 
 void FirstPersonCameraComponent::Update(double dt) {

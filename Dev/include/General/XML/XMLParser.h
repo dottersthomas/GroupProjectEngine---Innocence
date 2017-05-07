@@ -9,10 +9,20 @@
 #include "General\Scene.h"
 
 #include "UI\Text2D.h"
+#include "General\Game.h"
+#include "Rendering\ResourceManager.h"
 #include "Physics\Components\TransformComponent.h"
-#include "Rendering\Components\FirstPersonCameraComponent.h"
-#include "Rendering\Components\ThirdPersonCameraComponent.h"
+
 #include "Rendering\Components\RenderComponent.h"
+#include "Rendering\MeshFactory.h"
+#include "Scripting/LuaEngine.h"
+#include "Scripting/Script.h"
+#include "Scripting/ExtLib.h"
+#include "General\Timer.h"
+
+#include "Rendering\ShaderUniform.h"
+#include "Rendering\AssimpLoader.h"
+#include "Rendering\Components\ThirdPersonCameraComponent.h"
 
 
 using namespace tinyxml2;
@@ -23,6 +33,10 @@ private:
 	//The Document to be loaded.
 	XMLDocument m_Doc_;
 	XMLNode * m_Root_;
+
+	std::string AssetPath = "../Assets/";
+
+	AssimpLoader loader;
 public:
 
 	XMLParser() {}

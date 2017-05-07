@@ -40,9 +40,12 @@ void GameObject::removeComponent(Component * pComponent)
 
 	ComponentVectorWrapper::t_Component_Iter iter = std::find(m_Components_.begin(), m_Components_.end(), pComponent);
 	if (iter != m_Components_.end()) {
-		m_Components_.erase(iter);
+		iter = m_Components_.erase(iter);
 	}
 }
+
+
+
 
 void GameObject::UpdateComponents(double dt)
 {

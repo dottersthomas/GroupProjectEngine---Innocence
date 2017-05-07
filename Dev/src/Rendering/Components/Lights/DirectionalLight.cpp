@@ -5,6 +5,8 @@
 DirectionalLight::DirectionalLight(std::string pShader) {
 	setShader(pShader);
 	setUniformName("directionalLights");
+	m_ComponentName = "DIRECTIONAL_LIGHT";
+
 }
 
 DirectionalLight::DirectionalLight(std::string pShader, glm::vec3 dir, glm::vec3 amb, glm::vec3 diff, glm::vec3 spec) : m_Direction_(glm::vec3(0.0f, -1.0f, 0.0f)) {
@@ -16,6 +18,7 @@ DirectionalLight::DirectionalLight(std::string pShader, glm::vec3 dir, glm::vec3
 	setSpecular(spec);
 
 	setDirty(true);
+	m_ComponentName = "DIRECTIONAL_LIGHT";
 
 }
 

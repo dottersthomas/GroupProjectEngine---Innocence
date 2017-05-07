@@ -8,6 +8,9 @@ RigidBody::RigidBody()
 	acceleration = glm::vec3(0, 0, 0);
 	gravityScale = 1.f;
 	grounded = false;
+
+	m_ComponentName = "RIGID_BODY";
+
 }
 
 void RigidBody::Update(double dt)
