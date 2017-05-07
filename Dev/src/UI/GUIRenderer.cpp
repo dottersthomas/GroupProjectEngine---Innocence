@@ -16,6 +16,18 @@ void GUIRenderer::Render() {
 	glCullFace(GL_BACK);
 
 
+	//The orthographic projection used to overlay the ui.
+	Projection = glm::ortho(0.0f, 1280.f, 720.f, 0.0f, -1.0f, 1.0f);
+
+	// Camera matrix
+	View = glm::lookAt(
+		glm::vec3(1, 1, 1),
+		glm::vec3(1, 1, 0),
+		glm::vec3(0, 1, 0)
+	);
+
+
+
 	if (m_CurrentScene_ != nullptr) {
 
 		if (m_CurrentScene_->M_bIsDirty) {

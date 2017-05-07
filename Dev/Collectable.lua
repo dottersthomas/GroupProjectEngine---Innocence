@@ -9,8 +9,10 @@ Collectable =
 	
 	Update = function(dt)
 		collider = gameObject:getComponent("BoxCollider")
+		print(collider.triggerStatus)
 
 		if (collider.triggerStatus == Trigger.ENTER) then
+			print "HELLO"
 			-- Add to collectible global
 			CollectableManager.addCounter()
 			-- Collision, Pick up object (Stop drawing)

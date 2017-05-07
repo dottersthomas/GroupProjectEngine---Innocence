@@ -28,7 +28,6 @@ RandomSound =
 		end
 		
 		lastIndex = i
-		currentSound = nil
 		currentSound = Sound(files[i], false)
 		currentSound:play()
 	end,

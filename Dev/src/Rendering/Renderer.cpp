@@ -143,7 +143,7 @@ void Renderer::Render() {
 	}
 	else
 		View = glm::lookAt(
-			glm::vec3(1.2f, 1.0f, 2.0f),
+			glm::vec3(40.0f, 1.0f, 2.0f),
 			glm::vec3(0, 0, 0),
 			glm::vec3(0, 1, 0)
 		);

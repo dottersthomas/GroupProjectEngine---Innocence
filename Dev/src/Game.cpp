@@ -85,10 +85,17 @@ void Game::beginLoop() {
 	RenderComponent::registerLua(L);
 
 	CanvasComponent::registerLua(L);
+<<<<<<< HEAD
 	CanvasElement::registerLua(L);
 	CanvasButton::registerLua(L);
 	CanvasRect::registerLua(L);
 	Text2D::registerLua(L);
+=======
+    CanvasElement::registerLua(L);
+    CanvasButton::registerLua(L);
+    CanvasRect::registerLua(L);
+    Text2D::registerLua(L);
+>>>>>>> 30506c330f204604fade1389860c6c85ac2a351c
 
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);
@@ -246,14 +253,109 @@ Game::Game() {
 	
 	m_Physics_ = new Physics(WindowManager::getInstance().getWindow());
 
-	m_Physics_ = new Physics(WindowManager::getInstance().getWindow());
-
 	m_Renderer_ = new Renderer(WindowManager::getInstance().getWindow());
 	m_GUIRenderer_ = new GUIRenderer(WindowManager::getInstance().getWindow());
 
 
+<<<<<<< HEAD
 	//WindowManager::getInstance().getSceneManager()->LoadScene("XML/Scene.xml");
 	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTestScene());
+=======
+	//WindowManager::getInstance().getSceneManager()->LoadSceneFromPath("Assets/XML/Game.xml");
+	WindowManager::getInstance().getSceneManager()->LoadScene(LoadTestScene());
+
+
+	//DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.0f, -1.0f, -0.5f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+
+	//m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
+
+	//spotLight = new SpotLight("default", glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(-0.0f, -1.0f, 0.5f), glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 24.0f);
+
+	//spotLight->setConstant(1.0f);
+	//spotLight->setLinear(0.0014f);
+	//spotLight->setQuadratic(0.000007f);
+
+	//m_Renderer_->getLightManager().RegisterSpotLight(spotLight);
+
+
+	//ShaderUniform camera;
+	//camera.M_Address = "viewPos";
+	//camera.M_Type = ShaderType::VEC3;
+	//camera.M_Vec3 = glm::vec3(40.0f, 5.0f, 40.0f);
+
+	//ResourceManager::getInstance()->useShader("default");
+
+	//ResourceManager::getInstance()->GetShader("default")->SetUniform(camera);
+
+	//glm::vec3 pointLightPositions[] = {
+	//	glm::vec3(0.7f,  0.2f,  2.0f),
+	//	glm::vec3(2.3f, -3.3f, -4.0f),
+	//	glm::vec3(-4.0f,  2.0f, -12.0f),
+	//	glm::vec3(0.0f,  0.0f, -3.0f)
+	//};
+
+	//glm::vec3 pointLightColors[] = {
+
+	//	glm::vec3(1.0f, 1.0f, 1.0f),
+	//	glm::vec3(1.0f, 1.0f, 1.0f),
+	//	glm::vec3(1.0f, 1.0f, 1.0f),
+	//	glm::vec3(1.0f, 1.0f, 1.0f)
+	//};
+
+
+
+	///*glm::vec3 pointLightColors[] = {
+	//glm::vec3(1.0f, 0.6f, 0.0f),
+	//glm::vec3(1.0f, 0.0f, 0.0f),
+	//glm::vec3(1.0f, 1.0, 0.0),
+	//glm::vec3(0.2f, 0.2f, 1.0f)
+	//};*/
+
+
+	//for (int i = 0; i < 4; i++) {
+	//	ShaderUniform position;
+	//	position.M_Address = "pointLights[" + to_string(i) + "].position";
+	//	position.M_Type = ShaderType::VEC3;
+	//	position.M_Vec3 = glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z);
+
+	//	ShaderUniform ambient;
+	//	ambient.M_Address = "pointLights[" + to_string(i) + "].ambient";
+	//	ambient.M_Type = ShaderType::VEC3;
+	//	ambient.M_Vec3 = glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1);
+
+	//	ShaderUniform diffuse;
+	//	diffuse.M_Address = "pointLights[" + to_string(i) + "].diffuse";
+	//	diffuse.M_Type = ShaderType::VEC3;
+	//	diffuse.M_Vec3 = glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z);
+
+	//	ShaderUniform specular;
+	//	specular.M_Address = "pointLights[" + to_string(i) + "].specular";
+	//	specular.M_Type = ShaderType::VEC3;
+	//	specular.M_Vec3 = glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z);
+
+	//	ShaderUniform constant;
+	//	constant.M_Address = "pointLights[" + to_string(i) + "].constant";
+	//	constant.M_Type = ShaderType::UNIFORM_FLOAT;
+	//	constant.M_Float = 1.0f;
+
+	//	ShaderUniform linear;
+	//	linear.M_Address = "pointLights[" + to_string(i) + "].linear";
+	//	linear.M_Type = ShaderType::UNIFORM_FLOAT;
+	//	linear.M_Float = 0.09f;
+
+	//	ShaderUniform quadratic;
+	//	quadratic.M_Address = "pointLights[" + to_string(i) + "].quadratic";
+	//	quadratic.M_Type = ShaderType::UNIFORM_FLOAT;
+	//	quadratic.M_Float = 0.032f;
+
+	//	PointLight * pointLight = new PointLight("default", glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z), glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), 1.0f, 0.09f, 0.032f);
+
+
+	//	m_Renderer_->getLightManager().RegisterPointLight(pointLight);
+
+	//}
+
+>>>>>>> 30506c330f204604fade1389860c6c85ac2a351c
 
 	WindowManager::getInstance().getSceneManager()->switchScene();
 	WindowManager::getInstance().getSceneManager()->UpdateRenderers(m_Renderer_, m_GUIRenderer_);
@@ -294,7 +396,7 @@ Scene * Game::LoadTestScene() {
 
 
 
-	GameObject object("Model");
+	GameObject object("Ground");
 	int index = _Scene->AddGameObject(object);
 
 
@@ -517,9 +619,10 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	//bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-258.7, 0, 238.4), glm::vec3(249.5, 19, 290.6));
 
 	index = _Scene->AddGameObject(GameObject("RocksBack"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -599,6 +702,19 @@ Scene * Game::LoadTestScene() {
 	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(38.1, 0, -19.6), glm::vec3(71.9, 4, 20));
+
+	index = _Scene->AddGameObject(GameObject("Truck"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(44.6, 0, 20), glm::vec3(71.9, 14, 43.1));
 
 	index = _Scene->AddGameObject(GameObject("Wall"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -691,6 +807,16 @@ Scene * Game::LoadTestScene() {
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 	bc3->CustomBounds(glm::vec3(-17, 0, -233.4), glm::vec3(227.2, 19, -229.8));
 
+	index = _Scene->AddGameObject(GameObject("Wall9"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(222, 0, -280.9), glm::vec3(224.6, 19, -228.7));
+
 
 	index = _Scene->AddGameObject(GameObject("Well"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -728,6 +854,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
+<<<<<<< HEAD
 	index = _Scene->AddGameObject(GameObject("Paper1"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
@@ -735,6 +862,30 @@ Scene * Game::LoadTestScene() {
 	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+=======
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(248.7, 0, -280.9), glm::vec3(249.2, 19, 285.3));
+
+	index = _Scene->AddGameObject(GameObject("Fence2"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-247.8, 0, -226.4), glm::vec3(-247.3, 19, 249.2));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
+	
+
+	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
+>>>>>>> 30506c330f204604fade1389860c6c85ac2a351c
 
 	// Paper objects
 	for (int i = 1; i < 6; i++)
@@ -800,14 +951,6 @@ Scene * Game::LoadTestScene() {
 		glm::vec3(0.0f, 0.0f, 0.0f)
 	};
 
-
-
-	/*glm::vec3 pointLightColors[] = {
-	glm::vec3(1.0f, 0.6f, 0.0f),
-	glm::vec3(1.0f, 0.0f, 0.0f),
-	glm::vec3(1.0f, 1.0, 0.0),
-	glm::vec3(0.2f, 0.2f, 1.0f)
-	};*/
 
 
 	for (int i = 0; i < 4; i++) {

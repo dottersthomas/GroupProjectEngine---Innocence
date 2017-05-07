@@ -31,6 +31,23 @@ Scene * XMLParser::LoadScene()
 
 	XMLElement * sceneElem = m_Doc_.FirstChildElement("scene");
 	XMLElement * sceneContent = sceneElem->FirstChildElement("scenecontent");
+
+	XMLElement * Environ = sceneContent->FirstChildElement("Environment");
+	if (Environ != nullptr) {
+
+		std::vector<const GLchar*> faces;
+
+		XMLElement * child = Environ->FirstChildElement();
+		while (child != nullptr) {
+			if (checkStrings(child->Name(),"CubeTexture")) {
+				faces.push_back(child->GetText());
+			}
+			child = child->NextSiblingElement();
+		}
+
+		_Scene->getEnvironment()->setSkyBox(new SkyBox("skybox", faces));
+	}
+
 	XMLElement * gObject = sceneContent->FirstChildElement("GameObject");
 	while (gObject != nullptr)
 	{
@@ -146,7 +163,6 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 			if (checkStrings(childName, "scale")) {
 				tc->setScale( GenerateVec3(child));
 			}
-
 			child = child->NextSiblingElement();
 
 		}	
@@ -273,6 +289,7 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 			const char* childName = child->Name();
 			if (checkStrings(childName, "acceleration")) {
 				rb->SetAcc(GenerateVec3(child));
+
 			}
 			if (checkStrings(childName, "grounded")) {
 				child->QueryBoolText(&isGrounded);
@@ -291,7 +308,33 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 		pScene->getGameObjects()->at(pIndex).registerComponent(rb);
 		rb->setParent(&pScene->getGameObjects()->at(pIndex));
 	}
+	if (checkStrings(componentName, "DirectionalLight")) {
+		XMLElement * child = pElement->FirstChildElement();
+		DirectionalLight * dirLight = new DirectionalLight("default");
 
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
+			if (checkStrings(childName, "direction")) {
+				dirLight->setDirection(GenerateVec3(child));
+			}
+
+			if (checkStrings(childName, "ambient")) {
+				dirLight->setAmbient(GenerateVec3(child));
+			}
+			if (checkStrings(childName, "diffuse")) {
+				dirLight->setDiffuse(GenerateVec3(child));
+			}
+			if (checkStrings(childName, "specular")) {
+				dirLight->setSpecular(GenerateVec3(child));
+			}
+			child = child->NextSiblingElement();
+
+		}
+
+		pScene->getGameObjects()->at(pIndex).registerComponent(dirLight);
+		dirLight->setParent(&pScene->getGameObjects()->at(pIndex));
+	}
 	//Create the GUI here.
 	if (checkStrings(componentName, "canvas"))
 	{
@@ -451,7 +494,8 @@ void XMLParser::ProcessCanvas(Scene * pScene, XMLElement * pElement, int pIndex)
 				buttonChild = buttonChild->NextSiblingElement();
 			}
 			Text2D * text = new Text2D("text", textContent);
-			text->SetShader("text");
+
+			text->SetShader("text_shader");
 			text->setPosition(glm::vec2(pos.x, pos.y + (size.y / 2) - 16));
 			//text->setScale(size);
 			text->setColour(glm::vec4(1.0,1.0,1.0,1.0));
