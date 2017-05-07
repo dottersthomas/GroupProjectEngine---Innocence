@@ -9,7 +9,7 @@ void Timer::start()
 	reset();
 }
 
-void Timer::pause()
+void Timer::pause(bool paused)
 {
 	double currentTime = glfwGetTime();
 
@@ -17,13 +17,14 @@ void Timer::pause()
 	{
 		// Unpause
 		m_StartTime += currentTime - m_PausedTime; // Add offset
+		m_Paused = false;
 	}
-
-	// Pause
-	m_PausedTime = currentTime;
-
-	// Toggle pause
-	m_Paused = !m_Paused;
+	else
+	{
+		// Pause
+		m_PausedTime = currentTime;
+		m_Paused = true;
+	}
 }
 
 void Timer::reset()

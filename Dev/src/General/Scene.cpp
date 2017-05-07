@@ -35,9 +35,19 @@ int Scene::AddGameObject(GameObject pGameObject) {
 	return m_SceneGameObjects_.size() - 1;
 }
 
-void Scene::RemoveGameObject(GameObject * pGameObject) {
-	M_bIsDirty = true;
+void Scene::RemoveGameObject(GameObject * pGameObject)
+{
+	std::vector<GameObject>::iterator iter = m_SceneGameObjects_.begin();
+	while (iter != m_SceneGameObjects_.end())
+	{
+		std::cout << iter->m_Name_ << "\n";
+		if ((*iter).m_Name_ == pGameObject->m_Name_)
+		{
+			iter = m_SceneGameObjects_.erase(iter);
+		}
+	}
 
+	M_bIsDirty = true;
 }
 
 void Scene::Update(double dt){

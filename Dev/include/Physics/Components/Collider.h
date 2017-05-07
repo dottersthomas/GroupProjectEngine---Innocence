@@ -4,23 +4,32 @@
 #include "CollisionData.h"
 #include "RigidBody.h"
 
-#define TRIGGER_ENTER 0
-#define TRIGGER_STAY 1
-#define TRIGGER_EXIT 2
+#define TRIGGER_NONE 0
+#define TRIGGER_ENTER 1
+#define TRIGGER_STAY 2
+#define TRIGGER_EXIT 3
 
 class Collider : public Component
 {
 protected:
 	bool isTrigger = false;
 	bool collided = false;
-	CollisionData * m_CD;
-	int triggerStatus = TRIGGER_EXIT;
+
+
+	CollisionData* m_CD;
+	int triggerStatus = TRIGGER_NONE;
+
 public:
 	Collider() {};
 	Collider(GameObject * pParent) {
 		m_GameObjectParent_ = pParent;
 	}
 	~Collider() {};
+
+	CollisionData* getCD()
+	{
+		return m_CD;
+	}
 
 	bool getTrigger() const
 	{
@@ -31,10 +40,6 @@ public:
 	{
 		return collided;
 	}
-	CollisionData * getCD()
-	{
-		return m_CD;
-	}
 
 	virtual void Update(double dt) = 0;
 	virtual void LateUpdate(double dt) = 0;
@@ -43,7 +48,6 @@ public:
 	virtual void Start() = 0;
 
 	void OnTriggerEnter(CollisionData * cd) {
-		std::cout << "ENTER";
 		collided = true;
 		triggerStatus = TRIGGER_ENTER;
 		m_CD = cd;
@@ -51,6 +55,7 @@ public:
 
 	void OnTriggerStay(CollisionData * cd) {
 		std::cout << "stay";
+		std::cout << cd->target.m_Name_;
 		triggerStatus = TRIGGER_STAY;
 		m_CD = cd;
 	};
@@ -61,6 +66,11 @@ public:
 		triggerStatus = TRIGGER_EXIT;
 		m_CD = nullptr;
 	};
+
+	void resetTriggerStatus()
+	{
+		triggerStatus = TRIGGER_NONE;
+	}
 
 	void OnCollided(CollisionData * cd) {
 		
@@ -157,7 +167,7 @@ public:
 			.beginClass<Collider>("Collider")
 			.addData<int>("triggerStatus", &Collider::triggerStatus, false)
 			.addProperty("trigger", &Collider::getTrigger)
-			.addFunction("getOtherCollider", &Collider::getCollided)
+			.addData<CollisionData*>("otherCollider", &Collider::m_CD)
 			.endClass();
 	}
 };

@@ -14,7 +14,7 @@ public:
 	~Timer() {};
 
 	void start();
-	void pause();
+	void pause(bool paused);
 	void reset();
 
 	double getTime() const;
@@ -30,7 +30,7 @@ public:
 			.addFunction("start", &Timer::start)
 			.addFunction("pause", &Timer::pause)
 			.addFunction("reset", &Timer::reset)
-			.addProperty("currentTime", &Timer::getTime)
+			.addProperty("time", &Timer::getTime)
 			.endClass();
 	}
 };
