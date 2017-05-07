@@ -17,14 +17,14 @@ Ghost =
 			lastTime = timer.time
 		end
 		
-		if (timer.time >= lastTime + delay) then
-			-- Teleport within a 10% distance of the player
+		if (timer.time >= lastTime + 0) then
+			-- Teleport within a 25% distance of the player
 			
 			-- Get pos
 			playerPos = WindowManager.instance.sceneManager.currentScene:getGameObject("Player").transform.position
 			-- Create new pos
-			local newX = math.random(playerPos.x, playerPos.x * 1.1)
-			local newZ = math.random(playerPos.z, playerPos.z * 1.1)
+			local newX = math.random(playerPos.x, playerPos.x * 1.25)
+			local newZ = math.random(playerPos.z, playerPos.z * 1.25)
 			newPos = Vec3(newX, playerPos.y, newZ)
 			-- Set new pos
 			WindowManager.instance.sceneManager.currentScene:getGameObject("Player").transform.position = newPos

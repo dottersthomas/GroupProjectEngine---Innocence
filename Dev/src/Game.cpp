@@ -81,6 +81,8 @@ void Game::beginLoop() {
 	CameraComponent::registerLua(L);
 	FirstPersonCameraComponent::registerLua(L);
 	ThirdPersonCameraComponent::registerLua(L);
+	RenderComponent::registerLua(L);
+	CanvasComponent::registerLua(L);
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);
 	Scene::registerLua(L);
@@ -335,18 +337,6 @@ Scene * Game::LoadTestScene() {
 
 	render->setParent(&_Scene->getGameObjects()->at(index));
 
-<<<<<<< HEAD
-
-	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-
-	_Scene->getGameObjects()->at(index).registerComponent(bc);
-	bc->setParent(&_Scene->getGameObjects()->at(index));
-
-
-
-
-	index = _Scene->AddGameObject(GameObject("OBJ"));
-=======
 	
 	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc);
@@ -356,7 +346,6 @@ Scene * Game::LoadTestScene() {
 	
 	
 	index = _Scene->AddGameObject(GameObject("Player"));
->>>>>>> master
 	TransformComponent * tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc2->setParent(&_Scene->getGameObjects()->at(index));
@@ -402,15 +391,18 @@ Scene * Game::LoadTestScene() {
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
-
 	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 	model = loader.LoadModel("Models/Scene/House.fbx");
 
 	render3->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
+	
+	Script* s2 = new Script("Collectible.lua", "Collectible");
+	_Scene->getGameObjects()->at(index).registerComponent(s2);
+	s2->setParent(&_Scene->getGameObjects()->at(index));
 
-	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	BoxCollider * bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 

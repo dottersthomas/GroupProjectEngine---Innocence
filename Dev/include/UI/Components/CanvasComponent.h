@@ -27,6 +27,16 @@ public:
 		m_Elements_.push_back(pElement);
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.deriveClass<CanvasComponent, Component>("RenderComponent")
+			.addConstructor<void(*)(GameObject*)>()
+			.addFunction("addElement", &CanvasComponent::AddElement)
+			.endClass();
+	}
 };
 
 #endif
