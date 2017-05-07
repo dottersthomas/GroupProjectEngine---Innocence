@@ -65,11 +65,7 @@ void Physics::CollisionDetection(float dt)
 							go2 = *iter2->GetComponentByType<BoxCollider>()->getCD();
 							if (go2.target.m_Name_ == go.m_Name_)
 							{
-<<<<<<< Updated upstream
-=======
-								
->>>>>>> Stashed changes
-								test2->OnTriggerExit();
+							test2->OnTriggerExit();
 
 							}
 						}

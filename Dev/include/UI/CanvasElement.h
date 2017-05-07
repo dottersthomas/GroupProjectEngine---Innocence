@@ -11,6 +11,8 @@
 
 #include <GL\glew.h>
 
+#include <lua.hpp>
+#include <LuaBridge.h>
 
 struct CanvasElementVectorWrapper;
 
@@ -57,7 +59,7 @@ public:
 	virtual void Destroy() = 0;
 
 
-	std::string RequestShader() {
+	std::string RequestShader() const {
 		return m_Shader_;
 	}
 
@@ -66,11 +68,11 @@ public:
 	}
 
 
-	glm::vec2 getPosition() {
+	glm::vec2 getPosition() const {
 		return m_Position_;
 	}
 
-	glm::vec2 getScale() {
+	glm::vec2 getScale() const {
 		return m_Scale_;
 	}
 
@@ -88,10 +90,22 @@ public:
 		m_Colour_ = pColour;
 	}
 
-	glm::vec4 getColour() {
+	glm::vec4 getColour() const {
 		return m_Colour_;
 	}
 
+	static void registerLua(lua_State* L)
+	{
+		using namespace luabridge;
+
+		getGlobalNamespace(L)
+			.beginClass<CanvasElement>("CanvasElement")
+			.addProperty("shader", &CanvasElement::RequestShader, &CanvasElement::SetShader)
+			.addProperty("position", &CanvasElement::getPosition, &CanvasElement::setColour)
+			.addProperty("scale", &CanvasElement::getScale, &CanvasElement::setScale)
+			.addProperty("colour", &CanvasElement::getColour)
+			.endClass();
+	}
 };
 
 
