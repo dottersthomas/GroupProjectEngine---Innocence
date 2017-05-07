@@ -35,18 +35,16 @@ int Scene::AddGameObject(GameObject pGameObject) {
 	return m_SceneGameObjects_.size() - 1;
 }
 
-void Scene::RemoveGameObject(GameObject * pGameObject)
-{
+void Scene::RemoveGameObject(std::string pName) {
+	
 	std::vector<GameObject>::iterator iter = m_SceneGameObjects_.begin();
-	while (iter != m_SceneGameObjects_.end())
-	{
-		std::cout << iter->m_Name_ << "\n";
-		if ((*iter).m_Name_ == pGameObject->m_Name_)
-		{
+	while ( iter != m_SceneGameObjects_.end()) {
+		if ((*iter).m_Name_ == pName) {
 			iter = m_SceneGameObjects_.erase(iter);
 		}
+		++iter;
 	}
-
+	
 	M_bIsDirty = true;
 }
 
@@ -95,6 +93,7 @@ void Scene::Destroy() {
 	m_SceneGameObjects_.clear();
 }
 
+
 luabridge::LuaRef Scene::luaGetGameObject(std::string name)
 {
 	// Get GameObjects
@@ -118,6 +117,7 @@ luabridge::LuaRef Scene::luaGetGameObject(std::string name)
 	std::cout << "[Scripting] Error: " << "GameObject not found!" << "\n";
 	return luabridge::LuaRef(L);
 }
+
 
 luabridge::LuaRef Scene::luaGetGameObjects()
 {

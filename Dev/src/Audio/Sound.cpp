@@ -91,6 +91,7 @@ void Sound::play()
 {
 	// Check if the sound has been loaded
 	try
+
 	{
 		bool soundPlaying;
 		m_Channel->isPlaying(&soundPlaying);
@@ -102,6 +103,7 @@ void Sound::play()
 	{
 		// Stops random FMOD errors from crashing engine	
 	}
+
 
 	m_Paused = false;
 	m_Channel->setPaused(m_Paused);

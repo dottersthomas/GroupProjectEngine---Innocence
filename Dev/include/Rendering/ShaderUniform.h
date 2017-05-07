@@ -5,9 +5,8 @@
 #include "glm\glm.hpp"
 
 enum ShaderType {
-	BOOL,
-	INT,
-	FLOAT,
+	UNIFORM_INT,
+	UNIFORM_FLOAT,
 	VEC2,
 	VEC3,
 	VEC4,
@@ -22,7 +21,6 @@ struct ShaderUniform {
 	ShaderType M_Type;
 	union 
 	{
-		bool M_Bool;
 		int M_Int;
 		float M_Float;
 		glm::vec2 M_Vec2;

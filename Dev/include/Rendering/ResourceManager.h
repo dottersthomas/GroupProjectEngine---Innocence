@@ -50,7 +50,7 @@ private:
 
 	int m_PointLights_ = 4;
 	int m_DirectionalLights_ = 1;
-	int m_SpotLights_ = 4;
+	int m_SpotLights_ = 1;
 
 public:
 
@@ -62,8 +62,6 @@ public:
 
 			ResourceManager * temp = new ResourceManager();
 			s_instance = temp;
-
-
 
 		}
 		// Instantiated on first use.

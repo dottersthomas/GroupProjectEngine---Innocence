@@ -12,8 +12,12 @@
 #include "Rendering\ShaderUniform.h"
 #include "Rendering\AssimpLoader.h"
 #include "Rendering\Components\ThirdPersonCameraComponent.h"
+#include "UI\Text2D.h"
+
 
 #define TIXML_USE_STL
+
+SpotLight * spotLight;
 
 
 static void error_callback(int error, const char* description)
@@ -26,7 +30,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	//Close the window and thus kill the Engine.
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
-
 
 	InputHandler::invokeKey(key, scancode, action, mods);
 }
@@ -79,7 +82,9 @@ void Game::beginLoop() {
 	FirstPersonCameraComponent::registerLua(L);
 	ThirdPersonCameraComponent::registerLua(L);
 	RenderComponent::registerLua(L);
+
 	CanvasComponent::registerLua(L);
+
 	WindowManager::registerLua(L);
 	SceneManager::registerLua(L);
 	Scene::registerLua(L);
@@ -103,7 +108,7 @@ void Game::beginLoop() {
 		WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 	//TransformComponent * comp = m_WindowManager_.getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
 	float rotation = 0;
-
+	bool toggle = false;
 	while (!glfwWindowShouldClose(WindowManager::getInstance().getWindow()))
 
 	{
@@ -149,12 +154,19 @@ void Game::beginLoop() {
 				WindowManager::getInstance().getSceneManager()->getCurrentScene()->Start();
 			}
 			
-			rotation += 3.142 / 1000.0f;
-			TransformComponent* temp = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
+			rotation += 1 / 100.0f;
+			//TransformComponent* temp = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(1).GetComponentByType<TransformComponent>();
 			//temp->setRotation(glm::vec3(temp->getRotation().x, temp->getRotation().y,  rotation));
+			if (rotation > 1.0f) {
+				rotation = -1.0f;
+			}
+			TransformComponent * tc = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<TransformComponent>();
+
+			spotLight->setDirection(tc->getDirection());
+			spotLight->setPosition(tc->getPosition() + glm::vec3(0.0f, 5.0f, 0.0f));
 			
 			update(tick * 1/ fDelay);
-			RigidBody * rb = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
+			//RigidBody * rb = WindowManager::getInstance().getSceneManager()->getCurrentScene()->getGameObjects()->at(2).GetComponentByType<RigidBody>();
 			//rb->SetAcc(glm::vec3(-2, 0, 0));
 
 			tick -= TICKS_PER_SECOND;
@@ -214,8 +226,13 @@ Game::Game() {
 
 	ResourceManager::getInstance()->LoadShader("Shaders/skybox_shader.vert", "Shaders/skybox_shader.frag", "skybox");
 	ResourceManager::getInstance()->LoadShader("Shaders/texture_shader.vert", "Shaders/texture_shader.frag", "default");
-	ResourceManager::getInstance()->LoadShader("Shaders/shadow_depth.vert", "Shaders/shadow_depth.frag", "shadow_depth");
+	ResourceManager::getInstance()->LoadShader("Shaders/gui_plain_shader.vert", "Shaders/gui_plain_shader.frag", "gui_plain");
+	ResourceManager::getInstance()->LoadShader("Shaders/text_shader.vert", "Shaders/text_shader.frag", "text_shader");
 	ResourceManager::getInstance()->LoadShader("Shaders/post_process_fbo.vert", "Shaders/post_process_fbo.frag", "post_process_fbo");
+
+	ResourceManager::getInstance()->loadTextureSOIL("Textures/font.png", GL_TRUE, "FONT", "texture_font");
+
+	ResourceManager::getInstance()->setupTextCharacters("FONT");
 
 	Proxy::getInstance()->AssignWindowManager(&WindowManager::getInstance());
 	Proxy::getInstance()->AssignGame(this);
@@ -244,7 +261,7 @@ Game::Game() {
 //Create the Scene here. Should be data driven.
 void Game::CreateScene() {
 
-
+	
 
 }
 
@@ -280,24 +297,52 @@ Scene * Game::LoadTestScene() {
 	tc->setParent(&_Scene->getGameObjects()->at(index));
 	//tc->setPosition(glm::vec3(-2.0f, -3.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
-	tc->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+	tc->setScale(glm::vec3(1.5f, 1.5f, 1.5f));
+
+	CanvasComponent * canvas = new CanvasComponent(&_Scene->getGameObjects()->at(index));
 
 
+	CanvasRect * rect = new CanvasRect(nullptr, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	rect->SetShader("gui_plain");
+	rect->setPosition(glm::vec2(1.0, 1.0));
+	rect->setScale(glm::vec2(100, 100));
+
+
+	canvas->AddElement(rect);
+
+	Text2D * text = new Text2D("text_shader", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\");
+	text->SetShader("text_shader");
+	text->setPosition(glm::vec2(100,100));
+	//text->setUsesID(usesID);
+	text->setScale(glm::vec2(1,1));
+	text->setColour(glm::vec4(1.0, 1.0, 1.0, 1.0));
+
+	canvas->AddElement(text);
+
+
+	_Scene->getGameObjects()->at(index).registerComponent(canvas);
+	canvas->setParent(&_Scene->getGameObjects()->at(index));
+
+
+
+
+
+	/////
 	RenderComponent * render = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 
 	glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 
 	//Script* s1 = new Script("RandomSound.lua", "RandomSound");
-	
+
 	render->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render);
-	
+
 	render->setParent(&_Scene->getGameObjects()->at(index));
 
 	
 	BoxCollider * bc = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
-	
 	_Scene->getGameObjects()->at(index).registerComponent(bc);
 	bc->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -321,7 +366,7 @@ Scene * Game::LoadTestScene() {
 	render2->setParent(&_Scene->getGameObjects()->at(index));
 	render2->toggleDrawing(false);
 
-	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index),false);
+	BoxCollider * bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc2);
 	bc2->setParent(&_Scene->getGameObjects()->at(index));
 
@@ -330,7 +375,7 @@ Scene * Game::LoadTestScene() {
 	rb->setParent(&_Scene->getGameObjects()->at(index));
 	rb->SetAcc(glm::vec3(0, 0, 0));
 
-	FirstPersonCameraComponent * cameraComponent = new FirstPersonCameraComponent(&_Scene->getGameObjects()->at(index), "camera",  glm::vec3(0.0f, 10.0f, 0.0f));
+	FirstPersonCameraComponent * cameraComponent = new FirstPersonCameraComponent(&_Scene->getGameObjects()->at(index), "camera", glm::vec3(0.0f, 10.0f, 0.0f));
 
 	_Scene->getGameObjects()->at(index).registerComponent(cameraComponent);
 	cameraComponent->setParent(&_Scene->getGameObjects()->at(index));
@@ -341,18 +386,40 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(s1);
 	s1->setParent(&_Scene->getGameObjects()->at(index));
 
+	index = _Scene->AddGameObject(GameObject("Ghost"));
+	tc2 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc2->setParent(&_Scene->getGameObjects()->at(index));
+
+	render2 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
+	model = loader.LoadModel("Models/nanosuit/nanosuit.obj");
+	render2->toggleBackCulling(false);
+	render2->AttachModel(model);
+	_Scene->getGameObjects()->at(index).registerComponent(render2);
+	render2->setParent(&_Scene->getGameObjects()->at(index));
+	render2->toggleDrawing(false);
+
+	bc2 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
+	_Scene->getGameObjects()->at(index).registerComponent(bc2);
+	bc2->setParent(&_Scene->getGameObjects()->at(index));
+	bc2->CustomBounds(glm::vec3(-1, -1, -1), glm::vec3(1, 1, 1));
+	s1 = new Script("Ghost.lua", "Ghost");
+	_Scene->getGameObjects()->at(index).registerComponent(s1);
+	s1->setParent(&_Scene->getGameObjects()->at(index));
+
+
 
 	index = _Scene->AddGameObject(GameObject("House"));
 	TransformComponent * tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-	
+
 	RenderComponent * render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
-	model = loader.LoadModel("Models/Scene/Demon Girl.fbx");
-	
+
+	model = loader.LoadModel("Models/Scene/House.fbx");
+
 	render3->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
@@ -367,29 +434,27 @@ Scene * Game::LoadTestScene() {
 
 	index = _Scene->AddGameObject(GameObject("Items"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-	
-	
+
+
 	render3 = new RenderComponent(&_Scene->getGameObjects()->at(index), "default");
 	model = loader.LoadModel("Models/Scene/items.fbx");
-	
+
 	render3->AttachModel(model);
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
-	
+
 	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("Logs"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -401,7 +466,7 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), true);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
 	
@@ -409,7 +474,7 @@ Scene * Game::LoadTestScene() {
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -430,7 +495,7 @@ Scene * Game::LoadTestScene() {
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -442,15 +507,15 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
 	index = _Scene->AddGameObject(GameObject("RocksBack"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -470,7 +535,7 @@ Scene * Game::LoadTestScene() {
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -490,7 +555,7 @@ Scene * Game::LoadTestScene() {
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -508,9 +573,8 @@ Scene * Game::LoadTestScene() {
 
 	index = _Scene->AddGameObject(GameObject("Truck"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
-	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -530,7 +594,7 @@ Scene * Game::LoadTestScene() {
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -545,12 +609,84 @@ Scene * Game::LoadTestScene() {
 	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
 	_Scene->getGameObjects()->at(index).registerComponent(bc3);
 	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-90, 0, -118), glm::vec3(-86, 19, -71.6));
+
+	index = _Scene->AddGameObject(GameObject("Wall2"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-131, 0, -114), glm::vec3(-89.5, 19, -113));
+
+	index = _Scene->AddGameObject(GameObject("Wall3"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-132, 0, -236.9), glm::vec3(-123, 19, -115));
+
+	index = _Scene->AddGameObject(GameObject("Wall4"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-250, 0, -234.4), glm::vec3(-123.5, 19, -227.5));
+
+	index = _Scene->AddGameObject(GameObject("Wall5"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-57.8, 0, -118), glm::vec3(-53.8, 19, -68));
+
+	index = _Scene->AddGameObject(GameObject("Wall6"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-59.7, 0, -114.6), glm::vec3(-7.9, 19, -110.8));
+
+	index = _Scene->AddGameObject(GameObject("Wall7"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-15.5, 0, -236.4), glm::vec3(-11.08, 19, -109.1));
+
+	index = _Scene->AddGameObject(GameObject("Wall8"));
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
+	tc3->setParent(&_Scene->getGameObjects()->at(index));
+
+	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	bc3->CustomBounds(glm::vec3(-17, 0, -233.4), glm::vec3(227.2, 19, -229.8));
+
 
 	index = _Scene->AddGameObject(GameObject("Well"));
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -570,7 +706,7 @@ Scene * Game::LoadTestScene() {
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 	tc3->setParent(&_Scene->getGameObjects()->at(index));
-	tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+	//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 	//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 	tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -582,9 +718,9 @@ Scene * Game::LoadTestScene() {
 	_Scene->getGameObjects()->at(index).registerComponent(render3);
 	render3->setParent(&_Scene->getGameObjects()->at(index));
 
-	bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
-	_Scene->getGameObjects()->at(index).registerComponent(bc3);
-	bc3->setParent(&_Scene->getGameObjects()->at(index));
+	//bc3 = new BoxCollider(&_Scene->getGameObjects()->at(index), false);
+	//_Scene->getGameObjects()->at(index).registerComponent(bc3);
+	//bc3->setParent(&_Scene->getGameObjects()->at(index));
 
 	// Paper objects
 	for (int i = 1; i < 6; i++)
@@ -593,7 +729,7 @@ Scene * Game::LoadTestScene() {
 		tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 		tc3 = _Scene->getGameObjects()->at(index).GetComponentByType<TransformComponent>();
 		tc3->setParent(&_Scene->getGameObjects()->at(index));
-		tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
+		//tc3->setPosition(glm::vec3(10.0f, 1.0f, 0.0f));
 		//tc->setRotation(glm::vec3(-3.142 / 2.0f, 0.0f, 0.0f));
 		tc3->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -614,9 +750,18 @@ Scene * Game::LoadTestScene() {
 	////////////////////////////////////////////
 	//Uniforms
 
-	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.2f, -1.0f, -0.3f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.3f, 0.3f, 0.3f), glm::vec3(0.7f, 0.7f, 0.7f));
+	DirectionalLight * dirLight = new DirectionalLight("default", glm::vec3(-0.0f, -1.0f, -0.5f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
 	m_Renderer_->getLightManager().RegisterDirectionalLight(dirLight);
+
+	spotLight = new SpotLight("default", glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(-0.0f, -1.0f, 0.5f), glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 24.0f);
+
+	spotLight->setConstant(1.0f);
+	spotLight->setLinear(0.0014f);
+	spotLight->setQuadratic(0.000007f);
+
+	m_Renderer_->getLightManager().RegisterSpotLight(spotLight);
+
 
 	ShaderUniform camera;
 	camera.M_Address = "viewPos";
@@ -636,10 +781,10 @@ Scene * Game::LoadTestScene() {
 
 	glm::vec3 pointLightColors[] = {
 
-		glm::vec3(0.7f, 0.7f, 0.7f),
-		glm::vec3(0.7f, 0.7f, 0.7f),
-		glm::vec3(0.7f, 0.7f, 0.7f),
-		glm::vec3(0.7f, 0.7f, 0.7f)
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f)
 	};
 
 
@@ -675,17 +820,17 @@ Scene * Game::LoadTestScene() {
 
 		ShaderUniform constant;
 		constant.M_Address = "pointLights[" + to_string(i) + "].constant";
-		constant.M_Type = ShaderType::FLOAT;
+		constant.M_Type = ShaderType::UNIFORM_FLOAT;
 		constant.M_Float = 1.0f;
 
 		ShaderUniform linear;
 		linear.M_Address = "pointLights[" + to_string(i) + "].linear";
-		linear.M_Type = ShaderType::FLOAT;
+		linear.M_Type = ShaderType::UNIFORM_FLOAT;
 		linear.M_Float = 0.09f;
 
 		ShaderUniform quadratic;
 		quadratic.M_Address = "pointLights[" + to_string(i) + "].quadratic";
-		quadratic.M_Type = ShaderType::FLOAT;
+		quadratic.M_Type = ShaderType::UNIFORM_FLOAT;
 		quadratic.M_Float = 0.032f;
 
 		PointLight * pointLight = new PointLight("default", glm::vec3(pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z), glm::vec3(pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), glm::vec3(pointLightColors[i].x, pointLightColors[i].y, pointLightColors[i].z), 1.0f, 0.09f, 0.032f);

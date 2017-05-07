@@ -49,7 +49,6 @@ std::string ResourceManager::createShaderDefines() {
 	std::string spotLights = " #define SPOT_LIGHTS " + std::to_string(m_SpotLights_) + " \n";
 
 	return version + pointLights + dirLights + spotLights;
-	//return "";
 }
 
 

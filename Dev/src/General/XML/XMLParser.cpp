@@ -30,8 +30,8 @@ Scene * XMLParser::LoadScene()
 	Scene * _Scene = new Scene("");
 
 	XMLElement * sceneElem = m_Doc_.FirstChildElement("scene");
-
-	XMLElement * gObject = sceneElem->FirstChildElement("GameObject");
+	XMLElement * sceneContent = sceneElem->FirstChildElement("scenecontent");
+	XMLElement * gObject = sceneContent->FirstChildElement("GameObject");
 	while (gObject != nullptr)
 	{
 
@@ -125,105 +125,68 @@ glm::vec4 XMLParser::GenerateVec4(XMLElement * element)
 void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pIndex)
 {
 	const char* componentName = pElement->Name();
+	const char* tag = pElement->Attribute("tag");
 
 	//Setup the Transform Component
-	if (checkStrings(componentName, "position"))
+	if (checkStrings(componentName, "TransformComponent"))
 	{
 		TransformComponent * tc = pScene->getGameObjects()->at(pIndex).GetComponentByType<TransformComponent>();
-
-		tc->setPosition(GenerateVec3(pElement));
-	}
-
-	//Setup the Render Component
-	if (checkStrings(componentName, "mesh"))
-	{
-
-		MeshFactory factory;
-
-
-		const char* shader = pElement->Attribute("shader");
-		const char* name = pElement->Attribute("name");
-
-		int type = 0;
-
-		pElement->QueryIntAttribute("type", &type);
-
-
-		RenderComponent * render;
-		if (pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>())
-		{
-			render = pScene->getGameObjects()->at(pIndex).GetComponentByType<RenderComponent>();
-		}
-		else
-		{
-			render = new RenderComponent(&pScene->getGameObjects()->at(pIndex), std::string(shader), type);
-		}
+		tc->setTag(tag);
 		XMLElement * child = pElement->FirstChildElement();
-
-		glm::vec3 position, rotation, scale, pivot = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec4 colour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
-		const char* path;
-		const char* texturePath;
 		while (child != nullptr)
 		{
 			const char* childName = child->Name();
-			if (checkStrings(childName, "path"))
-			{
-				path = child->GetText();
+			if (checkStrings(childName, "position")) {
+				tc->setPosition( GenerateVec3(child));
 			}
-			if (checkStrings(childName, "pivot"))
-			{
-				pivot = GenerateVec3(child);
-			}
-			if (checkStrings(childName, "position"))
-			{
-				position = GenerateVec3(child);
-			}
-			if (checkStrings(childName, "rotation"))
-			{
-				rotation = GenerateVec3(child);
-			}
-			if (checkStrings(childName, "scale"))
-			{
-				scale = GenerateVec3(child);
-			}
-			if (checkStrings(childName, "texture"))
-			{
-				texturePath = child->GetText();
-				ResourceManager::getInstance()->loadTexture(texturePath, GL_FALSE, texturePath);
 
+			if (checkStrings(childName, "rotation")) {
+				tc->setRotation( GenerateVec3(child));
 			}
-			if (checkStrings(childName, "colour"))
-			{
-				colour = GenerateVec4(child);
+			if (checkStrings(childName, "scale")) {
+				tc->setScale( GenerateVec3(child));
 			}
+
 			child = child->NextSiblingElement();
-		}
 
-		Mesh * mesh;
-
-		if (path != nullptr)
-		{
-			if (type == 1)
-				mesh = factory.create(path, position, rotation, scale, texturePath);
-			else
-				mesh = factory.create(path, position, rotation, scale, colour);
-
-		}
-
-		mesh->setPivotPoint(pivot);
-		mesh->setColour(colour);
-
-
-		render->AttachMesh(mesh);
-
-		if (!pScene->getGameObjects()->at(pIndex).CheckComponentTypeExists<RenderComponent>())
-		{
-			pScene->getGameObjects()->at(pIndex).registerComponent(render);
-			render->setParent(&pScene->getGameObjects()->at(pIndex));
-		}
+		}	
 	}
-	if (checkStrings(componentName, "firstpersoncamera"))
+
+	//Setup the Render Component
+	if (checkStrings(componentName, "RenderComponent"))
+	{
+
+		RenderComponent * rc = new RenderComponent(&pScene->getGameObjects()->at(pIndex), std::string("default"));
+		rc->setTag(tag);
+		XMLElement * child = pElement->FirstChildElement();
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
+			if (checkStrings(childName, "Model")) {
+				std::string temp = AssetPath + child->GetText();
+				GLchar* path = (GLchar*)temp.c_str();
+				Model model = loader.LoadModel(path);
+
+				rc->AttachModel(model);
+			}
+			if (checkStrings(childName, "CullBack")) {
+				if (child->BoolText() == true)
+					rc->toggleBackCulling(true);
+				else
+					rc->toggleBackCulling(false);
+			}
+
+			child = child->NextSiblingElement();
+
+		}
+
+
+		pScene->getGameObjects()->at(pIndex).registerComponent(rc);
+		rc->setParent(&pScene->getGameObjects()->at(pIndex));
+
+	}
+		
+	if (checkStrings(componentName, "FirstPersonCameraComponent"))
 	{
 
 
@@ -233,10 +196,6 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 
 		const char* name = pElement->Attribute("name");
 
-		pElement->QueryBoolAttribute("main", &main);
-
-
-
 		while (child != nullptr)
 		{
 			const char* childName = child->Name();
@@ -245,9 +204,15 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 			{
 				position = GenerateVec3(child);
 			}
+			if (checkStrings(childName, "main")) {
+
+				child->QueryBoolText(&main);
+
+			}
 			child = child->NextSiblingElement();
 		}
 		FirstPersonCameraComponent * camera = new FirstPersonCameraComponent(&pScene->getGameObjects()->at(pIndex), std::string(name), position);
+		camera->setTag(tag);
 		pScene->getGameObjects()->at(pIndex).registerComponent(camera);
 		camera->setParent(&pScene->getGameObjects()->at(pIndex));
 
@@ -255,47 +220,76 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 			pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<FirstPersonCameraComponent>());
 
 	}
-
-	if (checkStrings(componentName, "thirdpersoncamera"))
+	if (checkStrings(componentName, "Script"))
 	{
 		XMLElement * child = pElement->FirstChildElement();
-		glm::vec3 position;
-		bool main = true;
+		std::string path;
+		std::string name;
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
+			
+			if (checkStrings(childName, "path")) {
+				std::string temp = AssetPath + child->GetText();
+				path = temp;
+			}
+			if (checkStrings(childName, "name")) {
+				name = child->GetText();
+			}
 
-		const char* name = pElement->Attribute("name");
-
-		pElement->QueryBoolAttribute("main", &main);
-
-		float distance = 10.0f;
-
-
-		//TODO add distance modifiers to constructor.
-		ThirdPersonCameraComponent * camera;
+			child = child->NextSiblingElement();
+		}
+		Script * s1 = new Script(path, name);
+		pScene->getGameObjects()->at(pIndex).registerComponent(s1);
+		s1->setParent(&pScene->getGameObjects()->at(pIndex));
+	}
+	if (checkStrings(componentName, "BoxCollider")) {
+		XMLElement * child = pElement->FirstChildElement();
+		bool isTrigger = false;
 
 		while (child != nullptr)
 		{
 			const char* childName = child->Name();
-
-			if (checkStrings(childName, "position"))
-			{
-				position = GenerateVec3(child);
+			if (checkStrings(childName, "trigger")) {
+				child->QueryBoolText(&isTrigger);
 			}
 
-			if (checkStrings(childName, "distance"))
-			{
-				child->QueryFloatText(&distance);
-			}
 			child = child->NextSiblingElement();
+
 		}
 
+		BoxCollider * bc = new BoxCollider(&pScene->getGameObjects()->at(pIndex), isTrigger);
+		pScene->getGameObjects()->at(pIndex).registerComponent(bc);
+		bc->setParent(&pScene->getGameObjects()->at(pIndex));
+	}
+	if (checkStrings(componentName, "RigidBody")) {
+		XMLElement * child = pElement->FirstChildElement();
 
-		camera = new ThirdPersonCameraComponent(&pScene->getGameObjects()->at(pIndex), std::string(name), distance);
+		RigidBody * rb = new RigidBody();
+		bool isGrounded = false;
+		float gravity = 1.0f;
+		while (child != nullptr)
+		{
+			const char* childName = child->Name();
+			if (checkStrings(childName, "acceleration")) {
+				rb->SetAcc(GenerateVec3(child));
+			}
+			if (checkStrings(childName, "grounded")) {
+				child->QueryBoolText(&isGrounded);
 
-		pScene->getGameObjects()->at(pIndex).registerComponent(camera);
-		camera->setParent(&pScene->getGameObjects()->at(pIndex));
+			}
+			if (checkStrings(childName, "gravity")) {
+				child->QueryFloatText(&gravity);
 
-		if (main)
-			pScene->attachMainCameraComponent(pScene->getGameObjects()->at(pIndex).GetComponentByType<ThirdPersonCameraComponent>());
+			}
+
+			child = child->NextSiblingElement();
+
+		}
+		rb->SetGravScale(gravity);
+		rb->setGrounded(isGrounded);
+		pScene->getGameObjects()->at(pIndex).registerComponent(rb);
+		rb->setParent(&pScene->getGameObjects()->at(pIndex));
 	}
 
 	//Create the GUI here.
@@ -310,186 +304,185 @@ void XMLParser::ProcessComponent(Scene * pScene, XMLElement * pElement, int pInd
 //Process the GUI and create a canvas component for the overlay.
 void XMLParser::ProcessCanvas(Scene * pScene, XMLElement * pElement, int pIndex)
 {
-	//const char* componentName = pElement->Name();
+	const char* componentName = pElement->Name();
 
-	//const char* type = pElement->Attribute("type");
-	//CanvasComponent * canvas = new CanvasComponent(&pScene->getGameObjects()->at(pIndex));
-	//XMLElement * child = pElement->FirstChildElement();
-	//while (child != nullptr)
-	//{
-	//	const char* childName = child->Name();
-	//	if (checkStrings(childName, "rect")) {
-
-
-	//		const char* shader = child->Attribute("shader");
-
-	//		glm::vec4 colour = glm::vec4(1.0, 1.0, 1.0, 1.0);
-	//		glm::vec2 pos, size;
-	//		XMLElement * rectChild = child->FirstChildElement();
-	//		CanvasRect * rect;
-	//		while (rectChild != nullptr)
-	//		{
-	//			const char* rectChildName = rectChild->Name();
-	//			if (checkStrings(rectChildName, "colour")) {
-	//				
-	//				colour = GenerateVec4(rectChild);
-	//			
-	//			}
-
-	//			if (checkStrings(rectChildName, "position")) {
-
-	//				pos = glm::vec2(GenerateVec3(rectChild).x, GenerateVec3(rectChild).y);
-
-	//			}
-
-	//			if (checkStrings(rectChildName, "scale")) {
-
-	//				size = glm::vec2(GenerateVec3(rectChild).x, GenerateVec3(rectChild).y);
-
-	//			}
-
-	//			rectChild = rectChild->NextSiblingElement();
-	//		}
-
-	//		rect = new CanvasRect(nullptr, colour);
-	//		rect->SetShader(shader);
-	//		rect->setPosition(pos);
-	//		rect->setScale(size);
-
-	//		canvas->AddElement(rect);
-
-	//		//canvas->AddElement(new Text2D("text", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\"));
-	//	}
-
-	//	if (checkStrings(childName, "text")) {
-	//		const char* shader = child->Attribute("shader");
-
-	//		glm::vec4 colour = glm::vec4(1.0, 1.0, 1.0, 1.0);
-	//		glm::vec2 pos, size;
-	//		std::string textContent;
-	//		bool usesID = false;
-	//		XMLElement * textChild = child->FirstChildElement();
-	//		while (textChild != nullptr)
-	//		{
-	//			const char* textChildName = textChild->Name();
-
-	//			if (checkStrings(textChildName, "content")) {
-	//				textContent = textChild->GetText();
-	//			}
-
-	//			if (checkStrings(textChildName, "contentidentifier")) {
-	//				textContent = textChild->GetText();
-	//				usesID = true;
-	//			}
-	//			if (checkStrings(textChildName, "colour")) {
-
-	//				colour = GenerateVec4(textChild);
-
-	//			}
-
-	//			if (checkStrings(textChildName, "position")) {
-
-	//				pos = glm::vec2(GenerateVec3(textChild).x, GenerateVec3(textChild).y);
-
-	//			}
-
-	//			if (checkStrings(textChildName, "scale")) {
-
-	//				size = glm::vec2(GenerateVec3(textChild).x, GenerateVec3(textChild).y);
-
-	//			}
-
-	//			textChild = textChild->NextSiblingElement();
-	//		}
-	//		Text2D * text = new Text2D(shader, textContent);
-	//		text->SetShader(shader);
-	//		text->setPosition(pos);
-	//		text->setUsesID(usesID);
-	//		text->setScale(size);
-	//		text->setColour(colour);
-
-	//		canvas->AddElement(text);
-	//	}
-
-	//	if (checkStrings(childName, "button")) {
-	//		
-	//		const char* shader = child->Attribute("shader");
-
-	//		glm::vec4 colour = glm::vec4(1.0, 1.0, 1.0, 1.0), hoverColour;
-	//		glm::vec2 pos, size;
-	//		std::string textContent;
-	//		std::string onclick;
-	//		XMLElement * buttonChild = child->FirstChildElement();
-	//		while (buttonChild != nullptr)
-	//		{
-	//			const char* buttonChildName = buttonChild->Name();
-
-	//			if (checkStrings(buttonChildName, "content")) {
-	//				textContent = buttonChild->GetText();
-	//			}
-	//			
-	//			if (checkStrings(buttonChildName, "onclick")) {
-	//				onclick = buttonChild->GetText();
-	//			}
-	//			if (checkStrings(buttonChildName, "colour")) {
-
-	//				colour = GenerateVec4(buttonChild);
-
-	//			}
-
-	//			if (checkStrings(buttonChildName, "colourHover")) {
-
-	//				hoverColour = GenerateVec4(buttonChild);
-
-	//			}
-
-	//			if (checkStrings(buttonChildName, "position")) {
-
-	//				pos = glm::vec2(GenerateVec3(buttonChild).x, GenerateVec3(buttonChild).y);
-
-	//			}
-
-	//			if (checkStrings(buttonChildName, "scale")) {
-
-	//				size = glm::vec2(GenerateVec3(buttonChild).x, GenerateVec3(buttonChild).y);
-
-	//			}
-
-	//			buttonChild = buttonChild->NextSiblingElement();
-	//		}
-	//		Text2D * text = new Text2D("text", textContent);
-	//		text->SetShader("text");
-	//		text->setPosition(glm::vec2(pos.x, pos.y + (size.y / 2) - 16));
-	//		//text->setScale(size);
-	//		text->setColour(glm::vec4(1.0,1.0,1.0,1.0));
-	//		CanvasButton * button = new CanvasButton(nullptr, colour);
-	//		button->SetShader(shader);
-	//		button->setPosition(pos);
-	//		button->setScale(size);
-	//		button->setHoverColour(hoverColour);
-	//		button->setOnClickListener(ResourceManager::getInstance()->getButtonFunctions(onclick));
+	const char* type = pElement->Attribute("type");
+	CanvasComponent * canvas = new CanvasComponent(&pScene->getGameObjects()->at(pIndex));
+	XMLElement * child = pElement->FirstChildElement();
+	while (child != nullptr)
+	{
+		const char* childName = child->Name();
+		if (checkStrings(childName, "rect")) {
 
 
-	//		canvas->AddElement(button);
-	//		canvas->AddElement(text);
-	//	
-	//	
-	//	}
+			const char* shader = "gui_plain";
 
-	//	child = child->NextSiblingElement();
-	//}
+			glm::vec4 colour = glm::vec4(1.0, 1.0, 1.0, 1.0);
+			glm::vec2 pos, size;
+			XMLElement * rectChild = child->FirstChildElement();
+			CanvasRect * rect;
+			while (rectChild != nullptr)
+			{
+				const char* rectChildName = rectChild->Name();
+				if (checkStrings(rectChildName, "colour")) {
+					
+					colour = GenerateVec4(rectChild);
+				
+				}
+
+				if (checkStrings(rectChildName, "position")) {
+
+					pos = glm::vec2(GenerateVec3(rectChild).x, GenerateVec3(rectChild).y);
+
+				}
+
+				if (checkStrings(rectChildName, "scale")) {
+
+					size = glm::vec2(GenerateVec3(rectChild).x, GenerateVec3(rectChild).y);
+
+				}
+
+				rectChild = rectChild->NextSiblingElement();
+			}
+
+			rect = new CanvasRect(nullptr, colour);
+			rect->SetShader(shader);
+			rect->setPosition(pos);
+			rect->setScale(size);
+
+			canvas->AddElement(rect);
+
+			//canvas->AddElement(new Text2D("text", "abcdefghijklmnopqrstuvwxyz , 1234567890 - + _ = @#~;:?><\\"));
+		}
+
+		if (checkStrings(childName, "text")) {
+			const char* shader = "text_shader";
+
+			glm::vec4 colour = glm::vec4(1.0, 1.0, 1.0, 1.0);
+			glm::vec2 pos, size;
+			std::string textContent;
+			bool usesID = false;
+			XMLElement * textChild = child->FirstChildElement();
+			while (textChild != nullptr)
+			{
+				const char* textChildName = textChild->Name();
+
+				if (checkStrings(textChildName, "content")) {
+					textContent = textChild->GetText();
+				}
+
+				if (checkStrings(textChildName, "contentidentifier")) {
+					textContent = textChild->GetText();
+					usesID = true;
+				}
+				if (checkStrings(textChildName, "colour")) {
+	
+					colour = GenerateVec4(textChild);
+				}
+
+				if (checkStrings(textChildName, "position")) {
+
+					pos = glm::vec2(GenerateVec3(textChild).x, GenerateVec3(textChild).y);
+
+				}
+
+				if (checkStrings(textChildName, "scale")) {
+
+					size = glm::vec2(GenerateVec3(textChild).x, GenerateVec3(textChild).y);
+
+				}
+
+				textChild = textChild->NextSiblingElement();
+			}
+			Text2D * text = new Text2D(shader, textContent);
+			text->SetShader(shader);
+			text->setPosition(pos);
+			text->setUsesID(usesID);
+			text->setScale(size);
+			text->setColour(colour);
+
+			canvas->AddElement(text);
+		}
+
+		if (checkStrings(childName, "button")) {
+			
+			const char* shader = "gui_plain";
+
+			glm::vec4 colour = glm::vec4(1.0, 1.0, 1.0, 1.0), hoverColour;
+			glm::vec2 pos, size;
+			std::string textContent;
+			std::string onclick;
+			XMLElement * buttonChild = child->FirstChildElement();
+			while (buttonChild != nullptr)
+			{
+				const char* buttonChildName = buttonChild->Name();
+
+				if (checkStrings(buttonChildName, "content")) {
+					textContent = buttonChild->GetText();
+				}
+				
+				if (checkStrings(buttonChildName, "onclick")) {
+					onclick = buttonChild->GetText();
+				}
+				if (checkStrings(buttonChildName, "colour")) {
+
+					colour = GenerateVec4(buttonChild);
+
+				}
+
+				if (checkStrings(buttonChildName, "colourHover")) {
+
+					hoverColour = GenerateVec4(buttonChild);
+
+				}
+
+				if (checkStrings(buttonChildName, "position")) {
+
+					pos = glm::vec2(GenerateVec3(buttonChild).x, GenerateVec3(buttonChild).y);
+
+				}
+
+				if (checkStrings(buttonChildName, "scale")) {
+
+					size = glm::vec2(GenerateVec3(buttonChild).x, GenerateVec3(buttonChild).y);
+
+				}
+
+				buttonChild = buttonChild->NextSiblingElement();
+			}
+			Text2D * text = new Text2D("text", textContent);
+			text->SetShader("text");
+			text->setPosition(glm::vec2(pos.x, pos.y + (size.y / 2) - 16));
+			//text->setScale(size);
+			text->setColour(glm::vec4(1.0,1.0,1.0,1.0));
+			CanvasButton * button = new CanvasButton(nullptr, colour);
+			button->SetShader(shader);
+			button->setPosition(pos);
+			button->setScale(size);
+			button->setHoverColour(hoverColour);
+			button->setOnClickListener(ResourceManager::getInstance()->getButtonFunctions(onclick));
 
 
-	//pScene->getGameObjects()->at(pIndex).registerComponent(canvas);
-	//canvas->setParent(&pScene->getGameObjects()->at(pIndex));
+			canvas->AddElement(button);
+			canvas->AddElement(text);
+		
+		
+		}
 
-	//if (checkStrings(type, "menu")) {
-	//	Proxy::getInstance()->setUIFocus(true);
-	//	Proxy::getInstance()->requestCursorDrawChange(true);
-	//}
-	//else {
-	//	Proxy::getInstance()->setUIFocus(false);
-	//	Proxy::getInstance()->requestCursorDrawChange(false);
-	//}
+		child = child->NextSiblingElement();
+	}
+
+
+	pScene->getGameObjects()->at(pIndex).registerComponent(canvas);
+	canvas->setParent(&pScene->getGameObjects()->at(pIndex));
+
+	if (checkStrings(type, "menu")) {
+		Proxy::getInstance()->setUIFocus(true);
+		Proxy::getInstance()->requestCursorDrawChange(true);
+	}
+	else {
+		Proxy::getInstance()->setUIFocus(false);
+		Proxy::getInstance()->requestCursorDrawChange(false);
+	}
 }
 

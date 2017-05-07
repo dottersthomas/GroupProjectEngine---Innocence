@@ -12,6 +12,10 @@ private:
 	float m_CutOff_;
 	float m_SoftCutoff_;
 
+	float m_Constant_;
+	float m_Linear_;
+	float m_Quadratic_;
+
 public:
 	SpotLight() {}
 	SpotLight(std::string pShader);
@@ -46,8 +50,31 @@ public:
 	void setCutOff(float pCut) {
 		setDirty(true);
 
-		m_CutOff_ = pCut;
+		m_CutOff_ = glm::cos(glm::radians(pCut));
+		m_SoftCutoff_ = glm::cos(glm::radians(pCut + 5.0f));
+
 	}
+
+
+	void setConstant(float pConstant) {
+
+		setDirty(true);
+
+		m_Constant_ = pConstant;
+	}
+
+	void setLinear(float pLinear) {
+		setDirty(true);
+
+		m_Linear_ = pLinear;
+	}
+
+	void setQuadratic(float pQuadratic) {
+		setDirty(true);
+
+		m_Quadratic_ = pQuadratic;
+	}
+
 
 	static void registerLua(lua_State* L)
 	{

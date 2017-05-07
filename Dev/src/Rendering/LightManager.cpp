@@ -8,6 +8,9 @@ void LightManager::RegisterPointLight(PointLight * pPoint) {
 	m_PointLights_.push_back(pPoint);
 }
 
+void LightManager::RegisterSpotLight(SpotLight * pSpot) {
+	m_SpotLights_.push_back(pSpot);
+}
 
 void LightManager::update(float dt) {
 
@@ -32,6 +35,18 @@ void LightManager::update(float dt) {
 			if ((*iter)->isDirty()) {
 				(*iter)->updateColourUniforms(iter - m_PointLights_.begin());
 				(*iter)->UpdateLightUniforms(iter - m_PointLights_.begin());
+			}
+		}
+
+	}
+
+
+	if (m_SpotLights_.size() > 0) {
+
+		for (SpotLightWrapper::t_Light_Iter iter = m_SpotLights_.begin(); iter != m_SpotLights_.end(); ++iter) {
+			if ((*iter)->isDirty()) {
+				(*iter)->updateColourUniforms(iter - m_SpotLights_.begin());
+				(*iter)->UpdateLightUniforms(iter - m_SpotLights_.begin());
 			}
 		}
 

@@ -26,8 +26,11 @@ void Physics::CollisionDetection(float dt)
 	bool collided;
 	for (std::vector<GameObject>::iterator iter = m_sceneGameObjectsCollide_.begin(); iter != m_sceneGameObjectsCollide_.end(); ++iter)
 	{
+		
+		if ((*iter).m_Name_ == "Player")
+		{
 
-
+		
 		BoxCollider * test = iter->GetComponentByType<BoxCollider>();
 		for (std::vector<GameObject>::iterator iter2 = m_sceneGameObjectsCollide_.begin(); iter2 != m_sceneGameObjectsCollide_.end(); ++iter2)
 		{
@@ -50,17 +53,21 @@ void Physics::CollisionDetection(float dt)
 				}
 				else
 				{
-					if (test->getTrigger() == true && test->getCollided() == true)
+					if (test2->getTrigger() == true && test2->getCollided() == true)
 					{
+
+
 						GameObject go = *iter2;
+
 						CollisionData go2;
 						if (iter->GetComponentByType<BoxCollider>()->getCD() != nullptr)
 						{
-							go2 = *iter->GetComponentByType<BoxCollider>()->getCD();
+							go2 = *iter2->GetComponentByType<BoxCollider>()->getCD();
 							if (go2.target.m_Name_ == go.m_Name_)
 							{
-								test->OnTriggerExit();
-								test->resetTriggerStatus();
+								
+								test2->OnTriggerExit();
+
 							}
 						}
 					}
@@ -68,6 +75,7 @@ void Physics::CollisionDetection(float dt)
 
 				//	std::cout << collided << endl;
 			}
+		}
 		}
 
 
@@ -89,10 +97,9 @@ void Physics::EulerMove(float dt)
 		RigidBody * body = iter->GetComponentByType<RigidBody>();
 		TransformComponent * transform = iter->GetComponentByType<TransformComponent>();
 		glm::vec3 g = glm::vec3(0, 0, 0);
-		if (body->GetGround() == false)
-		{
+	
 			g = gravity * glm::vec3(0, -1, 0) * body->GetGravityScale()*dt;
-		}
+		
 		glm::vec3 f = friction * 0.5f * glm::vec3(1, 0, 1)*dt;
 
 
@@ -132,7 +139,7 @@ bool Physics::AABBAABBCollision(BoxCollider * boxC1, BoxCollider * boxC2)
 void Physics::ResolveCollision(GameObject& go, CollisionData * cd)
 {
 
-	BoxCollider * bc = go.GetComponentByType<BoxCollider>();
+	BoxCollider * bc = cd->target.GetComponentByType<BoxCollider>();
 	if (bc->getTrigger())
 	{
 		if (!bc->getCollided())
@@ -149,7 +156,7 @@ void Physics::ResolveCollision(GameObject& go, CollisionData * cd)
 	}
 	else
 	{
-		bc->OnCollided(cd);
+		go.GetComponentByType<BoxCollider>()->OnCollided(cd);
 	}
 
 }
