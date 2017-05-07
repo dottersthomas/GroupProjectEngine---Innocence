@@ -64,13 +64,13 @@ void Material::CreateUniforms() {
 
 	ShaderUniform hasNormal;
 	hasNormal.M_Address = "hasNormalMap";
-	hasNormal.M_Type = INT;
+	hasNormal.M_Type = ShaderType::UNIFORM_INT;
 	hasNormal.M_Int = hasNormalMap ? 1 : 0;
 
 
 	ShaderUniform toggle;
 	toggle.M_Address = "material.hasTexture";
-	toggle.M_Type = INT;
+	toggle.M_Type = ShaderType::UNIFORM_INT;
 	if (m_hasTextures_)
 		toggle.M_Int = 1;
 	else
@@ -78,7 +78,7 @@ void Material::CreateUniforms() {
 
 	ShaderUniform shininess;
 	shininess.M_Address = "material.shininess";
-	shininess.M_Type = FLOAT;
+	shininess.M_Type = ShaderType::UNIFORM_FLOAT;
 	shininess.M_Float = m_Shininess_;
 
 	ShaderUniform diffuse;
@@ -90,7 +90,7 @@ void Material::CreateUniforms() {
 			for (int i = 0; i < m_Colours_.size(); i++) {
 				ShaderUniform uniform;
 				uniform.M_Address = "material." + m_Colours_[i].M_Type;
-				uniform.M_Type = VEC3;
+				uniform.M_Type = ShaderType::VEC3;
 				uniform.M_Vec3 = m_Colours_[i].M_Colour;
 
 				uniforms.push_back(uniform);
@@ -159,7 +159,7 @@ void Material::BindTextures(std::string pShader) {
 						uniform.M_Address = std::string("material.") + std::string(name + number);
 					else
 						uniform.M_Address = std::string("material.") + std::string(name);
-					uniform.M_Type = INT;
+					uniform.M_Type = ShaderType::UNIFORM_INT;
 					uniform.M_Int = i;
 
 					ResourceManager::getInstance()->GetShader(pShader)->UpdateSingleUniform(uniform);
@@ -185,7 +185,7 @@ void Material::BindTextures(std::string pShader) {
 						uniform.M_Address = std::string("material.") + std::string(name + number);
 					else
 						uniform.M_Address = std::string("material.") + std::string(name);
-					uniform.M_Type = INT;
+					uniform.M_Type = ShaderType::UNIFORM_INT;
 					uniform.M_Int = i;
 
 					ResourceManager::getInstance()->GetShader(pShader)->UpdateSingleUniform(uniform);

@@ -54,22 +54,22 @@ void PointLight::UpdateLightUniforms(int pos) {
 
 	ShaderUniform lightPosition;
 	lightPosition.M_Address = getUniformName() + "[" + std::to_string(pos) + "].position";
-	lightPosition.M_Type = VEC3;
+	lightPosition.M_Type = ShaderType::VEC3;
 	lightPosition.M_Vec3 = m_Position_;
 
 	ShaderUniform lightConstant;
 	lightConstant.M_Address = getUniformName() + "[" + std::to_string(pos) + "].constant";
-	lightConstant.M_Type = FLOAT;
+	lightConstant.M_Type = ShaderType::FLOAT;
 	lightConstant.M_Float = m_Constant_;
 
 	ShaderUniform lightLinear;
 	lightLinear.M_Address = getUniformName() + "[" + std::to_string(pos) + "].linear";
-	lightLinear.M_Type = FLOAT;
+	lightLinear.M_Type = ShaderType::FLOAT;
 	lightLinear.M_Float = m_Linear_;
 
 	ShaderUniform lightQuadratic;
 	lightQuadratic.M_Address = getUniformName() + "[" + std::to_string(pos) + "].quadratic";
-	lightQuadratic.M_Type = FLOAT;
+	lightQuadratic.M_Type = ShaderType::FLOAT;
 	lightQuadratic.M_Float = m_Quadratic_;
 
 	ResourceManager::getInstance()->GetShader(getShader())->SetUniform(lightPosition);
